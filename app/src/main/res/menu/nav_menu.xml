@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:id="@+id/nav_option_pendingorders"
+        android:title="Pending Orders"
+       />
+
+    <item android:id="@+id/nav_option_deliveredorders"
+        android:title="Delivered Orders"
+        />
+
+    <item android:id="@+id/nav_option_dishesoffered"
+        android:title="Dishes Offered"
+        />
+
+    <item android:id="@+id/nav_option_logout"
+        android:title="Logout"
+        />
+
+    <!--<item android:id="@+id/nav_option_orders"-->
+        <!--android:title="Orders"-->
+        <!--/>-->
+
+    <!--<item android:id="@+id/nav_option_offers"-->
+        <!--android:title="Offers"-->
+       <!--/>-->
+
+    <!--<item android:id="@+id/nav_option_help"-->
+        <!--android:title="Help"-->
+       <!--/>-->
+
+    <!--<item android:id="@+id/logout"-->
+        <!--android:title="Logout"-->
+        <!--/>-->
+
+
+
+    </menu>
+
+
+

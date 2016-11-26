@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.bipullohia.fauxifyrestaurant.DishesOfferedFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Categories"
+        android:gravity="center"
+        android:textSize="24dp"
+        android:padding="10dp"/>
+
+    <ExpandableListView
+       android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/expandable_listview"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:id="@+id/addcategory_fragdishoff"
+        android:layout_margin="10dp"
+        android:textAllCaps="false"
+        android:text="Add Category"
+        />
+
+
+</LinearLayout>

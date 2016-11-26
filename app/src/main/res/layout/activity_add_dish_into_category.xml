@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_dish_into_category"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.bipullohia.fauxifyrestaurant.AddDishIntoCategory">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar_adddish" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:hint="Item Price"
+        android:ems="10"
+        android:layout_below="@+id/edittext_dishname"
+        android:layout_alignLeft="@+id/edittext_dishname"
+        android:layout_alignStart="@+id/edittext_dishname"
+        android:layout_marginTop="28dp"
+        android:id="@+id/edittext_dishprice" />
+
+    <Button
+        android:text="Submit"
+        android:textAllCaps="false"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radiogroup"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
+        android:id="@+id/button_submit" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radiogroup"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_below="@+id/edittext_dishprice"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp">
+
+        <RadioButton
+            android:text="Non-Vegetarian"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioBtn_nonveg"
+            android:layout_weight="1"
+            android:textColor="#FF5722"
+           />
+
+        <RadioButton
+            android:text="Vegetarian"
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:id="@+id/radioBtn_veg"
+            android:textColor="#00C853"
+            />
+
+    </RadioGroup>
+
+
+
+    <TextView
+        android:text="Add Item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_marginTop="28dp"
+        android:id="@+id/textView_adddish_heading"
+        android:layout_below="@+id/toolbar_adddish"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textCapWords"
+       android:hint="Item Name"
+        android:ems="10"
+        android:layout_marginTop="35dp"
+        android:id="@+id/edittext_dishname"
+        android:layout_below="@+id/textView_adddish_heading"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
