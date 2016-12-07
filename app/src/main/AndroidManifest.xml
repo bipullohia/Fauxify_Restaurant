@@ -17,12 +17,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTop"/>
+
         <activity
             android:name=".PendingOrderDetails"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".DeliveredOrderDetails" />
+
+        <activity android:name=".DeliveredOrderDetails"
+            android:parentActivityName=".MainActivity"/>
+
         <activity android:name=".AddDishIntoCategory"></activity>
+
         <activity android:name=".ModifyDishIntoCategory"></activity>
 
 

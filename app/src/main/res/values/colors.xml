@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F57C00</color>
-    <color name="colorPrimaryDark">#E65100</color>
-    <color name="colorAccent">#FF9800</color>
+    <color name="colorPrimary">#404040</color>
+    <color name="colorPrimaryDark">#212121</color>
+    <color name="colorAccent">#F07937</color>
     <color name="colorPrimaryLight">#FFB74D</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#727272</color>
@@ -10,5 +10,10 @@
     <color name="colorTextIcons">#FFFFFF</color>
     <color name="white">#ffffff</color>
     <color name="lightGray">#E0E0E0</color>
+    <color name="collapse_status_color">#F57C00</color>
+    <color name="collapse_toolbar_color">#F57C00</color>
+    <color name="darkGray">#9E9E9E</color>
     <color name="transparent">#00ffffff</color>
+    <color name="red">#F44336</color>
+    <color name="green">#4CAF50</color>
 </resources>

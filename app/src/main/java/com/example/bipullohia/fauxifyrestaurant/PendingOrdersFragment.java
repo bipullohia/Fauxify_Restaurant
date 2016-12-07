@@ -21,10 +21,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -93,11 +91,7 @@ public class PendingOrdersFragment extends Fragment {
 
                 jsonArray = new JSONArray(resultjson);
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
 
@@ -130,18 +124,19 @@ public class PendingOrdersFragment extends Fragment {
                             String oconfirmed = joDelivery.getString("orderconfirmed");
                             String odelivered = joDelivery.getString("orderdelivered");
 
+
                             if (oconfirmed.equals("1")) {
                                 orderconfirmed = "Confirmed";
                             } else {
-                                orderconfirmed = "NOT Confirmed";
+                                orderconfirmed = "Not Confirmed";
                             }
 
                             if (odelivered.equals("1")) {
                                 orderdelivered = "Delivered";
                             } else {
-                                orderdelivered = "NOT Delivered";
+                                orderdelivered = "Not Delivered";
                             }
-                            if (orderdelivered.equals("NOT Delivered")) {
+                            if (orderdelivered.equals("Not Delivered")) {
                                 Orders orders = new Orders(jobject.getString("Orderid"), totalitems,
                                         jobject.getString("ordertotal"), jobject.getString("customername"),
                                         jobject.getString("customeremail"), ordertiming, orderconfirmed,
@@ -150,7 +145,11 @@ public class PendingOrdersFragment extends Fragment {
                                 orderList.add(orders);
 
                             }
+
                         }
+
+
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -161,6 +160,8 @@ public class PendingOrdersFragment extends Fragment {
 
             } else Log.e("Jsonarray length", "is zero");
         }
+
+
 
     }
 

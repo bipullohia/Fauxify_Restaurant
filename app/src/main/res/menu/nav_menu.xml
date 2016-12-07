@@ -4,18 +4,23 @@
 
     <item android:id="@+id/nav_option_pendingorders"
         android:title="Pending Orders"
+        android:icon="@drawable/ic_action_name"
        />
 
     <item android:id="@+id/nav_option_deliveredorders"
         android:title="Delivered Orders"
+        android:icon="@drawable/ic_action_name"
         />
 
     <item android:id="@+id/nav_option_dishesoffered"
         android:title="Dishes Offered"
+        android:icon="@drawable/ic_action_name"
+
         />
 
     <item android:id="@+id/nav_option_logout"
         android:title="Logout"
+        android:icon="@drawable/ic_action_name"
         />
 
     <!--<item android:id="@+id/nav_option_orders"-->

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="160dp"
+    android:layout_height="210dp"
     android:gravity="bottom"
     android:background="@color/colorPrimary"
     android:padding="@dimen/activity_horizontal_margin">
@@ -18,8 +18,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Bipul Lohia"
+            android:text="Restaurant Name"
             android:textSize="16sp"
+            android:id="@+id/restNameNavHeader"
             android:layout_marginBottom="3dp"
             android:textColor="@color/white"
 
@@ -27,21 +28,14 @@
 
         <TextView
             android:layout_width="wrap_content"
+            android:id="@+id/restTypeNavHeader"
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
             android:textSize="14sp"
-            android:text="bipul.lohia@gmail.com"
+            android:text="Type"
             android:layout_marginLeft="10sp"
             android:textColor="@color/white"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="9176907049"
-            android:textSize="14sp"
-            android:layout_marginBottom="3dp"
-            android:layout_marginLeft = "10dp"
-            android:textColor="@color/white"/>
 
 
     </LinearLayout>

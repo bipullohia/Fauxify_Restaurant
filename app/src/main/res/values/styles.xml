@@ -4,6 +4,16 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorSecondaryText</item>
+        <item name="colorControlNormal">@color/white</item>
+
     </style>
+
+    <style name="NavigationTheme" parent="AppTheme">
+
+        <item name="android:listPreferredItemHeightSmall">55dp</item>
+
+    </style>
+
+
 </resources>

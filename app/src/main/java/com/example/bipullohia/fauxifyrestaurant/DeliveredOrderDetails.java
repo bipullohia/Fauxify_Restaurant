@@ -43,6 +43,7 @@ public class DeliveredOrderDetails extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar_cartactivity);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Order Details");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         customerName = (TextView) findViewById(R.id.orderdetails_customername);

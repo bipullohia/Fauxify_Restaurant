@@ -11,6 +11,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     static String requestURL;
     FragmentTransaction fragmentTransaction;
     NavigationView navigationView;
+    public static TextView restTypeNavHeader, restNameNavHeader;
 
     // 192.168.0.110 ip for use in mobile
     @Override
@@ -42,6 +45,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = (NavigationView) findViewById(R.id.navigationView);
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.getHeaderView(0);
+        restNameNavHeader = (TextView) header.findViewById(R.id.restNameNavHeader);
+        restTypeNavHeader = (TextView) header.findViewById(R.id.restTypeNavHeader);
+
+        // here will be the code for Restaurant Name and type for Navigation Header
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.main_container, new PendingOrdersFragment());

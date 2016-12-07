@@ -135,13 +135,13 @@ public class DeliveredOrdersFragment extends Fragment {
                             if (oconfirmed.equals("1")) {
                                 orderconfirmed = "Confirmed";
                             } else {
-                                orderconfirmed = "NOT Confirmed";
+                                orderconfirmed = "Not Confirmed";
                             }
 
                             if (odelivered.equals("1")) {
                                 orderdelivered = "Delivered";
                             } else {
-                                orderdelivered = "NOT Delivered";
+                                orderdelivered = "Not Delivered";
                             }
                             if (orderdelivered.equals("Delivered")&& orderconfirmed.equals("Confirmed")) {
                                 Orders orders = new Orders(jobject.getString("Orderid"), totalitems,

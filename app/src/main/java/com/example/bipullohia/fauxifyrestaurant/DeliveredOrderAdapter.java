@@ -2,6 +2,7 @@ package com.example.bipullohia.fauxifyrestaurant;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -91,6 +92,23 @@ public class DeliveredOrderAdapter extends RecyclerView.Adapter<DeliveredOrderAd
         holder.totalItems.setText(orders.getTotalitems());
         holder.orderConfirmed.setText(orders.getOrderconfirmed());
         holder.orderDelivered.setText(orders.getOrderdelivered());
+
+
+        if (orders.getOrderconfirmed().equals("Confirmed")) {
+            holder.orderConfirmed.setTextColor(ContextCompat.getColor(holder.context, R.color.green));
+        } else {
+            holder.orderConfirmed.setTextColor(ContextCompat.getColor(holder.context, R.color.red));
+        }
+
+
+        if (orders.getOrderdelivered().equals("Delivered")) {
+            holder.orderDelivered.setTextColor(ContextCompat.getColor(holder.context, R.color.green));
+        } else{
+            holder.orderDelivered.setTextColor(ContextCompat.getColor(holder.context, R.color.red));
+        }
+
+
+
 
         Log.e("dishesinfo", orders.getCustomerorder());
 
