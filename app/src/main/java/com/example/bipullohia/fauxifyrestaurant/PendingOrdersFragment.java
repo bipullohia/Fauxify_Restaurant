@@ -46,7 +46,9 @@ public class PendingOrdersFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(pendingOrdersAdapter);
 
+
         prepareOrderData();
+
         return rootview;
     }
 
@@ -104,7 +106,7 @@ public class PendingOrdersFragment extends Fragment {
             String totalitems, totalitemprice, ordertiming, orderconfirmed, orderdelivered, dishesinfo;
             if (jsonArray != null) {
                 Log.e("Jsonobject length", String.valueOf(jsonArray.length()));
-                for (int j = 0; j <= (jsonArray.length() - 1); j++) {
+                for (int j = (jsonArray.length() - 1); j >= 0; j--) {
 
                     try {
                         jobject = jsonArray.getJSONObject(j);
@@ -149,8 +151,6 @@ public class PendingOrdersFragment extends Fragment {
                         }
 
 
-
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -160,7 +160,6 @@ public class PendingOrdersFragment extends Fragment {
 
             } else Log.e("Jsonarray length", "is zero");
         }
-
 
 
     }

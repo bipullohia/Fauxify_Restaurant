@@ -215,7 +215,7 @@ public class DishesOfferedFragment extends Fragment {
                                 AlertDialog.Builder alertbuilder1 = new AlertDialog.Builder(getContext());
                                 alertbuilder1.setMessage("DELETE ''" + currentitem + "'' ?")
                                         .setCancelable(true)
-                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
 
 
                                             @Override
@@ -284,7 +284,7 @@ public class DishesOfferedFragment extends Fragment {
 
                                         }
                             })
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("Later", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.cancel();

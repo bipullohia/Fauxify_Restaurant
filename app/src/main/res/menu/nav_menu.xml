@@ -1,47 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <group android:checkableBehavior="single">
 
-    <item android:id="@+id/nav_option_pendingorders"
-        android:title="Pending Orders"
-        android:icon="@drawable/ic_action_name"
-       />
+        <item
+            android:id="@+id/nav_option_pendingorders"
+            android:icon="@drawable/ic_action_name"
+            android:title="Pending Orders" />
 
-    <item android:id="@+id/nav_option_deliveredorders"
-        android:title="Delivered Orders"
-        android:icon="@drawable/ic_action_name"
-        />
+        <item
+            android:id="@+id/nav_option_deliveredorders"
+            android:icon="@drawable/ic_action_name"
+            android:title="Delivered Orders" />
 
-    <item android:id="@+id/nav_option_dishesoffered"
-        android:title="Dishes Offered"
-        android:icon="@drawable/ic_action_name"
+        <item
+            android:id="@+id/nav_option_dishesoffered"
+            android:icon="@drawable/ic_action_name"
+            android:title="Dishes Offered" />
 
-        />
+        <item
+            android:id="@+id/nav_option_restaurantstatus"
+            android:icon="@drawable/ic_action_name"
+            android:title="Restaurant Status" />
 
-    <item android:id="@+id/nav_option_logout"
-        android:title="Logout"
-        android:icon="@drawable/ic_action_name"
-        />
-
-    <!--<item android:id="@+id/nav_option_orders"-->
-        <!--android:title="Orders"-->
-        <!--/>-->
-
-    <!--<item android:id="@+id/nav_option_offers"-->
-        <!--android:title="Offers"-->
-       <!--/>-->
-
-    <!--<item android:id="@+id/nav_option_help"-->
-        <!--android:title="Help"-->
-       <!--/>-->
-
-    <!--<item android:id="@+id/logout"-->
-        <!--android:title="Logout"-->
-        <!--/>-->
+        <item
+            android:id="@+id/nav_option_edit_restDetails"
+            android:icon="@drawable/ic_action_name"
+            android:title="Edit Restaurant Details" />
 
 
+        <item
+            android:id="@+id/nav_option_logout"
+            android:icon="@drawable/ic_action_name"
+            android:title="Logout" />
 
-    </menu>
+    </group>
+
+
+</menu>
 
 
 

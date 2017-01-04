@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     tools:context="com.example.bipullohia.fauxifyrestaurant.DishesOfferedFragment">
 
@@ -9,27 +9,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Categories"
+        android:layout_marginTop="20dp"
         android:gravity="center"
-        android:textSize="24dp"
-        android:padding="10dp"/>
-
-    <ExpandableListView
-       android:paddingStart="5dp"
-        android:paddingEnd="5dp"
-
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/expandable_listview"/>
+        android:textSize="22sp" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:minHeight="5dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
         android:id="@+id/addcategory_fragdishoff"
-        android:layout_margin="10dp"
         android:textAllCaps="false"
-        android:text="Add Category"
+        android:text="Add New Category"
         />
+
+    <ExpandableListView
+       android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/expandable_listview"/>
+
+
 
 
 </LinearLayout>

@@ -308,11 +308,11 @@ public class PendingOrderDetails extends AppCompatActivity {
 
     private void checkDeliveryStatus() {
 
-        if (orderconfirmed.equals("NOT Confirmed") && orderdelivered.equals("NOT Delivered")) {
+        if (orderconfirmed.equals("Not Confirmed") && orderdelivered.equals("Not Delivered")) {
 
             cardviewonclickSetDeliveryTime.setVisibility(View.VISIBLE);
 
-        } else if (orderconfirmed.equals("Confirmed") && orderdelivered.equals("NOT Delivered")) {
+        } else if (orderconfirmed.equals("Confirmed") && orderdelivered.equals("Not Delivered")) {
 
             cardviewonclickSetDeliveryTime.setVisibility(View.GONE);
             cardviewDeliveryConfirmation.setVisibility(View.VISIBLE);

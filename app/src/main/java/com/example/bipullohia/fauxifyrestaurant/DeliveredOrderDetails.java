@@ -26,7 +26,6 @@ public class DeliveredOrderDetails extends AppCompatActivity {
     private RecyclerView recyclerView;
     TextView customerName, customerAddress, orderId, totalPrice, totalItemPrice, totalItems, orderTime, deliveryTime;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

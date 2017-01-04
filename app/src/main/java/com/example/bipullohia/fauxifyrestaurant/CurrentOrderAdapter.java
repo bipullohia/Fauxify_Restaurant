@@ -35,10 +35,7 @@ public class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapte
             dishquantity = (TextView) view.findViewById(R.id.dishquantity_incart);
             dishamount = (TextView) view.findViewById(R.id.dishamount_incart);
 
-
-
         }
-
 
     }
 

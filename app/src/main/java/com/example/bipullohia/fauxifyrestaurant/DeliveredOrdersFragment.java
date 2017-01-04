@@ -36,8 +36,6 @@ public class DeliveredOrdersFragment extends Fragment {
     private DeliveredOrderAdapter deliveredOrderAdapter;
 
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_deliveredorders, container, false);
