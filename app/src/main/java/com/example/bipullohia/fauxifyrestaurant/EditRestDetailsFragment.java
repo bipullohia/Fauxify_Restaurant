@@ -162,7 +162,7 @@ public class EditRestDetailsFragment extends Fragment {
         protected void onPostExecute(String s) {
 
             restMinOrder.setText(restaurantMinOrder);
-            restDelTime.setText(restaurantDelTime);
+            restDelTime.setText(restaurantDelTime.substring(0,2));
             restName.setText(restaurantName);
             restType.setText(restaurantType);
             restDelFee.setText(restaurantDelFee);
@@ -206,7 +206,9 @@ public class EditRestDetailsFragment extends Fragment {
                 JSONObject jsonObject = new JSONObject();
 
                 jsonObject.put("Resttype", newRestType);
-                jsonObject.put("Deliversin", newRestDelTime);
+                jsonObject.put("Deliversin", newRestDelTime + " minutes");
+
+                Log.i("del time", newRestDelTime + " minutes");
                 jsonObject.put("Minorder", newRestMinOrder);
                 jsonObject.put("Deliveryfee", newRestDelFee);
                 jsonObject.put("freeDeliveryAmount", newRestFreeDelAmount);

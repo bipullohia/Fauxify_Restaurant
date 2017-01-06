@@ -61,6 +61,7 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdap
             intent.putExtra("customerorder", orders.getCustomerorder());
             intent.putExtra("totalitemprice", orders.getTotalitemsprice());
             intent.putExtra("customeraddress", orders.getCustomeraddress());
+            intent.putExtra("deliveryfee", orders.getDeliveryFee());
 
             context.startActivity(intent);
 

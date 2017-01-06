@@ -28,19 +28,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="15dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:text="Price" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingEnd="3dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
                 android:text="@string/Rs" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="110"
+                android:text="XXX"
                 android:id="@+id/dishprice_incart"/>
 
 
@@ -57,12 +59,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="15dp"
+                android:paddingLeft="15dp"
                 android:text="Quantity" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4"
+                android:text="X"
                 android:id="@+id/dishquantity_incart"/>
 
 
@@ -94,7 +97,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="440"
+                android:text="XXX"
                 android:textSize="16sp"
                 android:id="@+id/dishamount_incart"/>
 

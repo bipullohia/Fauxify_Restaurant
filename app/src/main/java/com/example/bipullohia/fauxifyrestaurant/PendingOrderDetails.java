@@ -51,7 +51,7 @@ public class PendingOrderDetails extends AppCompatActivity {
     Button buttonSetAnotherTime, buttonConfirmDelivery, buttonsubmitDeliveryTime, buttonDeliveryConfirmed;
     private RecyclerView recyclerView;
     CardView cardviewonclickSetDeliveryTime, cardviewShowDeliveryTime, cardviewDeliveryConfirmation;
-    TextView customerName, customerAddress, orderId, totalPrice, totalItemPrice, totalItems, orderTime, deliveryTime;
+    TextView customerName, customerAddress, orderId, totalPrice, totalItemPrice, totalItems, orderTime, deliveryTime, deliveryFee;
 
     @Override
     public void onBackPressed() {
@@ -95,6 +95,7 @@ public class PendingOrderDetails extends AppCompatActivity {
         totalItems = (TextView) findViewById(R.id.orderdetails_totalitems);
         totalPrice = (TextView) findViewById(R.id.orderdetails_totalprice);
         deliveryTime = (TextView) findViewById(R.id.deliverytime);
+        deliveryFee = (TextView) findViewById(R.id.orderdetails_deliveryfee);
 
         customerName.setText(getIntent().getStringExtra("customername"));
         customerAddress.setText(getIntent().getStringExtra("customeraddress"));
@@ -108,6 +109,8 @@ public class PendingOrderDetails extends AppCompatActivity {
         dishesdata = getIntent().getStringExtra("customerorder");
         orderconfirmed = getIntent().getStringExtra("orderconfirmed");
         orderdelivered = getIntent().getStringExtra("orderdelivered");
+        deliveryFee.setText(getIntent().getStringExtra("deliveryfee"));
+
 
         checkDeliveryStatus();
 
@@ -178,7 +181,10 @@ public class PendingOrderDetails extends AppCompatActivity {
         buttonConfirmDelivery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 sendDeliveryDetails();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
 
             }
         });

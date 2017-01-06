@@ -20,8 +20,7 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_marginTop="5dp"
+            android:layout_margin="10dp"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
@@ -40,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:paddingBottom="5dp"
-                    android:text="Item Summary"
+                    android:text="Item Summary and Details"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <View
@@ -64,83 +63,173 @@
                     android:layout_marginTop="10dp"
                     android:background="@color/lightGray" />
 
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp">
 
-                    <LinearLayout
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:paddingTop="5dp">
+                        android:text="Total Items"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/orderdetails_totalitems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="X"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Total Items Amount"
+                        android:textSize="15sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end">
+
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="Total Items"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="16sp" />
+                            android:paddingEnd="5dp"
+                            android:paddingStart="5dp"
+                            android:text="@string/Rs"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="15sp" />
 
                         <TextView
-                            android:id="@+id/orderdetails_totalitems"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:text="5"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="16sp" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:paddingTop="5dp">
-
-
-                        <TextView
+                            android:id="@+id/orderdetails_totalitemsprice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Item Price"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="16sp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center">
-
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingEnd="5dp"
-                                android:paddingStart="5dp"
-                                android:text="@string/Rs"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="16sp" />
-
-                            <TextView
-                                android:id="@+id/orderdetails_totalitemsprice"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="340"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="16sp" />
-                        </LinearLayout>
-
-
+                            android:text="XXX"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="15sp" />
                     </LinearLayout>
 
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Delivery Fee"
+                        android:textSize="15sp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="5dp"
+                            android:paddingStart="5dp"
+                            android:text="@string/Rs"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="15sp" />
+
+                        <TextView
+                            android:id="@+id/orderdetails_deliveryfee"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="XX"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/lightGray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Final Amount"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingEnd="5dp"
+                            android:paddingStart="5dp"
+                            android:text="@string/Rs"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/orderdetails_totalprice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="XXX"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -149,8 +238,7 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_marginTop="5dp"
+            android:layout_margin="10dp"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
@@ -181,73 +269,117 @@
                     android:background="@color/lightGray" />
 
 
-                <TextView
-                    android:id="@+id/orderdetails_customername"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:text="Customer Name"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorPrimary" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Order Id"
+                        android:textSize="15sp" />
+
+                    <TextView
+
                         android:id="@+id/orderdetails_orderid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
                         android:layout_weight="1"
-                        android:text="Order Id" />
-
-                    <TextView
-                        android:id="@+id/orderdetails_ordertime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_weight="1"
-                        android:text="Order Time" />
+                        android:gravity="end"
+                        android:text="XXXXXXXXXXXXXX"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="15sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total Price" />
+                        android:layout_weight="1"
+                        android:text="Customer Name"
+                        android:textSize="15sp" />
 
                     <TextView
+
+                        android:id="@+id/orderdetails_customername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="35dp"
-
-                        android:paddingRight="5dp"
-                        android:text="@string/Rs" />
-
-                    <TextView
-                        android:id="@+id/orderdetails_totalprice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="370" />
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="XXXXXX XXXXXX"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="15sp" />
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/orderdetails_deliveryaddress"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:text="Delivery Address"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Order Time"
+                        android:textSize="15sp" />
+
+                    <TextView
+
+                        android:id="@+id/orderdetails_ordertime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="XXXXXXX"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="15dp"
+                        android:text="Delivery Address"
+                        android:textSize="15sp" />
+
+                    <TextView
+
+                        android:id="@+id/orderdetails_deliveryaddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="XXXXXXX"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new PendingOrdersFragment()).commit();
             navigationView.getMenu().getItem(0).setChecked(true);
+            getSupportActionBar().setTitle("Pending Orders");
         }
 
         navigationView = (NavigationView) findViewById(R.id.navigationView);

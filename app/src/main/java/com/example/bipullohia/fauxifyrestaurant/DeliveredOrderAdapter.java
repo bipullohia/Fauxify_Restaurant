@@ -62,6 +62,7 @@ public class DeliveredOrderAdapter extends RecyclerView.Adapter<DeliveredOrderAd
             intent.putExtra("customerorder", orders.getCustomerorder());
             intent.putExtra("totalitemprice", orders.getTotalitemsprice());
             intent.putExtra("customeraddress", orders.getCustomeraddress());
+            intent.putExtra("deliveryfee", orders.getDeliveryFee());
 
             context.startActivity(intent);
 

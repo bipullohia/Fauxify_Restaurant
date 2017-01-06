@@ -103,7 +103,7 @@ public class PendingOrdersFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
 
-            String totalitems, totalitemprice, ordertiming, orderconfirmed, orderdelivered, dishesinfo;
+            String totalitems, totalitemprice, ordertiming, orderconfirmed, orderdelivered, dishesinfo, deliveryfee;
             if (jsonArray != null) {
                 Log.e("Jsonobject length", String.valueOf(jsonArray.length()));
                 for (int j = (jsonArray.length() - 1); j >= 0; j--) {
@@ -120,6 +120,7 @@ public class PendingOrdersFragment extends Fragment {
                             totalitems = joOrderinfo.getString("totalitems");
                             totalitemprice = joOrderinfo.getString("totalitemprice");
                             dishesinfo = joOrderinfo.getString("dishesinfo");
+                            deliveryfee = joOrderinfo.getString("deliveryfee");
 
                             ordertiming = joDelivery.getString("ordertiming");
 
@@ -142,7 +143,7 @@ public class PendingOrdersFragment extends Fragment {
                                 Orders orders = new Orders(jobject.getString("Orderid"), totalitems,
                                         jobject.getString("ordertotal"), jobject.getString("customername"),
                                         jobject.getString("customeremail"), ordertiming, orderconfirmed,
-                                        orderdelivered, totalitemprice, jobject.getString("customeraddress"), dishesinfo);
+                                        orderdelivered, totalitemprice, jobject.getString("customeraddress"), dishesinfo, deliveryfee);
 
                                 orderList.add(orders);
 

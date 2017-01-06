@@ -24,7 +24,7 @@ public class DeliveredOrderDetails extends AppCompatActivity {
 
     String customeremail, dishesdata, orderconfirmed, orderdelivered;
     private RecyclerView recyclerView;
-    TextView customerName, customerAddress, orderId, totalPrice, totalItemPrice, totalItems, orderTime, deliveryTime;
+    TextView customerName, customerAddress, orderId, totalPrice, totalItemPrice, totalItems, orderTime, deliveryTime, deliveryFee;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +53,7 @@ public class DeliveredOrderDetails extends AppCompatActivity {
         totalItems = (TextView) findViewById(R.id.orderdetails_totalitems);
         totalPrice = (TextView) findViewById(R.id.orderdetails_totalprice);
         deliveryTime = (TextView) findViewById(R.id.deliverytime);
+        deliveryFee = (TextView) findViewById(R.id.orderdetails_deliveryfee);
 
         customerName.setText(getIntent().getStringExtra("customername"));
         customerAddress.setText(getIntent().getStringExtra("customeraddress"));
@@ -65,7 +66,7 @@ public class DeliveredOrderDetails extends AppCompatActivity {
         dishesdata = getIntent().getStringExtra("customerorder");
         orderconfirmed = getIntent().getStringExtra("orderconfirmed");
         orderdelivered = getIntent().getStringExtra("orderdelivered");
-
+        deliveryFee.setText(getIntent().getStringExtra("deliveryfee"));
 
         try {
             JSONArray jsonArray = new JSONArray(dishesdata);

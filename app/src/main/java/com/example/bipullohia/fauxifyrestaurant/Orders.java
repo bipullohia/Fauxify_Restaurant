@@ -6,11 +6,11 @@ package com.example.bipullohia.fauxifyrestaurant;
 
 public class Orders {
     public String orderId, totalitems, totalprice, customername, customeremail, ordertime,
-            orderconfirmed, orderdelivered, totalitemsprice, customeraddress, customerorder;
+            orderconfirmed, orderdelivered, totalitemsprice, customeraddress, customerorder, deliveryFee;
 
     public Orders(String orderId, String totalitems, String totalprice, String customername, String customeremail,
                   String ordertime, String orderconfirmed, String orderdelivered,
-                  String totalitemsprice, String customeraddress, String customerorder) {
+                  String totalitemsprice, String customeraddress, String customerorder, String deliveryFee) {
         this.orderId = orderId;
         this.totalitems = totalitems;
         this.totalprice = totalprice;
@@ -22,6 +22,7 @@ public class Orders {
         this.customerorder = customerorder;
         this.customeraddress = customeraddress;
         this.totalitemsprice = totalitemsprice;
+        this.deliveryFee = deliveryFee;
 
     }
 
@@ -111,6 +112,14 @@ public class Orders {
 
     public void setTotalitemsprice(String name) {
         this.totalitemsprice = name;
+    }
+
+    public String getDeliveryFee() {
+        return deliveryFee;
+    }
+
+    public void setDeliveryFee(String name) {
+        this.deliveryFee = name;
     }
 
 }
