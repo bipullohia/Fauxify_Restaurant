@@ -1,6 +1,9 @@
 package com.example.bipullohia.fauxifyrestaurant;
 
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,7 +24,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -53,21 +55,30 @@ public class DeliveredOrdersFragment extends Fragment {
     }
 
     private void prepareOrderData() {
-        new bgroundtask().execute();
+        new btaskPrepareOrderData().execute();
     }
 
-    class bgroundtask extends AsyncTask<Void, Void, String> {
+    class btaskPrepareOrderData extends AsyncTask<Void, Void, String> {
 
         String json_url;
         String JSON_STRING;
         JSONArray jsonArray;
         JSONObject jobject;
+        ProgressDialog pd;
 
         @Override
         protected void onPreExecute() {
 
-            json_url = MainActivity.requestURL + "Fauxorders";
+            SharedPreferences sharedPref;
+            sharedPref = DeliveredOrdersFragment.this.getActivity().getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+            String restId = sharedPref.getString("restId", null);
+            String restToken = sharedPref.getString("restToken", null);
+
+            json_url = MainActivity.requestURL + "restaurants/" + restId + "/fauxorders?access_token=" + restToken;
             Log.e("json_url", json_url);
+
+            pd = ProgressDialog.show(getContext(), "", "Loading Delivered orders...", false);
+
         }
 
         @Override
@@ -93,11 +104,7 @@ public class DeliveredOrdersFragment extends Fragment {
 
                 jsonArray = new JSONArray(resultjson);
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (JSONException | IOException e) {
                 e.printStackTrace();
             }
 
@@ -107,7 +114,7 @@ public class DeliveredOrdersFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
 
-            String totalitems, totalitemprice, ordertiming, orderconfirmed, orderdelivered, dishesinfo, deliveryfee;
+            String totalitems, totalitemprice, orderconfirmed, orderdelivered, dishesinfo, deliveryfee;
             if (jsonArray != null) {
                 Log.e("Jsonobject length", String.valueOf(jsonArray.length()));
                 for (int j = 0; j <= (jsonArray.length() - 1); j++) {
@@ -115,43 +122,40 @@ public class DeliveredOrdersFragment extends Fragment {
                     try {
                         jobject = jsonArray.getJSONObject(j);
 
-                        if (jobject.getString("Restid").equals(PasscodeScreen.resId)) {
-                            JSONObject joDelivery;
-                            joDelivery = jobject.getJSONObject("delivery");
-                            JSONObject joOrderinfo;
-                            joOrderinfo = jobject.getJSONObject("orderinfo");
+                        JSONObject joDelivery;
+                        joDelivery = jobject.getJSONObject("delivery");
+                        JSONObject joOrderinfo;
+                        joOrderinfo = jobject.getJSONObject("orderinfo");
 
-                            totalitems = joOrderinfo.getString("totalitems");
-                            totalitemprice = joOrderinfo.getString("totalitemprice");
-                            dishesinfo = joOrderinfo.getString("dishesinfo");
-                            deliveryfee = joOrderinfo.getString("deliveryfee");
+                        totalitems = joOrderinfo.getString("totalitems");
+                        totalitemprice = joOrderinfo.getString("totalitemprice");
+                        dishesinfo = joOrderinfo.getString("dishesinfo");
+                        deliveryfee = joOrderinfo.getString("deliveryfee");
 
-                            ordertiming = joDelivery.getString("ordertiming");
+                        String oconfirmed = joDelivery.getString("orderconfirmed");
+                        String odelivered = joDelivery.getString("orderdelivered");
 
-                            String oconfirmed = joDelivery.getString("orderconfirmed");
-                            String odelivered = joDelivery.getString("orderdelivered");
-
-                            if (oconfirmed.equals("1")) {
-                                orderconfirmed = "Confirmed";
-                            } else {
-                                orderconfirmed = "Not Confirmed";
-                            }
-
-                            if (odelivered.equals("1")) {
-                                orderdelivered = "Delivered";
-                            } else {
-                                orderdelivered = "Not Delivered";
-                            }
-                            if (orderdelivered.equals("Delivered")&& orderconfirmed.equals("Confirmed")) {
-                                Orders orders = new Orders(jobject.getString("Orderid"), totalitems,
-                                        jobject.getString("ordertotal"), jobject.getString("customername"),
-                                        jobject.getString("customeremail"), ordertiming, orderconfirmed,
-                                        orderdelivered, totalitemprice, jobject.getString("customeraddress"), dishesinfo, deliveryfee);
-
-                                orderList.add(orders);
-
-                            }
+                        if (oconfirmed.equals("1")) {
+                            orderconfirmed = "Confirmed";
+                        } else {
+                            orderconfirmed = "Not Confirmed";
                         }
+
+                        if (odelivered.equals("1")) {
+                            orderdelivered = "Delivered";
+                        } else {
+                            orderdelivered = "Not Delivered";
+                        }
+                        if (orderdelivered.equals("Delivered") && orderconfirmed.equals("Confirmed")) {
+                            Orders orders = new Orders(jobject.getString("orderid"), totalitems,
+                                    jobject.getString("ordertotal"), jobject.getString("customername"),
+                                    jobject.getString("customeremail"), jobject.getString("ordertiming"), orderconfirmed,
+                                    orderdelivered, totalitemprice, jobject.getString("customeraddress"), dishesinfo, deliveryfee);
+
+                            orderList.add(orders);
+
+                        }
+
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -161,6 +165,8 @@ public class DeliveredOrdersFragment extends Fragment {
                 deliveredOrderAdapter.notifyDataSetChanged();
 
             } else Log.e("Jsonarray length", "is zero");
+
+            pd.dismiss();
         }
 
     }

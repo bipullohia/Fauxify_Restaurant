@@ -1,580 +1,586 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:cardView="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <include
+        android:id="@+id/toolbar_cartactivity"
+        layout="@layout/toolbar" />
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context="com.example.bipul.fauxify.CartActivity">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <include
-            android:id="@+id/toolbar_cartactivity"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            layout="@layout/toolbar" />
-
-
-        <android.support.v7.widget.CardView
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:cardView="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
             android:orientation="vertical"
-            cardView:cardCornerRadius="2dp"
-            cardView:cardElevation="2dp">
+            tools:context="com.example.bipul.fauxify.CartActivity">
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:orientation="vertical"
-                android:padding="5dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingBottom="5dp"
-                    android:text="Item Summary"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/lightGray" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerview_orderdetails"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:longClickable="true"
-                    android:scrollbars="vertical">
-
-                </android.support.v7.widget.RecyclerView>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/lightGray" />
+                cardView:cardCornerRadius="2dp"
+                cardView:cardElevation="2dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:orientation="horizontal"
-                    android:paddingTop="5dp">
-
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Total Items"
-                        android:textSize="15sp" />
+                        android:gravity="center"
+                        android:paddingBottom="5dp"
+                        android:text="Item Summary"
+                        android:textSize="@dimen/headingCardView" />
 
-                    <TextView
-                        android:id="@+id/orderdetails_totalitems"
-                        android:layout_width="wrap_content"
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/headingSeparatorCardView"
+                        android:background="@color/headingSeparatorCardView"  />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerview_orderdetails"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:text="X"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
+                        android:layout_marginTop="10dp"
+                        android:longClickable="true"
+                        android:scrollbars="vertical">
 
-                </LinearLayout>
+                    </android.support.v7.widget.RecyclerView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:orientation="horizontal"
-                    android:paddingTop="5dp">
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Total Items Amount"
-                        android:textSize="15sp" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_height="@dimen/sectionSeparatorCardView"
+                        android:background="@color/sectionSeparatorCardView"  />
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end">
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="horizontal"
+                        android:paddingTop="5dp">
 
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingEnd="5dp"
-                            android:paddingStart="5dp"
-                            android:text="@string/Rs"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="15sp" />
+                            android:layout_weight="1"
+                            android:text="Total Items"
+                            android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/orderdetails_totalitemsprice"
+                            android:id="@+id/orderdetails_totalitems"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="XXX"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="15sp" />
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="X"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="horizontal"
+                        android:paddingTop="5dp">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Total Items Amount"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingEnd="2dp"
+                                android:paddingStart="2dp"
+                                android:text="@string/Rs"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/orderdetails_totalitemsprice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="XXX"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:orientation="horizontal"
+                        android:paddingTop="5dp">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Delivery Fee"
+                            android:textSize="14sp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end">
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingEnd="2dp"
+                                android:paddingStart="2dp"
+                                android:text="@string/Rs"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/orderdetails_deliveryfee"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="XX"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+
                     </LinearLayout>
 
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:orientation="horizontal"
-                    android:paddingTop="5dp">
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Delivery Fee"
-                        android:textSize="15sp" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/sectionSeparatorCardView"
+                        android:background="@color/sectionSeparatorCardView"  />
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end">
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingEnd="5dp"
-                            android:paddingStart="5dp"
-                            android:text="@string/Rs"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/orderdetails_deliveryfee"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="XX"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="15sp" />
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/lightGray" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Final Amount"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="16sp" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingEnd="5dp"
-                            android:paddingStart="5dp"
-                            android:text="@string/Rs"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="16sp" />
+                            android:layout_weight="1"
+                            android:text="Final Amount"
+                            android:textSize="15sp" />
 
-                        <TextView
-                            android:id="@+id/orderdetails_totalprice"
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="XXX"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="16sp" />
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingEnd="2dp"
+                                android:paddingStart="2dp"
+                                android:text="@string/Rs"
+                                android:textSize="15sp" />
+
+                            <TextView
+                                android:id="@+id/orderdetails_totalprice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="XXX"
+                                android:textSize="15sp" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical"
-            cardView:cardCornerRadius="2dp"
-            cardView:cardElevation="2dp">
-
-
-            <LinearLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:orientation="vertical"
-                android:padding="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    android:text="Other Details"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/lightGray" />
+                cardView:cardCornerRadius="2dp"
+                cardView:cardElevation="2dp">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Order Id"
-                        android:textSize="15sp" />
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:text="Other Details"
+                        android:textSize="@dimen/headingCardView"/>
 
-                    <TextView
 
-                        android:id="@+id/orderdetails_orderid"
-                        android:layout_width="wrap_content"
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/headingSeparatorCardView"
+                        android:background="@color/headingSeparatorCardView"  />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:text="XXXXXXXXXXXXXX"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Order Id"
+                            android:textSize="14sp" />
+
+                        <TextView
+
+                            android:id="@+id/orderdetails_orderid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="XXXXXXXXXXXXXX"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Customer Name"
+                            android:textSize="14sp" />
+
+                        <TextView
+
+                            android:id="@+id/orderdetails_customername"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="XXXXXX XXXXXX"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Order Time"
+                            android:textSize="14sp" />
+
+                        <TextView
+
+                            android:id="@+id/orderdetails_ordertime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="XXXXXXX"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
+            </android.support.v7.widget.CardView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Customer Name"
-                        android:textSize="15sp" />
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                cardView:cardCornerRadius="2dp"
+                cardView:cardElevation="2dp">
 
-                    <TextView
-
-                        android:id="@+id/orderdetails_customername"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:text="XXXXXX XXXXXX"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Order Time"
-                        android:textSize="15sp" />
-
-                    <TextView
-
-                        android:id="@+id/orderdetails_ordertime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:text="XXXXXXX"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingRight="15dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
                         android:text="Delivery Address"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/headingCardView"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/headingSeparatorCardView"
+                        android:background="@color/headingSeparatorCardView" />
 
                     <TextView
-
+                        android:padding="10dp"
+                        android:textAlignment="center"
                         android:id="@+id/orderdetails_deliveryaddress"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
+                        android:layout_gravity="center"
                         android:text="XXXXXXX"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="16sp" />
+                        android:textSize="15sp" />
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-        </android.support.v7.widget.CardView>
-
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardview_confirmdelivery"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_marginTop="5dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:visibility="gone"
-            android:focusable="true"
-            android:orientation="vertical"
-            cardView:cardCornerRadius="2dp"
-            cardView:cardElevation="2dp">
-
-            <LinearLayout
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardview_confirmdelivery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_marginTop="5dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:orientation="vertical"
-                android:padding="5dp">
+                android:visibility="gone"
+                cardView:cardCornerRadius="2dp"
+                cardView:cardElevation="2dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    android:text="Enter Delivery Time"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-
-                <View
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/lightGray" />
-
-
-                <Spinner
-                    android:id="@+id/spinner"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="20dp" />
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
-                <Button
-                    android:id="@+id/button_submitdeliverytime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="20dp"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:text="Submit"
-                    android:textAllCaps="false"
-                    android:visibility="gone" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:text="Enter Delivery Time"
+                        android:textSize="@dimen/headingCardView"/>
 
-            </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/headingSeparatorCardView"
+                        android:background="@color/headingSeparatorCardView" />
 
 
-        </android.support.v7.widget.CardView>
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp" />
+
+                    <Button
+                        android:id="@+id/button_submitdeliverytime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="@dimen/paddingNormalButton"
+                        android:paddingRight="@dimen/paddingNormalButton"
+                        android:text="Submit"
+                        android:minHeight="0dp"
+                        android:textAllCaps="false"
+                        android:visibility="gone" />
+
+                </LinearLayout>
 
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardview_showDeliveryTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_marginTop="5dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="vertical"
-            android:visibility="gone"
-            cardView:cardCornerRadius="2dp"
-            cardView:cardElevation="2dp">
+            </android.support.v7.widget.CardView>
 
-            <LinearLayout
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardview_showDeliveryTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_marginTop="5dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:orientation="vertical"
-                android:padding="5dp">
+                android:visibility="gone"
+                cardView:cardCornerRadius="2dp"
+                cardView:cardElevation="2dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    android:text="Delivery Time"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-
-                <View
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/lightGray" />
-
-                <TextView
-                    android:id="@+id/deliverytime"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:text="40 Minutes"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="36sp" />
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
-                <Button
-                    android:id="@+id/button_selectanothertime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="30dp"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:text="Select Another Time"
-                    android:textAllCaps="false" />
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <Button
-            android:id="@+id/button_confirmdelivery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="50dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/colorPrimary"
-            android:paddingLeft="80dp"
-            android:paddingRight="80dp"
-            android:text="Confirm Delivery"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="21sp"
-            android:visibility="gone" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:text="Delivery Time"
+                        android:textSize="@dimen/headingCardView" />
 
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardview_deliveryConfirmation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_marginTop="5dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:visibility="gone"
-            android:focusable="true"
-            android:orientation="vertical"
-            cardView:cardCornerRadius="2dp"
-            cardView:cardElevation="2dp">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/headingSeparatorCardView"
+                        android:background="@color/headingSeparatorCardView" />
 
-            <LinearLayout
+                    <TextView
+                        android:id="@+id/deliverytime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="XX Minutes"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="24sp" />
+
+                    <Button
+                        android:id="@+id/button_selectanothertime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:paddingLeft="@dimen/paddingNormalButton"
+                        android:paddingRight="@dimen/paddingNormalButton"
+                        android:text="Select Another Time"
+                        android:textAllCaps="false" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <Button
+                android:id="@+id/button_confirmdelivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/colorAccent"
+                android:paddingLeft="80dp"
+                android:paddingRight="80dp"
+                android:text="Confirm Delivery"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardview_deliveryConfirmation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:layout_marginTop="5dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 android:orientation="vertical"
-                android:padding="5dp">
+                android:visibility="gone"
+                cardView:cardCornerRadius="2dp"
+                cardView:cardElevation="2dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="5dp"
-                    android:layout_weight="1"
-                    android:text="Delivery Confirmation"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <View
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/lightGray" />
-
-
-                <Button
-                    android:id="@+id/button_deliveryconfirmed"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp"
-                    android:text="Order Delivered"
-                    android:textAllCaps="false" />
+                    android:orientation="vertical"
+                    android:padding="5dp">
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:text="Delivery Confirmation"
+                        android:textSize="@dimen/headingCardView"/>
 
-        </android.support.v7.widget.CardView>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/headingSeparatorCardView"
+                        android:background="@color/headingSeparatorCardView" />
+
+                    <Button
+                        android:id="@+id/button_deliveryconfirmed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:paddingLeft="@dimen/paddingNormalButton"
+                        android:paddingRight="@dimen/paddingNormalButton"
+                        android:text="Order Delivered"
+                        android:textAllCaps="false" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
 
 
-    </LinearLayout>
+        </LinearLayout>
 
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

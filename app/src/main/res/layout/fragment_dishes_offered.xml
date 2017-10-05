@@ -29,12 +29,12 @@
                 android:gravity="center"
                 android:paddingBottom="5dp"
                 android:text="Categories Offered"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textSize="@dimen/headingCardView"/>
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lightGray" />
+                android:layout_height="@dimen/headingSeparatorCardView"
+                android:background="@color/headingSeparatorCardView"/>
 
 
             <Button
@@ -42,6 +42,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:minHeight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_marginRight="15dp"
                 android:id="@+id/addcategory_fragdishoff"
                 android:textAllCaps="false"
@@ -50,12 +52,11 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/lightGray" />
+                android:layout_height="@dimen/sectionSeparatorCardView"
+                android:background="@color/sectionSeparatorCardView"/>
 
             <ExpandableListView
-                android:paddingStart="5dp"
-                android:paddingEnd="5dp"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/expandable_listview"/>

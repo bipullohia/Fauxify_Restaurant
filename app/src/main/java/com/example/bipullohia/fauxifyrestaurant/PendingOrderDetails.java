@@ -1,7 +1,9 @@
 package com.example.bipullohia.fauxifyrestaurant;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,7 +32,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -52,6 +53,8 @@ public class PendingOrderDetails extends AppCompatActivity {
     private RecyclerView recyclerView;
     CardView cardviewonclickSetDeliveryTime, cardviewShowDeliveryTime, cardviewDeliveryConfirmation;
     TextView customerName, customerAddress, orderId, totalPrice, totalItemPrice, totalItems, orderTime, deliveryTime, deliveryFee;
+
+
 
     @Override
     public void onBackPressed() {
@@ -233,20 +236,25 @@ public class PendingOrderDetails extends AppCompatActivity {
 
     private void changeDeliveryStatus() {
 
-        new Btask().execute();
+        new btaskChangeDeliveryStatus().execute();
 
     }
 
-    class Btask extends AsyncTask<Void, Void, String> {
-        String json_url, finalurl;
+    class btaskChangeDeliveryStatus extends AsyncTask<Void, Void, String> {
+        String json_url;
 
 
         @Override
         protected void onPreExecute() {
             String orderId = getIntent().getStringExtra("orderid");
-            json_url = MainActivity.requestURL + "Fauxorders/";
-            finalurl = json_url + orderId;
-            Log.e("final url", finalurl);
+
+            SharedPreferences sharedPref;
+            sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+            String restId = sharedPref.getString("restId", null);
+            String restToken = sharedPref.getString("restToken", null);
+
+            json_url = MainActivity.requestURL + "restaurants/" + restId + "/fauxorders/" + orderId + "?access_token=" + restToken;
+            Log.e("json_url", json_url);
 
         }
 
@@ -254,7 +262,7 @@ public class PendingOrderDetails extends AppCompatActivity {
         protected String doInBackground(Void... voids) {
             try {
 
-                URL url = new URL(finalurl);
+                URL url = new URL(json_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
                 httpURLConnection.setDoOutput(true);
@@ -298,11 +306,7 @@ public class PendingOrderDetails extends AppCompatActivity {
                 }
 
                 Log.e("test", json);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
             return null;
@@ -334,23 +338,27 @@ public class PendingOrderDetails extends AppCompatActivity {
     }
 
     class BackgroundTask extends AsyncTask<Void, Void, String> {
-        String json_url, finalurl;
+        String json_url;
 
 
         @Override
         protected void onPreExecute() {
             String orderId = getIntent().getStringExtra("orderid");
-            json_url = MainActivity.requestURL + "Fauxorders/";
-            finalurl = json_url + orderId;
-            Log.e("final url", finalurl);
 
+            SharedPreferences sharedPref;
+            sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+            String restId = sharedPref.getString("restId", null);
+            String restToken = sharedPref.getString("restToken", null);
+
+            json_url = MainActivity.requestURL + "restaurants/" + restId + "/fauxorders/" + orderId + "?access_token=" + restToken;
+            Log.e("json_url", json_url);
         }
 
         @Override
         protected String doInBackground(Void... voids) {
             try {
 
-                URL url = new URL(finalurl);
+                URL url = new URL(json_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
                 httpURLConnection.setDoOutput(true);
@@ -394,11 +402,7 @@ public class PendingOrderDetails extends AppCompatActivity {
                 }
 
                 Log.e("test", json);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
             return null;

@@ -1,14 +1,20 @@
 package com.example.bipullohia.fauxifyrestaurant;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -18,6 +24,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -25,37 +32,77 @@ import java.net.URL;
  * Created by Bipul Lohia on 9/27/2016.
  */
 
-public class PasscodeScreen extends AppCompatActivity {
+public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListener, View.OnClickListener {
 
-    EditText restaurantId;
-    Button enterButton;
+    EditText restaurantUsername, restaurantPassword;
+    Button loginButton;
     static String resId;
-
+    String username, password;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passcodescreen);
 
-        restaurantId = (EditText) findViewById(R.id.restaurantid);
-        enterButton = (Button) findViewById(R.id.enterbutton);
+        SharedPreferences sharedPref;
+        sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+        String restId = sharedPref.getString("restId", null);
+        String restToken = sharedPref.getString("restToken", null);
 
-        enterButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resId = restaurantId.getText().toString();
-                Log.e("respascde44", resId);
+        if (restId != null && restToken != null) {
 
-                checkRestaurantExistence();
-        }});
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            Log.i("status", "skipping login");
+        }
 
+        restaurantUsername = (EditText) findViewById(R.id.restaurantUsername);
+        restaurantPassword = (EditText) findViewById(R.id.restaurantPassword);
+        loginButton = (Button) findViewById(R.id.loginButton);
+        LinearLayout linearLayoutPasscodeScreen = (LinearLayout) findViewById(R.id.passcodescreenLinearLayout);
+        CardView logincardView = (CardView) findViewById(R.id.loginCardview);
+        linearLayoutPasscodeScreen.setOnClickListener(this);
+        logincardView.setOnClickListener(this);
+
+        restaurantPassword.setOnKeyListener(this); // to handle keypress on keyboard after typing the password
     }
 
-    private void checkRestaurantExistence(){
-        new BackgroundTask().execute();
+    @Override  // to let enter button on keyboard directly press the login button
+    public boolean onKey(View view, int i, KeyEvent keyEvent) {
+
+        if (i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+
+            checkRestaurantExistence(view);
+        }
+
+        return false;
     }
 
-    class BackgroundTask extends AsyncTask<Void, Void, String> {
+    public void checkRestaurantExistence(View view) {
+
+
+        username = restaurantUsername.getText().toString();
+        password = restaurantPassword.getText().toString();
+        resId = username;
+        if (!username.matches("") && !password.matches("")) {
+            new BackgroundTask().execute();
+        } else {
+            Toast.makeText(this, "Username/Password field cannot be empty", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        if (view.getId() == R.id.passcodescreenLinearLayout || view.getId() == R.id.loginCardview) {  // this is to let user click anywhere on blank area to remove keyboard from screen
+
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+        }
+    }
+
+    private class BackgroundTask extends AsyncTask<Void, Void, String> {
 
         String json_url;
         String json_checkurl;
@@ -65,8 +112,8 @@ public class PasscodeScreen extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
 
-            json_url = "http://192.168.0.103:3000/api/Restaurants/";
-            json_checkurl = json_url + resId + "/exists";
+            json_url = "http://fauxify.com/api/restaurants/";
+            json_checkurl = json_url + username + "/exists";
         }
 
         @Override
@@ -98,7 +145,6 @@ public class PasscodeScreen extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
             return null;
         }
 
@@ -107,17 +153,117 @@ public class PasscodeScreen extends AppCompatActivity {
 
             if (ifRestaurantExists.equals("true")) {
 
-                Log.e("checkRestexistence", "Rest exists: redirecting to main activity");
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+                Log.e("checkRestexistence", "Restaurant exists: redirecting to main activity");
+
+                LoginRestaurant();
+//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                startActivity(intent);
 
             } else if (ifRestaurantExists.equals("false")) {
 
-                Toast.makeText(getApplicationContext(), "Wrong Restaurant Id", Toast.LENGTH_LONG).show();
-
+                Toast.makeText(getApplicationContext(), "Username doesn't exist", Toast.LENGTH_LONG).show();
             }
-
         }
     }
+
+    private void LoginRestaurant() {
+
+        new BackGroundTaskLoginUser().execute();
+    }
+
+    private class BackGroundTaskLoginUser extends AsyncTask<Void, Void, String> {
+
+        String jsonUrl = "http://fauxify.com/api/restaurants/login"; // undefined url
+        boolean exceptioncaught = false;
+        boolean issuccess = true;
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            //post login data
+            try {
+
+                URL url = new URL(jsonUrl);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestProperty("Accept", "application/json");
+                httpURLConnection.setRequestProperty("Content-Type", "application/json");
+
+                JSONObject jsonObject = new JSONObject();
+
+                jsonObject.accumulate("username", username);
+                jsonObject.accumulate("password", password);
+
+                String json = jsonObject.toString();
+                OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
+                out.write(json);
+                out.flush();
+                out.close();
+
+                StringBuilder sb = new StringBuilder();
+                int HttpResult = httpURLConnection.getResponseCode();
+                if (HttpResult == HttpURLConnection.HTTP_OK) {
+                    BufferedReader br = new BufferedReader(
+                            new InputStreamReader(httpURLConnection.getInputStream(), "utf-8"));
+                    String line = null;
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line).append("\n");
+                    }
+
+                    br.close();
+
+                    String ss = String.valueOf(sb);
+
+                    JSONObject jsoDetails = new JSONObject(ss);
+
+                    String token = String.valueOf(jsoDetails.get("id"));
+                    String userId = String.valueOf(jsoDetails.get("userId"));
+
+
+                    // saving essential info
+                    SharedPreferences sharedPref;
+                    sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+
+                    editor.putString("restToken", token);
+                    editor.putString("restId", userId);
+                    editor.apply();
+
+                    Log.i("details", token + "   " + userId);
+
+                    System.out.println("" + sb.toString());
+                } else {
+                    System.out.println(httpURLConnection.getResponseMessage());
+                    issuccess = false;
+                }
+
+                Log.e("test", json);
+
+            } catch (IOException | JSONException e) {
+
+                exceptioncaught = true;
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (!exceptioncaught && issuccess) {
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+
+            } else if (!issuccess) {
+                Toast.makeText(PasscodeScreen.this, "Login Failed", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
 }

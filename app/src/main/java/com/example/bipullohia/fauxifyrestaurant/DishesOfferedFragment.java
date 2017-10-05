@@ -1,8 +1,11 @@
 package com.example.bipullohia.fauxifyrestaurant;
 
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -48,7 +51,6 @@ public class DishesOfferedFragment extends Fragment {
     HashMap<String, List<DishMenu>> listChildData;
     Integer noOfCategories;
     Button addCategory;
-    JSONObject jodishid;
     JSONArray jsonArray;
     ArrayList<String> categories;
 
@@ -113,7 +115,6 @@ public class DishesOfferedFragment extends Fragment {
             }
         });
 
-
         expandableListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -127,7 +128,7 @@ public class DishesOfferedFragment extends Fragment {
                 if (itemType == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
 
                     category = listParentData.get(groupPosition);
-                    Toast.makeText(getContext(), category, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), category, Toast.LENGTH_SHORT).show();
                     CharSequence options[] = new CharSequence[]{"ADD an Item", "DELETE the Category"};
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -167,7 +168,6 @@ public class DishesOfferedFragment extends Fragment {
                                         });
 
                                 AlertDialog alert = alertbuilder.create();
-                                alert.setTitle("Alert!");
                                 alert.show();
 
 
@@ -208,14 +208,12 @@ public class DishesOfferedFragment extends Fragment {
                                 intent1.putStringArrayListExtra("categoryList", categories);
                                 startActivity(intent1);
 
-                                Toast.makeText(getContext(), "modified", Toast.LENGTH_SHORT).show();
-
                             } else if (which == 1) {
 
                                 AlertDialog.Builder alertbuilder1 = new AlertDialog.Builder(getContext());
                                 alertbuilder1.setMessage("DELETE ''" + currentitem + "'' ?")
                                         .setCancelable(true)
-                                        .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
 
                                             @Override
@@ -278,13 +276,13 @@ public class DishesOfferedFragment extends Fragment {
 
                                             getContext(),
 
-                                            "Deleted "+currentitem,Toast.LENGTH_SHORT).
+                                            "Item Deleted "+currentitem,Toast.LENGTH_SHORT).
 
                                             show();
 
                                         }
                             })
-                            .setNegativeButton("Later", new DialogInterface.OnClickListener() {
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.cancel();
@@ -292,10 +290,7 @@ public class DishesOfferedFragment extends Fragment {
                             });
 
                             AlertDialog alert = alertbuilder1.create();
-                            alert.setTitle("Alert!");
                             alert.show();
-
-
                         }
 
                     }
@@ -326,7 +321,7 @@ public class DishesOfferedFragment extends Fragment {
 
     private void deleteItem() {
 
-        new backTask().execute();
+        new bTaskDeleteItem().execute();
     }
 
     @Override
@@ -344,41 +339,44 @@ public class DishesOfferedFragment extends Fragment {
 
     private void deleteCategory() {
 
-        new bbTask().execute();
+        new bTaskDeleteCategory().execute();
     }
 
     private void sendCategoryName() {
 
 
-        new bTask().execute();
+        new bTaskAddCategory().execute();
 
     }
 
     private void prepareDishData() {
 
-        new bgroundtask().execute();
+        new bgroundtaskPrepareDishData().execute();
 
     }
 
-class bgroundtask extends AsyncTask<Void, Void, String> {
+class bgroundtaskPrepareDishData extends AsyncTask<Void, Void, String> {
 
     String json_url;
     String JSON_STRING;
     JSONObject jobject;
+    ProgressDialog pd;
 
     @Override
     protected void onPreExecute() {
 
-        json_url = MainActivity.requestURL + "Restaurants/" + PasscodeScreen.resId;
+        SharedPreferences sharedPref;
+        sharedPref = DishesOfferedFragment.this.getActivity().getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+        String restId = sharedPref.getString("restId", null);
 
+        json_url = MainActivity.requestURL + "Restaurants/" + restId;
+        pd = ProgressDialog.show(getContext(), "", "Loading Dishes offered...", false);
     }
 
     @Override
     protected String doInBackground(Void... params) {
 
-
         try {
-
 
             URL urll = new URL(json_url);
             HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
@@ -396,7 +394,6 @@ class bgroundtask extends AsyncTask<Void, Void, String> {
             String resultjson = stringBuilder.toString().trim();
 
             categories = new ArrayList<String>();
-
 
             jobject = new JSONObject(resultjson);
             JSONObject job = jobject.getJSONObject("Menu");
@@ -429,7 +426,6 @@ class bgroundtask extends AsyncTask<Void, Void, String> {
         listChildData = new HashMap<String, List<DishMenu>>();
 
         for (int i = 0; i <= noOfCategories - 1; i++) {
-
 
             try {
 
@@ -472,21 +468,28 @@ class bgroundtask extends AsyncTask<Void, Void, String> {
 
         dishesOfferedAdapter = new DishesOfferedAdapter(getContext(), listParentData, listChildData);
         expandableListView.setAdapter(dishesOfferedAdapter);
+
+        pd.dismiss();
     }
 }
 
 
-private class bTask extends AsyncTask<Void, Void, String>
+private class bTaskAddCategory extends AsyncTask<Void, Void, String>
 
 {
 
-    String json_url;
+    String json_url, userId, userToken;
 
     @Override
     protected void onPreExecute() {
 
-        json_url = MainActivity.requestURL + "Restaurants/" + PasscodeScreen.resId;
-        Log.e("json_url_", json_url);
+        SharedPreferences sharedPref;
+        sharedPref = DishesOfferedFragment.this.getActivity().getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+        userId = sharedPref.getString("restId", null);
+        userToken = sharedPref.getString("restToken", null);
+
+        json_url = MainActivity.requestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
+
 
     }
 
@@ -554,16 +557,21 @@ private class bTask extends AsyncTask<Void, Void, String>
     }
 }
 
-private class bbTask extends AsyncTask<Void, Void, String> {
+private class bTaskDeleteCategory extends AsyncTask<Void, Void, String> {
 
     JSONArray jsonArray1 = new JSONArray();
     ArrayList<String> categories1 = new ArrayList<>();
-    String json_url;
+    String json_url, userId, userToken;
 
     @Override
     protected void onPreExecute() {
 
-        json_url = MainActivity.requestURL + "Restaurants/" + PasscodeScreen.resId;
+        SharedPreferences sharedPref;
+        sharedPref = DishesOfferedFragment.this.getActivity().getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+        userId = sharedPref.getString("restId", null);
+        userToken = sharedPref.getString("restToken", null);
+
+        json_url = MainActivity.requestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
 
         Log.e("categories", categories.toString());
 
@@ -649,17 +657,21 @@ private class bbTask extends AsyncTask<Void, Void, String> {
     }
 }
 
-private class backTask extends AsyncTask<Void, Void, String>
+private class bTaskDeleteItem extends AsyncTask<Void, Void, String>
 
 {
 
-    String json_url;
+    String json_url, userId, userToken;
 
     @Override
     protected void onPreExecute() {
 
-        json_url = MainActivity.requestURL + "Restaurants/" + PasscodeScreen.resId;
-        Log.e("json_url_", json_url);
+        SharedPreferences sharedPref;
+        sharedPref = DishesOfferedFragment.this.getActivity().getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+        userId = sharedPref.getString("restId", null);
+        userToken = sharedPref.getString("restToken", null);
+
+        json_url = MainActivity.requestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
 
     }
 

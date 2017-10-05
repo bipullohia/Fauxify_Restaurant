@@ -1,29 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/passcodescreenLinearLayout"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:cardView="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
 
-    <EditText
-        android:id="@+id/restaurantid"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.CardView
+        android:id="@+id/loginCardview"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="100dp"
-        android:inputType="number"
-        android:ems="15"
-        android:gravity="center"
-        android:hint="Enter Your Restaurant Id" />
+        android:layout_margin="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center_vertical"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="visible"
+        android:orientation="vertical"
+        cardView:cardCornerRadius="2dp"
+        cardView:cardElevation="2dp">
 
-    <Button
-        android:id="@+id/enterbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textAllCaps="false"
-        android:layout_marginTop="50dp"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
-        android:text="Enter" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
+                android:text="Restaurant Login Details"
+                android:textSize="@dimen/headingCardView" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/headingSeparatorCardView"
+                android:background="@color/headingSeparatorCardView" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/view"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp">
+
+                <EditText
+                    android:id="@+id/restaurantUsername"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spinner"
+                    android:inputType="text"
+                    android:layout_centerHorizontal="true"
+                    android:hint="Enter Username" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/restaurantPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spinner"
+                    android:layout_centerHorizontal="true"
+                    android:ems="13"
+                    android:hint="Enter Password"
+                    android:inputType="textPassword" />
+            </android.support.design.widget.TextInputLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/sectionSeparatorCardView"
+                android:background="@color/sectionSeparatorCardView" />
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/paddingNormalButton"
+                android:paddingEnd="@dimen/paddingNormalButton"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:onClick="checkRestaurantExistence"
+                android:text="Login"
+                android:textAllCaps="false"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
 
 </LinearLayout>

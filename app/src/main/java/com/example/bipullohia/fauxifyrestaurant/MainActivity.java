@@ -1,6 +1,8 @@
 package com.example.bipullohia.fauxifyrestaurant;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -64,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-    // 192.168.0.110 ip for use in mobile
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         restStatusTextview = (TextView) findViewById(R.id.RestStatusTextview);
 
-        requestURL = "http://192.168.0.103:3000/api/";
+        requestURL = "http://fauxify.com/api/";
 
         myToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myToolbar);
@@ -157,8 +158,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         drawerLayout.closeDrawers();
                         break;
 
-
                     case R.id.nav_option_logout:
+
+                        SharedPreferences sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.clear();
+                        editor.apply();
 
                         Intent intent = new Intent(getApplicationContext(), PasscodeScreen.class);
                         startActivity(intent);
@@ -220,12 +225,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String json_url;
         String JSON_STRING;
         JSONObject jobject;
-        String restName, restType;
+        String restName, restType, userId, userToken;
 
         @Override
         protected void onPreExecute() {
 
-            json_url = MainActivity.requestURL + "Restaurants/" + PasscodeScreen.resId;
+            SharedPreferences sharedPref;
+            sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+            userId = sharedPref.getString("restId", null);
+            userToken = sharedPref.getString("restToken", null);
+
+            json_url = MainActivity.requestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
 
         }
 

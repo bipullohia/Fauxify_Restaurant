@@ -1,7 +1,10 @@
 package com.example.bipullohia.fauxifyrestaurant;
 
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -113,12 +116,17 @@ public class EditRestDetailsFragment extends Fragment {
 
         String json_url;
         String JSON_STRING;
+        ProgressDialog pd;
 
         @Override
         protected void onPreExecute() {
 
-            json_url = MainActivity.requestURL + "Restaurants/" + PasscodeScreen.resId;
+            SharedPreferences sharedPref;
+            sharedPref = EditRestDetailsFragment.this.getActivity().getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+            String restId = sharedPref.getString("restId", null);
 
+            json_url = MainActivity.requestURL + "Restaurants/" + restId;
+            pd = ProgressDialog.show(getContext(), "", "Loading Restaurant details...", false);
         }
 
         @Override
@@ -162,17 +170,17 @@ public class EditRestDetailsFragment extends Fragment {
         protected void onPostExecute(String s) {
 
             restMinOrder.setText(restaurantMinOrder);
-            restDelTime.setText(restaurantDelTime.substring(0,2));
+            restDelTime.setText(restaurantDelTime.substring(0, 2));
             restName.setText(restaurantName);
             restType.setText(restaurantType);
             restDelFee.setText(restaurantDelFee);
             restFreeDelAmount.setText(restaurantFreeDelAmount);
 
+            pd.dismiss();
         }
-
     }
 
-    public void submitNewDetails(){
+    public void submitNewDetails() {
 
         new backgroundTask().execute();
         Log.i("status", newRestDelFee + newRestType + newRestDelTime + newRestMinOrder + newRestFreeDelAmount);
@@ -180,13 +188,17 @@ public class EditRestDetailsFragment extends Fragment {
 
     class backgroundTask extends AsyncTask<Void, Void, String> {
 
-        String json_url;
+        String json_url, userId, userToken;
 
         @Override
         protected void onPreExecute() {
 
-            json_url = MainActivity.requestURL + "Restaurants/" + PasscodeScreen.resId;
+            SharedPreferences sharedPref;
+            sharedPref = EditRestDetailsFragment.this.getActivity().getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+            userId = sharedPref.getString("restId", null);
+            userToken = sharedPref.getString("restToken", null);
 
+            json_url = MainActivity.requestURL + "Restaurants/" + userId + "?access_token=" + userToken;
         }
 
         @Override
@@ -240,10 +252,6 @@ public class EditRestDetailsFragment extends Fragment {
                 e.printStackTrace();
             }
             return null;
-
         }
-
     }
-
-
 }

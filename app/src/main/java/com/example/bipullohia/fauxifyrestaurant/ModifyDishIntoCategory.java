@@ -1,10 +1,13 @@
 package com.example.bipullohia.fauxifyrestaurant;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,6 +44,15 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
     JSONObject dishdata, jomenu, jo;
     Toolbar toolbar;
 
+    @Override   //this is to duplicate the effect of back button on UP button of actionbar
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +67,9 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
         adddish_dishprice = (EditText) findViewById(R.id.edittext_dishprice);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_adddish);
-        toolbar.setTitle("Add Item");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Modify Item");
 
         categoryList = new ArrayList<>();
         category = getIntent().getStringExtra("Category");
@@ -68,7 +82,7 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
         dishTypeDefault = getIntent().getIntExtra("dishtype", 2);
 
 
-        dishname_heading.setText("Add to " + "''" + category + "''");
+        dishname_heading.setText("Modify " + "'" + dishnameDefault + "'");
 
         adddish_dishname.setText(dishnameDefault);
         adddish_dishprice.setText(dishpriceDefault);
@@ -128,7 +142,6 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
                 jomenu = new JSONObject();
                 jo = new JSONObject();
 
-                Toast.makeText(getApplicationContext(), dishname + " added to " + category, Toast.LENGTH_SHORT).show();
 
                 for (int i = 0; i < categoryList.size(); i++) {
 
@@ -172,7 +185,7 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
 
     private void sendDishData() {
 
-        new bbTask().execute();
+        new bTaskSendDishData().execute();
     }
 
     private void checkRadioButtonStatus() {
@@ -185,17 +198,21 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
     }
 
 
-    private class bbTask extends AsyncTask<Void, Void, String>
+    private class bTaskSendDishData extends AsyncTask<Void, Void, String>
 
     {
 
-        String json_url;
+        String json_url, userId, userToken;
 
         @Override
         protected void onPreExecute() {
 
-            json_url = MainActivity.requestURL + "Restaurants/" + PasscodeScreen.resId;
-            Log.e("json_url_", json_url);
+            SharedPreferences sharedPref;
+            sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+            userId = sharedPref.getString("restId", null);
+            userToken = sharedPref.getString("restToken", null);
+
+            json_url = MainActivity.requestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
 
         }
 
@@ -252,6 +269,8 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             DishesOfferedFragment.shouldRefreshOnResume = true;
+            Toast.makeText(getApplicationContext(), "Item Modified", Toast.LENGTH_SHORT).show();
+
             finish();
 
         }

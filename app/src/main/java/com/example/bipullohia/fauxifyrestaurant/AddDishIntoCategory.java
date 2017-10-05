@@ -1,10 +1,13 @@
 package com.example.bipullohia.fauxifyrestaurant;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,11 +37,20 @@ public class AddDishIntoCategory extends AppCompatActivity {
     String category, categoryData;
     ArrayList<String> categoryList;
     int dishType;
+    Boolean vegDataPresent;
     JSONArray jaa;
     JSONObject dishdata, jomenu, jo;
     Toolbar toolbar;
 
-
+    @Override   //this is to duplicate the effect of back button on UP button of actionbar
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +65,14 @@ public class AddDishIntoCategory extends AppCompatActivity {
         adddish_dishprice = (EditText) findViewById(R.id.edittext_dishprice);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_adddish);
-        toolbar.setTitle("Add Item");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Add Item");
 
         categoryList = new ArrayList<>();
         category = getIntent().getStringExtra("Category");
         categoryList = getIntent().getStringArrayListExtra("categoryList");
         categoryData = getIntent().getStringExtra("categoryData");
-
 
         dishname_heading.setText("Add to " + "''" + category + "''");
 
@@ -73,75 +86,82 @@ public class AddDishIntoCategory extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
                 String dishname1 = adddish_dishname.getText().toString();
-
-               String dishname = dishname1.substring(0, 1).toUpperCase() + dishname1.substring(1);
-
                 String dishprice = adddish_dishprice.getText().toString();
+
 
                 checkRadioButtonStatus();
 
-                dishdata = new JSONObject();
+                if (!dishname1.matches("") && !dishprice.matches("") && vegDataPresent) { //this condition is there to
+                    // ensure no empty field is passed
 
-                try {
-                    dishdata.put("dishname", dishname);
-                    dishdata.put("dishprice", dishprice);
-                    dishdata.put("isveg", dishType);
-                    Log.e("asdfg", dishdata.toString());
+                    String dishname = dishname1.substring(0, 1).toUpperCase() + dishname1.substring(1);
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                    dishdata = new JSONObject();
 
-                try {
-                    jaa = new JSONArray(categoryData);
+                    try {
+                        dishdata.put("dishname", dishname);
+                        dishdata.put("dishprice", dishprice);
+                        dishdata.put("isveg", dishType);
+                        Log.e("asdfg", dishdata.toString());
 
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                jomenu = new JSONObject();
-                jo = new JSONObject();
-
-                Toast.makeText(getApplicationContext(), dishname + " added to " + category, Toast.LENGTH_SHORT).show();
-
-                for (int i = 0; i < categoryList.size(); i++) {
-
-                    if (!categoryList.get(i).equals(category)) {
-
-                        try {
-                            jomenu.accumulate(categoryList.get(i), jaa.get(i));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    } else if (categoryList.get(i).equals(category)) {
-                        Random r = new Random();
-                        try {
-
-                            jo = jaa.getJSONObject(i);
-
-                            jo.accumulate(String.valueOf(r.nextInt(8999) + 1000), dishdata);
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        try {
-                            jomenu.accumulate(categoryList.get(i), jo);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
 
+                    try {
+                        jaa = new JSONArray(categoryData);
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    jomenu = new JSONObject();
+                    jo = new JSONObject();
+
+                    Toast.makeText(getApplicationContext(), dishname + " added to " + category, Toast.LENGTH_SHORT).show();
+
+                    for (int i = 0; i < categoryList.size(); i++) {
+
+                        if (!categoryList.get(i).equals(category)) {
+
+                            try {
+                                jomenu.accumulate(categoryList.get(i), jaa.get(i));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        } else if (categoryList.get(i).equals(category)) {
+                            Random r = new Random();
+                            try {
+
+                                jo = jaa.getJSONObject(i);
+                                jo.accumulate(String.valueOf(r.nextInt(8999) + 1000), dishdata);
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            try {
+                                jomenu.accumulate(categoryList.get(i), jo);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
+
+                    Log.e("final", jomenu.toString());
+
+                    sendDishData(); // data sent to servers
+
+                } else {
+
+                    Toast.makeText(AddDishIntoCategory.this, "Input field is empty!", Toast.LENGTH_SHORT).show();
                 }
-
-                Log.e("final", jomenu.toString());
-
-                sendDishData();
-
             }
         });
 
@@ -149,30 +169,43 @@ public class AddDishIntoCategory extends AppCompatActivity {
 
     private void sendDishData() {
 
-        new bbTask().execute();
+        new bTaskSendDishData().execute();
     }
 
     private void checkRadioButtonStatus() {
 
-        if (adddishVeg.isChecked()) {
-            dishType = 1;
-        } else if (adddishNonveg.isChecked()) {
-            dishType = 0;
+        if((!adddishVeg.isChecked() && !adddishNonveg.isChecked())){ // to check if any radio button of dishtype is selected or not
+            vegDataPresent = false;
         }
+        else {
+
+            vegDataPresent = true;
+            if (adddishVeg.isChecked()) {
+                dishType = 1;
+            } else if (adddishNonveg.isChecked()) {
+                dishType = 0;
+            }
+        }
+
+        Log.i("vegdatapresent", String.valueOf(vegDataPresent));
     }
 
 
-    private class bbTask extends AsyncTask<Void, Void, String>
+    private class bTaskSendDishData extends AsyncTask<Void, Void, String>
 
     {
 
-        String json_url;
+        String json_url, userId, userToken;
 
         @Override
         protected void onPreExecute() {
 
-            json_url = MainActivity.requestURL + "Restaurants/" + PasscodeScreen.resId;
-            Log.e("json_url_", json_url);
+            SharedPreferences sharedPref;
+            sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+            userId = sharedPref.getString("restId", null);
+            userToken = sharedPref.getString("restToken", null);
+
+            json_url = MainActivity.requestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
 
         }
 
@@ -228,7 +261,7 @@ public class AddDishIntoCategory extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-DishesOfferedFragment.shouldRefreshOnResume = true;
+            DishesOfferedFragment.shouldRefreshOnResume = true;
             finish();
 
         }

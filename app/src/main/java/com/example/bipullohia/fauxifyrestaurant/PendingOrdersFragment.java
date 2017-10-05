@@ -1,9 +1,15 @@
 package com.example.bipullohia.fauxifyrestaurant;
 
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +38,7 @@ public class PendingOrdersFragment extends Fragment {
     private ArrayList<Orders> orderList = new ArrayList<>();
     private RecyclerView recyclerView;
     private PendingOrdersAdapter pendingOrdersAdapter;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
 
@@ -45,6 +52,20 @@ public class PendingOrdersFragment extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(pendingOrdersAdapter);
+
+
+        swipeRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.swipeRefreshLayout);
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorAccent));
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                orderList.clear();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(PendingOrdersFragment.this).attach(PendingOrdersFragment.this).commit();
+
+            }
+        });
 
 
         prepareOrderData();
@@ -62,12 +83,21 @@ public class PendingOrdersFragment extends Fragment {
         String JSON_STRING;
         JSONArray jsonArray;
         JSONObject jobject;
+        ProgressDialog pd;
 
         @Override
         protected void onPreExecute() {
 
-            json_url = MainActivity.requestURL + "Fauxorders";
+            SharedPreferences sharedPref;
+            sharedPref = PendingOrdersFragment.this.getActivity().getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
+            String restId = sharedPref.getString("restId", null);
+            String restToken = sharedPref.getString("restToken", null);
+
+            json_url = MainActivity.requestURL + "restaurants/" + restId + "/fauxorders?access_token=" + restToken;
             Log.e("json_url", json_url);
+
+            pd = ProgressDialog.show(getContext(), "", "Loading Pending orders...", false);
+
         }
 
         @Override
@@ -111,43 +141,38 @@ public class PendingOrdersFragment extends Fragment {
                     try {
                         jobject = jsonArray.getJSONObject(j);
 
-                        if (jobject.getString("Restid").equals(PasscodeScreen.resId)) {
-                            JSONObject joDelivery;
-                            joDelivery = jobject.getJSONObject("delivery");
-                            JSONObject joOrderinfo;
-                            joOrderinfo = jobject.getJSONObject("orderinfo");
+                        JSONObject joDelivery;
+                        joDelivery = jobject.getJSONObject("delivery");
+                        JSONObject joOrderinfo;
+                        joOrderinfo = jobject.getJSONObject("orderinfo");
 
-                            totalitems = joOrderinfo.getString("totalitems");
-                            totalitemprice = joOrderinfo.getString("totalitemprice");
-                            dishesinfo = joOrderinfo.getString("dishesinfo");
-                            deliveryfee = joOrderinfo.getString("deliveryfee");
+                        totalitems = joOrderinfo.getString("totalitems");
+                        totalitemprice = joOrderinfo.getString("totalitemprice");
+                        dishesinfo = joOrderinfo.getString("dishesinfo");
+                        deliveryfee = joOrderinfo.getString("deliveryfee");
 
-                            ordertiming = joDelivery.getString("ordertiming");
-
-                            String oconfirmed = joDelivery.getString("orderconfirmed");
-                            String odelivered = joDelivery.getString("orderdelivered");
+                        String oconfirmed = joDelivery.getString("orderconfirmed");
+                        String odelivered = joDelivery.getString("orderdelivered");
 
 
-                            if (oconfirmed.equals("1")) {
-                                orderconfirmed = "Confirmed";
-                            } else {
-                                orderconfirmed = "Not Confirmed";
-                            }
+                        if (oconfirmed.equals("1")) {
+                            orderconfirmed = "Confirmed";
+                        } else {
+                            orderconfirmed = "Not Confirmed";
+                        }
 
-                            if (odelivered.equals("1")) {
-                                orderdelivered = "Delivered";
-                            } else {
-                                orderdelivered = "Not Delivered";
-                            }
-                            if (orderdelivered.equals("Not Delivered")) {
-                                Orders orders = new Orders(jobject.getString("Orderid"), totalitems,
-                                        jobject.getString("ordertotal"), jobject.getString("customername"),
-                                        jobject.getString("customeremail"), ordertiming, orderconfirmed,
-                                        orderdelivered, totalitemprice, jobject.getString("customeraddress"), dishesinfo, deliveryfee);
+                        if (odelivered.equals("1")) {
+                            orderdelivered = "Delivered";
+                        } else {
+                            orderdelivered = "Not Delivered";
+                        }
+                        if (orderdelivered.equals("Not Delivered")) {
+                            Orders orders = new Orders(jobject.getString("orderid"), totalitems,
+                                    jobject.getString("ordertotal"), jobject.getString("customername"),
+                                    jobject.getString("customeremail"), jobject.getString("ordertiming"), orderconfirmed,
+                                    orderdelivered, totalitemprice, jobject.getString("customeraddress"), dishesinfo, deliveryfee);
 
-                                orderList.add(orders);
-
-                            }
+                            orderList.add(orders);
 
                         }
 
@@ -160,6 +185,8 @@ public class PendingOrdersFragment extends Fragment {
                 pendingOrdersAdapter.notifyDataSetChanged();
 
             } else Log.e("Jsonarray length", "is zero");
+
+            pd.dismiss();
         }
 
 
