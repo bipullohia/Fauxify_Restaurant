@@ -1,0 +1,158 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:cardView="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical"
+        tools:context="com.example.bipullohia.fauxifyrestaurant.EditRestDetailsFragment">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            cardView:cardCornerRadius="2dp"
+            cardView:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <TextView
+                    android:id="@+id/restNameTextview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="Restaurant Name"
+                    android:textSize="18sp" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/headingSeparatorCardView"
+                    android:background="@color/headingSeparatorCardView" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp">
+
+                    <EditText
+                        android:id="@+id/restTypeEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="25"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginStart="40dp"
+                        android:hint="Restaurant Type" />
+                </android.support.design.widget.TextInputLayout>
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp">
+
+                    <EditText
+                        android:id="@+id/restMinOrderEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginEnd="40dp"
+                        android:maxLength="3"
+                        android:layout_marginStart="40dp"
+                        android:hint="Minimum Order (Rs)"
+                        android:inputType="number" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp">
+
+                    <EditText
+                        android:id="@+id/restDelTimeEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:maxLength="2"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginStart="40dp"
+                        android:hint="Delivery Time (minutes)"
+                        android:inputType="number" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp">
+
+                    <EditText
+                        android:id="@+id/restDelFeeEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginEnd="40dp"
+                        android:maxLength="2"
+                        android:layout_marginStart="40dp"
+                        android:hint="Delivery Fee (Rs)"
+                        android:inputType="number" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="30dp">
+
+                    <EditText
+                        android:id="@+id/restFreeDelAmountEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:maxLength="3"
+                        android:layout_marginEnd="40dp"
+                        android:layout_marginStart="40dp"
+                        android:hint="Amount for free delivery (Rs)"
+                        android:inputType="number" />
+                </android.support.design.widget.TextInputLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/sectionSeparatorCardView"
+                    android:background="@color/sectionSeparatorCardView" />
+
+
+                <Button
+                    android:id="@+id/submitButtonEditRest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingStart="@dimen/paddingNormalButton"
+                    android:paddingEnd="@dimen/paddingNormalButton"
+                    android:layout_marginTop="3dp"
+                    android:text="Submit"
+                    android:textAllCaps="false" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+
+    </LinearLayout>
+
+</ScrollView>
