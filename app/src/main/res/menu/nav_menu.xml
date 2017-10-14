@@ -5,37 +5,35 @@
 
         <item
             android:id="@+id/nav_option_pendingorders"
-            android:icon="@drawable/ic_action_name"
+            android:icon="@drawable/ic_pending_orders"
             android:title="Pending Orders" />
 
         <item
             android:id="@+id/nav_option_deliveredorders"
-            android:icon="@drawable/ic_action_name"
+            android:icon="@drawable/ic_delivered_orders"
             android:title="Delivered Orders" />
 
         <item
             android:id="@+id/nav_option_dishesoffered"
-            android:icon="@drawable/ic_action_name"
+            android:icon="@drawable/ic_dishesoffered"
             android:title="Dishes Offered" />
 
         <item
             android:id="@+id/nav_option_restaurantstatus"
-            android:icon="@drawable/ic_action_name"
+            android:icon="@drawable/ic_rest_status"
             android:title="Restaurant Status" />
 
         <item
             android:id="@+id/nav_option_edit_restDetails"
-            android:icon="@drawable/ic_action_name"
+            android:icon="@drawable/ic_edit"
             android:title="Edit Restaurant Details" />
-
 
         <item
             android:id="@+id/nav_option_logout"
-            android:icon="@drawable/ic_action_name"
+            android:icon="@drawable/ic_logout"
             android:title="Logout" />
 
     </group>
-
 
 </menu>
 

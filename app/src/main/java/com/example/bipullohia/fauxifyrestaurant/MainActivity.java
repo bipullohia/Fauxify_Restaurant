@@ -36,16 +36,15 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    ActionBarDrawerToggle toggle;
-    DrawerLayout drawerLayout;
-    Toolbar myToolbar;
-    static TextView restStatusTextview;
-    static String requestURL;
+    ActionBarDrawerToggle mToggleActionBarDrawer;
+    DrawerLayout mDrawerLayout;
+    Toolbar mToolbar;
+    static TextView mRestStatusTextview;
+    static String mRequestURL;
     static String RestStatus;
-    FragmentTransaction fragmentTransaction;
-    TextView restTypeNavHeader, restNameNavHeader;
+    FragmentTransaction mFragmentTransaction;
+    TextView mRestTypeNavHeader, mRestNameNavHeader;
     boolean doubleBackToExitPressedOnce = false;
-
 
     @Override
     public void onBackPressed() {
@@ -65,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }, 2000);
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,16 +74,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
 
-        restStatusTextview = (TextView) findViewById(R.id.RestStatusTextview);
+        mRestStatusTextview = (TextView) findViewById(R.id.textview_rest_status);
+        mRequestURL = "http://fauxify.com/api/";
 
-        requestURL = "http://fauxify.com/api/";
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_main_activity);
+        setSupportActionBar(mToolbar);
 
-        myToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(myToolbar);
-
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
-        toggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(toggle);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.nav_drawer_layout);
+        mToggleActionBarDrawer = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mDrawerLayout.addDrawerListener(mToggleActionBarDrawer);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -95,10 +92,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         View header = navigationView.getHeaderView(0);
-        restNameNavHeader = (TextView) header.findViewById(R.id.restNameNavHeader);
-        restTypeNavHeader = (TextView) header.findViewById(R.id.restTypeNavHeader);
-
-        // here will be the code for Restaurant Name and type for Navigation Header
+        mRestNameNavHeader = (TextView) header.findViewById(R.id.navheader_rest_name);
+        mRestTypeNavHeader = (TextView) header.findViewById(R.id.navheader_rest_type);
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new PendingOrdersFragment()).commit();
@@ -114,67 +109,63 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 switch (item.getItemId()) {
                     case R.id.nav_option_pendingorders:
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.main_container, new PendingOrdersFragment());
-                        fragmentTransaction.commit();
+                        mFragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        mFragmentTransaction.replace(R.id.main_container, new PendingOrdersFragment());
+                        mFragmentTransaction.commit();
                         getSupportActionBar().setTitle("Pending Orders");
-                        drawerLayout.closeDrawers();
+                        mDrawerLayout.closeDrawers();
                         break;
 
                     case R.id.nav_option_deliveredorders:
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.main_container, new DeliveredOrdersFragment());
-                        fragmentTransaction.commit();
+                        mFragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        mFragmentTransaction.replace(R.id.main_container, new DeliveredOrdersFragment());
+                        mFragmentTransaction.commit();
                         getSupportActionBar().setTitle("Delivered Orders");
                         getSupportActionBar().setSubtitle(null);
-                        drawerLayout.closeDrawers();
-
+                        mDrawerLayout.closeDrawers();
                         break;
 
                     case R.id.nav_option_dishesoffered:
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.main_container, new DishesOfferedFragment());
-                        fragmentTransaction.commit();
+                        mFragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        mFragmentTransaction.replace(R.id.main_container, new DishesOfferedFragment());
+                        mFragmentTransaction.commit();
                         getSupportActionBar().setTitle("Dishes Offered");
                         getSupportActionBar().setSubtitle(null);
-                        drawerLayout.closeDrawers();
+                        mDrawerLayout.closeDrawers();
                         break;
 
                     case R.id.nav_option_restaurantstatus:
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.main_container, new RestaurantStatusFragment());
-                        fragmentTransaction.commit();
+                        mFragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        mFragmentTransaction.replace(R.id.main_container, new RestaurantStatusFragment());
+                        mFragmentTransaction.commit();
                         getSupportActionBar().setTitle("Restaurant Status");
                         getSupportActionBar().setSubtitle(null);
-                        drawerLayout.closeDrawers();
+                        mDrawerLayout.closeDrawers();
                         break;
 
                     case R.id.nav_option_edit_restDetails:
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.main_container, new EditRestDetailsFragment());
-                        fragmentTransaction.commit();
+                        mFragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        mFragmentTransaction.replace(R.id.main_container, new EditRestDetailsFragment());
+                        mFragmentTransaction.commit();
                         getSupportActionBar().setTitle("Edit Restarant Details");
                         getSupportActionBar().setSubtitle(null);
-                        drawerLayout.closeDrawers();
+                        mDrawerLayout.closeDrawers();
                         break;
 
                     case R.id.nav_option_logout:
-
                         SharedPreferences sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.clear();
                         editor.apply();
-
                         Intent intent = new Intent(getApplicationContext(), PasscodeScreen.class);
                         startActivity(intent);
-
+                        finish();
                 }
                 return true;
             }
         });
 
         checkRestaurantStatus();
-
     }
 
     @Override
@@ -185,8 +176,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
-
         return false;
     }
 
@@ -195,14 +184,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         View view = new View(this);
         view.setPadding(16, 0, 0, 0);
-
         return super.onCreateOptionsMenu(menu);
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (toggle.onOptionsItemSelected(item)) {
+        if (mToggleActionBarDrawer.onOptionsItemSelected(item)) {
             return true;
         }
         return true;
@@ -211,16 +198,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        toggle.syncState();
+        mToggleActionBarDrawer.syncState();
     }
 
     public void checkRestaurantStatus() {
-
-        new bgroundtask().execute();
-
+        new BGTaskCheckRestStatus().execute();
     }
 
-    class bgroundtask extends AsyncTask<Void, Void, String> {
+    private class BGTaskCheckRestStatus extends AsyncTask<Void, Void, String> {
 
         String json_url;
         String JSON_STRING;
@@ -235,15 +220,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             userId = sharedPref.getString("restId", null);
             userToken = sharedPref.getString("restToken", null);
 
-            json_url = MainActivity.requestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
-
+            json_url = MainActivity.mRequestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
         }
 
         @Override
         protected String doInBackground(Void... params) {
 
             try {
-
                 URL urll = new URL(json_url);
                 HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
@@ -262,7 +245,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 jobject = new JSONObject(resultjson);
 
-
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
@@ -274,29 +256,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         protected void onPostExecute(String s) {
 
             try {
-
                 RestStatus = jobject.getString("RestaurantStatus");
                 Log.i("new reststatus MA", RestStatus);
                 restName = jobject.getString("Restname");
                 restType = jobject.getString("Resttype");
 
-                restNameNavHeader.setText(restName);
-                restTypeNavHeader.setText(restType);
+                mRestNameNavHeader.setText(restName);
+                mRestTypeNavHeader.setText(restType);
 
                 if (RestStatus.equals("open")) {
-                    restStatusTextview.setText("Your Restaurant is Active");
-                    restStatusTextview.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
-                } else {
-                    restStatusTextview.setText("Your Restaurant is Inactive");
-                    restStatusTextview.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
-                }
-            } catch (JSONException e) {
+                    mRestStatusTextview.setText("Restaurant is Active");
+                    mRestStatusTextview.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
 
+                } else {
+                    mRestStatusTextview.setText("Restaurant is Inactive");
+                    mRestStatusTextview.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                }
+
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-
     }
-
 }
 

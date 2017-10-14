@@ -27,24 +27,20 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-/**
- * Created by Bipul Lohia on 11/10/2016.
- */
-
 public class ModifyDishIntoCategory extends AppCompatActivity {
 
-    TextView dishname_heading;
-    Button button_adddishsubmit;
-    RadioButton adddishVeg, adddishNonveg;
-    EditText adddish_dishname, adddish_dishprice;
-    String category, categoryData, dishnameDefault, dishidDefault, dishpriceDefault;
-    ArrayList<String> categoryList;
-    int dishType, dishTypeDefault;
-    JSONArray jaa;
-    JSONObject dishdata, jomenu, jo;
-    Toolbar toolbar;
+    TextView mDishNameHeadingTextView;
+    Button mSubmitButton;
+    RadioButton mVegRadioButton, mNonVegRadioButton;
+    EditText mDishNameEditText, mDishPriceEditText;
+    String mCategory, mCategoryData, mDishNameDefault, mDishIdDefault, mDishPriceDefault;
+    ArrayList<String> mCategoryList;
+    int mDishTypeInt, mDishTypeDefaultInt;
+    JSONArray mCategoryDataJA;
+    JSONObject mNewDishDataJO, mFinalMenuJO, mParticularCategoryJO;
+    Toolbar mToolbar;
 
-    @Override   //this is to duplicate the effect of back button on UP button of actionbar
+    @Override   //this is to duplicate the effect of 'back' button on 'up' button of actionbar
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -59,149 +55,138 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_dish_into_category);
 
-        dishname_heading = (TextView) findViewById(R.id.textView_adddish_heading);
-        button_adddishsubmit = (Button) findViewById(R.id.button_submit);
-        adddishVeg = (RadioButton) findViewById(R.id.radioBtn_veg);
-        adddishNonveg = (RadioButton) findViewById(R.id.radioBtn_nonveg);
-        adddish_dishname = (EditText) findViewById(R.id.edittext_dishname);
-        adddish_dishprice = (EditText) findViewById(R.id.edittext_dishprice);
+        mDishNameHeadingTextView = (TextView) findViewById(R.id.textview_adddish_heading);
+        mSubmitButton = (Button) findViewById(R.id.button_submit);
+        mVegRadioButton = (RadioButton) findViewById(R.id.radiobutton_veg);
+        mNonVegRadioButton = (RadioButton) findViewById(R.id.radiobutton_nonveg);
+        mDishNameEditText = (EditText) findViewById(R.id.edittext_dishname);
+        mDishPriceEditText = (EditText) findViewById(R.id.edittext_dishprice);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_adddish);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_adddish);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Modify Item");
 
-        categoryList = new ArrayList<>();
-        category = getIntent().getStringExtra("Category");
-        categoryList = getIntent().getStringArrayListExtra("categoryList");
-        categoryData = getIntent().getStringExtra("categoryData");
+        mCategoryList = new ArrayList<>();
+        mCategory = getIntent().getStringExtra("category");
+        mCategoryList = getIntent().getStringArrayListExtra("categoryList");
+        mCategoryData = getIntent().getStringExtra("categoryData");
 
-        dishnameDefault = getIntent().getStringExtra("dishname");
-        dishidDefault = getIntent().getStringExtra("dishid");
-        dishpriceDefault = getIntent().getStringExtra("dishprice");
-        dishTypeDefault = getIntent().getIntExtra("dishtype", 2);
+        mDishNameDefault = getIntent().getStringExtra("dishname");
+        mDishIdDefault = getIntent().getStringExtra("dishid");
+        mDishPriceDefault = getIntent().getStringExtra("dishprice");
+        mDishTypeDefaultInt = getIntent().getIntExtra("dishtype", 2);
 
+        mDishNameHeadingTextView.setText("Modify " + "'" + mDishNameDefault + "'");
 
-        dishname_heading.setText("Modify " + "'" + dishnameDefault + "'");
+        mDishNameEditText.setText(mDishNameDefault);
+        mDishPriceEditText.setText(mDishPriceDefault);
 
-        adddish_dishname.setText(dishnameDefault);
-        adddish_dishprice.setText(dishpriceDefault);
-
-        switch (dishTypeDefault) {
+        switch (mDishTypeDefaultInt) {
 
             case 0:
-                adddishVeg.setChecked(false);
-                adddishNonveg.setChecked(true);
+                mVegRadioButton.setChecked(false);
+                mNonVegRadioButton.setChecked(true);
                 break;
 
             case 1:
-                adddishVeg.setChecked(true);
-                adddishNonveg.setChecked(false);
+                mVegRadioButton.setChecked(true);
+                mNonVegRadioButton.setChecked(false);
                 break;
 
             default:
-                adddishVeg.setChecked(false);
-                adddishNonveg.setChecked(false);
+                mVegRadioButton.setChecked(false);
+                mNonVegRadioButton.setChecked(false);
                 break;
         }
 
+        Log.i("checking-Category", mCategory);
+        Log.i("checking-categorydata", mCategoryData);
 
-        Log.e("category", category);
-        Log.e("data", categoryList.toString());
-        Log.e("categorydata", categoryData);
-
-        button_adddishsubmit.setOnClickListener(new View.OnClickListener() {
+        mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String dishname = adddish_dishname.getText().toString();
-                String dishprice = adddish_dishprice.getText().toString();
+                String dishname = mDishNameEditText.getText().toString();
+                String dishprice = mDishPriceEditText.getText().toString();
 
                 checkRadioButtonStatus();
 
-                dishdata = new JSONObject();
+                mNewDishDataJO = new JSONObject();
 
                 try {
-                    dishdata.put("dishname", dishname);
-                    dishdata.put("dishprice", dishprice);
-                    dishdata.put("isveg", dishType);
-                    Log.e("asdfg", dishdata.toString());
+                    mNewDishDataJO.put("dishname", dishname);
+                    mNewDishDataJO.put("dishprice", dishprice);
+                    mNewDishDataJO.put("isveg", mDishTypeDefaultInt);
+                    Log.e("asdfg", mNewDishDataJO.toString());
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
                 try {
-                    jaa = new JSONArray(categoryData);
-
+                    mCategoryDataJA = new JSONArray(mCategoryData);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                jomenu = new JSONObject();
-                jo = new JSONObject();
+                mFinalMenuJO = new JSONObject();
+                mParticularCategoryJO = new JSONObject();
 
+                for (int i = 0; i < mCategoryList.size(); i++) {
 
-                for (int i = 0; i < categoryList.size(); i++) {
-
-                    if (!categoryList.get(i).equals(category)) {
+                    if (!mCategoryList.get(i).equals(mCategory)) {
 
                         try {
-                            jomenu.accumulate(categoryList.get(i), jaa.get(i));
+                            mFinalMenuJO.accumulate(mCategoryList.get(i), mCategoryDataJA.get(i));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                    } else if (categoryList.get(i).equals(category)) {
+                    } else if (mCategoryList.get(i).equals(mCategory)) {
 
                         try {
-                            jo = jaa.getJSONObject(i);
-
-                            jo.remove(dishidDefault);
-                            jo.accumulate(dishidDefault, dishdata);
+                            mParticularCategoryJO = mCategoryDataJA.getJSONObject(i);
+                            mParticularCategoryJO.remove(mDishIdDefault);
+                            mParticularCategoryJO.accumulate(mDishIdDefault, mNewDishDataJO);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
                         try {
-                            jomenu.accumulate(categoryList.get(i), jo);
+                            mFinalMenuJO.accumulate(mCategoryList.get(i), mParticularCategoryJO);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
 
                 }
-
-                Log.e("final", jomenu.toString());
+                Log.e("final-menu", mFinalMenuJO.toString());
 
                 sendDishData();
-
             }
         });
-
     }
 
     private void sendDishData() {
 
-        new bTaskSendDishData().execute();
+        new BGTaskSendDishData().execute();
     }
 
     private void checkRadioButtonStatus() {
 
-        if (adddishVeg.isChecked()) {
-            dishType = 1;
-        } else if (adddishNonveg.isChecked()) {
-            dishType = 0;
+        if (mVegRadioButton.isChecked()) {
+            mDishTypeInt = 1;
+        } else if (mNonVegRadioButton.isChecked()) {
+            mDishTypeInt = 0;
         }
     }
 
-
-    private class bTaskSendDishData extends AsyncTask<Void, Void, String>
+    private class BGTaskSendDishData extends AsyncTask<Void, Void, String>
 
     {
-
         String json_url, userId, userToken;
 
         @Override
@@ -212,15 +197,13 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
             userId = sharedPref.getString("restId", null);
             userToken = sharedPref.getString("restToken", null);
 
-            json_url = MainActivity.requestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
-
+            json_url = MainActivity.mRequestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
         }
 
         @Override
         protected String doInBackground(Void... voids) {
 
             try {
-
                 URL urll = new URL(json_url);
                 HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
@@ -231,9 +214,8 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
                 httpConnection.setRequestProperty("Accept", "application/json");
                 httpConnection.setRequestProperty("Content-Type", "application/json");
 
-
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("Menu", jomenu);
+                jsonObject.accumulate("Menu", mFinalMenuJO);
 
                 String json = jsonObject.toString();
 
@@ -257,13 +239,11 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
                     System.out.println(httpConnection.getResponseMessage());
                 }
 
-
                 Log.e("test", json);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
             return null;
-
         }
 
         @Override
@@ -272,8 +252,6 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Item Modified", Toast.LENGTH_SHORT).show();
 
             finish();
-
         }
     }
-
 }

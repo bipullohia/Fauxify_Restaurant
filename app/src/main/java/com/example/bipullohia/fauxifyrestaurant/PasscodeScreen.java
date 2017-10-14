@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,21 +29,23 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by Bipul Lohia on 9/27/2016.
- */
 
 public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListener, View.OnClickListener {
 
-    EditText restaurantUsername, restaurantPassword;
-    Button loginButton;
-    static String resId;
-    String username, password;
+    EditText mRestUsernameEditText, mRestPasswordEditText;
+    Button mLoginButton;
+    static String mResId;
+    String mUsername, mPassword;
+    Toolbar mToolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passcodescreen);
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_passcodescreen);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setTitle("Fauxify for Restaurant");
 
         SharedPreferences sharedPref;
         sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
@@ -56,22 +59,21 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
             Log.i("status", "skipping login");
         }
 
-        restaurantUsername = (EditText) findViewById(R.id.restaurantUsername);
-        restaurantPassword = (EditText) findViewById(R.id.restaurantPassword);
-        loginButton = (Button) findViewById(R.id.loginButton);
-        LinearLayout linearLayoutPasscodeScreen = (LinearLayout) findViewById(R.id.passcodescreenLinearLayout);
-        CardView logincardView = (CardView) findViewById(R.id.loginCardview);
+        mRestUsernameEditText = (EditText) findViewById(R.id.edittext_rest_username);
+        mRestPasswordEditText = (EditText) findViewById(R.id.edittext_rest_password);
+        mLoginButton = (Button) findViewById(R.id.button_login);
+        LinearLayout linearLayoutPasscodeScreen = (LinearLayout) findViewById(R.id.ll_passcodescreen);
+        CardView logincardView = (CardView) findViewById(R.id.cardview_login);
         linearLayoutPasscodeScreen.setOnClickListener(this);
         logincardView.setOnClickListener(this);
 
-        restaurantPassword.setOnKeyListener(this); // to handle keypress on keyboard after typing the password
+        mRestPasswordEditText.setOnKeyListener(this); // to handle keypress on keyboard after typing the password
     }
 
     @Override  // to let enter button on keyboard directly press the login button
     public boolean onKey(View view, int i, KeyEvent keyEvent) {
 
         if (i == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
-
             checkRestaurantExistence(view);
         }
 
@@ -80,12 +82,11 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
 
     public void checkRestaurantExistence(View view) {
 
-
-        username = restaurantUsername.getText().toString();
-        password = restaurantPassword.getText().toString();
-        resId = username;
-        if (!username.matches("") && !password.matches("")) {
-            new BackgroundTask().execute();
+        mUsername = mRestUsernameEditText.getText().toString();
+        mPassword = mRestPasswordEditText.getText().toString();
+        mResId = mUsername;
+        if (!mUsername.matches("") && !mPassword.matches("")) {
+            new BGTaskIfRestExist().execute();
         } else {
             Toast.makeText(this, "Username/Password field cannot be empty", Toast.LENGTH_SHORT).show();
         }
@@ -94,15 +95,15 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
     @Override
     public void onClick(View view) {
 
-        if (view.getId() == R.id.passcodescreenLinearLayout || view.getId() == R.id.loginCardview) {  // this is to let user click anywhere on blank area to remove keyboard from screen
+        if (view.getId() == R.id.ll_passcodescreen || view.getId() == R.id.cardview_login) {
+            // this is to let user click anywhere on blank area to remove soft-keyboard from screen
 
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-
         }
     }
 
-    private class BackgroundTask extends AsyncTask<Void, Void, String> {
+    private class BGTaskIfRestExist extends AsyncTask<Void, Void, String> {
 
         String json_url;
         String json_checkurl;
@@ -113,7 +114,7 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
         protected void onPreExecute() {
 
             json_url = "http://fauxify.com/api/restaurants/";
-            json_checkurl = json_url + username + "/exists";
+            json_checkurl = json_url + mUsername + "/exists";
         }
 
         @Override
@@ -154,13 +155,9 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
             if (ifRestaurantExists.equals("true")) {
 
                 Log.e("checkRestexistence", "Restaurant exists: redirecting to main activity");
-
                 LoginRestaurant();
-//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                startActivity(intent);
 
             } else if (ifRestaurantExists.equals("false")) {
-
                 Toast.makeText(getApplicationContext(), "Username doesn't exist", Toast.LENGTH_LONG).show();
             }
         }
@@ -168,10 +165,10 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
 
     private void LoginRestaurant() {
 
-        new BackGroundTaskLoginUser().execute();
+        new BGTaskLoginUser().execute();
     }
 
-    private class BackGroundTaskLoginUser extends AsyncTask<Void, Void, String> {
+    private class BGTaskLoginUser extends AsyncTask<Void, Void, String> {
 
         String jsonUrl = "http://fauxify.com/api/restaurants/login"; // undefined url
         boolean exceptioncaught = false;
@@ -180,9 +177,7 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
         @Override
         protected String doInBackground(Void... params) {
 
-            //post login data
             try {
-
                 URL url = new URL(jsonUrl);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
@@ -195,8 +190,8 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
 
                 JSONObject jsonObject = new JSONObject();
 
-                jsonObject.accumulate("username", username);
-                jsonObject.accumulate("password", password);
+                jsonObject.accumulate("username", mUsername);
+                jsonObject.accumulate("password", mPassword);
 
                 String json = jsonObject.toString();
                 OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
@@ -217,12 +212,10 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
                     br.close();
 
                     String ss = String.valueOf(sb);
-
                     JSONObject jsoDetails = new JSONObject(ss);
 
                     String token = String.valueOf(jsoDetails.get("id"));
                     String userId = String.valueOf(jsoDetails.get("userId"));
-
 
                     // saving essential info
                     SharedPreferences sharedPref;
@@ -233,7 +226,7 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
                     editor.putString("restId", userId);
                     editor.apply();
 
-                    Log.i("details", token + "   " + userId);
+                    //Log.i("details", token + "   " + userId);
 
                     System.out.println("" + sb.toString());
                 } else {
@@ -264,6 +257,4 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
             }
         }
     }
-
-
 }

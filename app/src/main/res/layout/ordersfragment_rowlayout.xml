@@ -21,9 +21,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:baselineAligned="false"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
+            android:baselineAligned="false"
             android:paddingStart="5dp"
             android:paddingEnd="5dp">
 
@@ -33,34 +33,33 @@
                 android:layout_marginRight="10dp">
 
                 <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_margin="5dp"
-                    android:id="@+id/greenConfirmImg"
-                    android:visibility="gone"
-                    android:layout_gravity="center_vertical"
+                    android:contentDescription="Vegetarian Dish"
                     android:src="@drawable/dish_type_veg"
-                    android:contentDescription="Vegetarian Dish" />
+                    android:id="@+id/img_green_confirm"
+                    android:visibility="gone"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"/>
 
                 <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_margin="5dp"
-                    android:id="@+id/redConfirmImg"
-                    android:visibility="visible"
-                    android:layout_gravity="center_vertical"
+                    android:contentDescription="Non-Vegetarian Dish"
                     android:src="@drawable/dish_type_nonveg"
-                    android:contentDescription="Non-Vegetarian Dish" />
-
+                    android:id="@+id/img_red_confirm"
+                    android:visibility="visible"
+                    android:layout_margin="5dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"/>
 
                 <TextView
-                    android:layout_width="wrap_content"
                     android:id="@+id/orderrow_orderconfirmed"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Default Status"
                     android:layout_gravity="center_vertical"
+                    android:textAlignment="center"
                     android:textSize="11sp"
-                    android:textAlignment="center"/>
+                    android:text="Default Status"/>
 
             </LinearLayout>
 
@@ -70,33 +69,33 @@
                 android:layout_marginLeft="10dp">
 
                 <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_margin="5dp"
-                    android:id="@+id/greenDeliverImg"
+                    android:contentDescription="Vegetarian Dish"
+                    android:src="@drawable/dish_type_veg"
+                    android:id="@+id/img_deliver_green"
                     android:visibility="gone"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/dish_type_veg"
-                    android:contentDescription="Vegetarian Dish" />
+                    android:layout_margin="5dp"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"/>
 
                 <ImageView
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:layout_margin="5dp"
-                    android:id="@+id/redDeliverImg"
+                    android:contentDescription="Non-Vegetarian Dish"
+                    android:src="@drawable/dish_type_nonveg"
+                    android:id="@+id/img_deliver_red"
                     android:visibility="visible"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/dish_type_nonveg"
-                    android:contentDescription="Non-Vegetarian Dish" />
+                    android:layout_margin="5dp"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"/>
 
                 <TextView
+                    android:id="@+id/orderrow_orderdelivered"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Default Status"
-                    android:id="@+id/orderrow_orderdelivered"
                     android:layout_gravity="center_vertical"
+                    android:textAlignment="center"
                     android:textSize="11sp"
-                    android:textAlignment="center"/>
+                    android:text="Default Status"/>
 
             </LinearLayout>
 
@@ -110,25 +109,25 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_gravity="center_vertical"
+            android:orientation="vertical"
             android:padding="10dp">
 
             <TextView
+                android:id="@+id/orderrow_custname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Restaurant Name"
-                android:id="@+id/orderrow_custname"
                 android:paddingBottom="2dp"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:text="Restaurant Name"/>
 
             <TextView
+                android:id="@+id/orderrow_ordertime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
                 android:paddingTop="2dp"
-                android:id="@+id/orderTime"
+                android:textSize="12sp"
                 android:text="Ordered on 03 Oct 2017 at 7.14PM"/>
 
         </LinearLayout>
@@ -154,15 +153,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Order Id  "
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:text="Order Id  "/>
 
                 <TextView
                     android:id="@+id/orderrow_orderid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="00000000"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:text="00000000"/>
 
             </LinearLayout>
 
@@ -175,33 +174,28 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total "
-                    android:textSize="14sp"/>
+                    android:textSize="14sp"
+                    android:text="Total "/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
                     android:paddingStart="2dp"
                     android:paddingEnd="2dp"
+                    android:textSize="14sp"
                     android:text="@string/Rs" />
 
                 <TextView
                     android:id="@+id/orderrow_totalprice"
                     android:layout_width="wrap_content"
-                    android:textSize="14sp"
                     android:layout_height="wrap_content"
+                    android:textSize="14sp"
                     android:text="000" />
 
             </LinearLayout>
 
-
-
         </LinearLayout>
 
-
-
     </LinearLayout>
-
 
 </android.support.v7.widget.CardView>

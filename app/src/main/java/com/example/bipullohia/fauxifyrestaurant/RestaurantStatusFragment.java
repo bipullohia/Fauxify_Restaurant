@@ -26,13 +26,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class RestaurantStatusFragment extends Fragment {
 
-    public Switch restStatusSwitch;
-    String OppositerestStatus, newRestStatus;
+    public Switch mRestStatusSwitch;
+    String mOppositeOfRestStatus, mNewRestStatus;
 
     public RestaurantStatusFragment() {
         // Required empty public constructor
@@ -44,42 +41,39 @@ public class RestaurantStatusFragment extends Fragment {
 
         View rootview = inflater.inflate(R.layout.fragment_restaurant_status, container, false);
 
-        restStatusSwitch = (Switch) rootview.findViewById(R.id.restStatusSwitch);
-
+        mRestStatusSwitch = (Switch) rootview.findViewById(R.id.switch_rest_status);
 
         Log.i("MainActivity restStatus", MainActivity.RestStatus);
         if (MainActivity.RestStatus.equals("open")) {
 
-            restStatusSwitch.setChecked(true);
-            OppositerestStatus = "Inactive";
+            mRestStatusSwitch.setChecked(true);
+            mOppositeOfRestStatus = "Inactive";
 
         } else {
-            restStatusSwitch.setChecked(false);
-            OppositerestStatus = "Active";
-
+            mRestStatusSwitch.setChecked(false);
+            mOppositeOfRestStatus = "Active";
         }
 
-        Log.i("oppositeRestStatus", OppositerestStatus);
+        Log.i("oppositeRestStatus", mOppositeOfRestStatus);
 
-        restStatusSwitch.setOnClickListener(new View.OnClickListener() {
+        mRestStatusSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder alertbuilder = new AlertDialog.Builder(getContext());
-                alertbuilder.setMessage("Set Restaurant as " + OppositerestStatus + "?")
+                alertbuilder.setMessage("Set Restaurant as " + mOppositeOfRestStatus + "?")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
-                                if (OppositerestStatus.equals("Inactive")) {
-                                    newRestStatus = "close";
+                                if (mOppositeOfRestStatus.equals("Inactive")) {
+                                    mNewRestStatus = "close";
                                 } else {
-                                    newRestStatus = "open";
+                                    mNewRestStatus = "open";
                                 }
 
-                                Log.i("new RestStatus", newRestStatus);
+                                Log.i("new RestStatus", mNewRestStatus);
                                 changeRestaurantStatus();
-
                             }
                         })
 
@@ -87,10 +81,10 @@ public class RestaurantStatusFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
-                                if (restStatusSwitch.isChecked()) {
-                                    restStatusSwitch.setChecked(false);
+                                if (mRestStatusSwitch.isChecked()) {
+                                    mRestStatusSwitch.setChecked(false);
                                 } else {
-                                    restStatusSwitch.setChecked(true);
+                                    mRestStatusSwitch.setChecked(true);
                                 }
                                 dialogInterface.cancel();
                             }
@@ -99,7 +93,6 @@ public class RestaurantStatusFragment extends Fragment {
                 AlertDialog alertDialog = alertbuilder.create();
                 alertDialog.setTitle("Change Restaurant Status");
                 alertDialog.show();
-
             }
         });
         return rootview;
@@ -107,11 +100,10 @@ public class RestaurantStatusFragment extends Fragment {
 
     private void changeRestaurantStatus() {
 
-        new backgroundTask().execute();
-
+        new BGTaskChangeRestaurantStatus().execute();
     }
 
-    private class backgroundTask extends AsyncTask<Void, Void, String> {
+    private class BGTaskChangeRestaurantStatus extends AsyncTask<Void, Void, String> {
 
         String json_url, userId, userToken;
         ProgressDialog pd;
@@ -124,17 +116,14 @@ public class RestaurantStatusFragment extends Fragment {
             userId = sharedPref.getString("restId", null);
             userToken = sharedPref.getString("restToken", null);
 
-            json_url = MainActivity.requestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
+            json_url = MainActivity.mRequestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
             pd = ProgressDialog.show(getContext(), "", "Loading Restaurant status...", false);
-
-
         }
 
         @Override
         protected String doInBackground(Void... voids) {
 
             try {
-
                 URL urll = new URL(json_url);
                 HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
@@ -145,11 +134,10 @@ public class RestaurantStatusFragment extends Fragment {
                 httpConnection.setRequestProperty("Accept", "application/json");
                 httpConnection.setRequestProperty("Content-Type", "application/json");
 
-
                 JSONObject jsonObject = new JSONObject();
 
-                Log.i("newreststatus async", newRestStatus);
-                jsonObject.accumulate("RestaurantStatus", newRestStatus);
+                Log.i("newreststatus async", mNewRestStatus);
+                jsonObject.accumulate("RestaurantStatus", mNewRestStatus);
 
                 String json = jsonObject.toString();
 
@@ -178,21 +166,20 @@ public class RestaurantStatusFragment extends Fragment {
                 e.printStackTrace();
             }
             return null;
-
         }
 
         @Override
         protected void onPostExecute(String s) {
 
+//            Another way to restart the activity
 //            getActivity().recreate();
 //            FragmentTransaction ft = getFragmentManager().beginTransaction();
 //            ft.detach(RestaurantStatusFragment.this).attach(RestaurantStatusFragment.this).commit();
 
+            //this code will restart this activity, thus updating the latest restaurant status
             getActivity().finish();
             startActivity(getActivity().getIntent());
-
             pd.dismiss();
         }
-
     }
 }

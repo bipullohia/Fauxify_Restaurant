@@ -30,54 +30,46 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class PendingOrdersFragment extends Fragment {
 
-    private ArrayList<Orders> orderList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private PendingOrdersAdapter pendingOrdersAdapter;
-    SwipeRefreshLayout swipeRefreshLayout;
+    private ArrayList<Orders> mOrderList = new ArrayList<>();
+    private PendingOrdersAdapter mPendingOrdersAdapter;
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_pendingorders, container, false);
 
-        recyclerView = (RecyclerView) rootview.findViewById(R.id.orderfragment_recyclerview);
+        RecyclerView recyclerView = (RecyclerView) rootview.findViewById(R.id.recyclerview_orderfragment);
 
-        pendingOrdersAdapter = new PendingOrdersAdapter(orderList);
+        mPendingOrdersAdapter = new PendingOrdersAdapter(mOrderList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(rootview.getContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(pendingOrdersAdapter);
+        recyclerView.setAdapter(mPendingOrdersAdapter);
 
-
-        swipeRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.swipeRefreshLayout);
-        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorAccent));
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mSwipeRefreshLayout = (SwipeRefreshLayout) rootview.findViewById(R.id.swipe_refreshlayout);
+        mSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorAccent));
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
 
-                orderList.clear();
+                mOrderList.clear();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.detach(PendingOrdersFragment.this).attach(PendingOrdersFragment.this).commit();
-
             }
         });
 
-
         prepareOrderData();
-
         return rootview;
     }
 
     private void prepareOrderData() {
-        new bgroundtask().execute();
+        new BGTaskPrepareOrderData().execute();
     }
 
-    class bgroundtask extends AsyncTask<Void, Void, String> {
+    private class BGTaskPrepareOrderData extends AsyncTask<Void, Void, String> {
 
         String json_url;
         String JSON_STRING;
@@ -93,20 +85,18 @@ public class PendingOrdersFragment extends Fragment {
             String restId = sharedPref.getString("restId", null);
             String restToken = sharedPref.getString("restToken", null);
 
-            json_url = MainActivity.requestURL + "restaurants/" + restId + "/fauxorders?access_token=" + restToken;
-            Log.e("json_url", json_url);
+            json_url = MainActivity.mRequestURL + "restaurants/" + restId + "/fauxorders?access_token=" + restToken;
+            Log.e("finalURL", json_url);
 
             pd = ProgressDialog.show(getContext(), "", "Loading Pending orders...", false);
-
         }
 
         @Override
         protected String doInBackground(Void... params) {
 
             try {
-
-                URL urll = new URL(json_url);
-                HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
+                URL url = new URL(json_url);
+                HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
 
                 InputStream inputStream = httpConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -133,7 +123,7 @@ public class PendingOrdersFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
 
-            String totalitems, totalitemprice, ordertiming, orderconfirmed, orderdelivered, dishesinfo, deliveryfee;
+            String totalitems, totalitemprice, orderconfirmed, orderdelivered, dishesinfo, deliveryfee;
             if (jsonArray != null) {
                 Log.e("Jsonobject length", String.valueOf(jsonArray.length()));
                 for (int j = (jsonArray.length() - 1); j >= 0; j--) {
@@ -154,7 +144,6 @@ public class PendingOrdersFragment extends Fragment {
                         String oconfirmed = joDelivery.getString("orderconfirmed");
                         String odelivered = joDelivery.getString("orderdelivered");
 
-
                         if (oconfirmed.equals("1")) {
                             orderconfirmed = "Confirmed";
                         } else {
@@ -172,24 +161,18 @@ public class PendingOrdersFragment extends Fragment {
                                     jobject.getString("customeremail"), jobject.getString("ordertiming"), orderconfirmed,
                                     orderdelivered, totalitemprice, jobject.getString("customeraddress"), dishesinfo, deliveryfee);
 
-                            orderList.add(orders);
-
+                            mOrderList.add(orders);
                         }
-
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
 
-                pendingOrdersAdapter.notifyDataSetChanged();
+                mPendingOrdersAdapter.notifyDataSetChanged();
 
             } else Log.e("Jsonarray length", "is zero");
-
             pd.dismiss();
         }
-
-
     }
-
 }

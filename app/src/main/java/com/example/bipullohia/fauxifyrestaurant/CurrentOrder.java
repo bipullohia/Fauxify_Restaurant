@@ -1,25 +1,22 @@
 package com.example.bipullohia.fauxifyrestaurant;
 
-/**
- * Created by Bipul Lohia on 10/10/2016.
- */
+class CurrentOrder{
 
-public class CurrentOrder{
-    public String currentdishName, currentdishPrice; Integer currentdishQuantity;
+    private String currentdishName, currentdishPrice; private Integer currentdishQuantity;
 
-        public CurrentOrder(String currentdishName, String currentdishPrice, Integer currentdishQuantity) {
+        CurrentOrder(String currentdishName, String currentdishPrice, Integer currentdishQuantity) {
             this.currentdishName = currentdishName;
             this.currentdishPrice = currentdishPrice;
             this.currentdishQuantity = currentdishQuantity;
         }
 
-        public String getCurrentdishName() {
+        String getCurrentdishName() {
             return currentdishName;
         }
 
         public void setCurrentdishName(String name) { this.currentdishName = name; }
 
-        public String getCurrentdishPrice() {
+        String getCurrentdishPrice() {
             return currentdishPrice;
         }
 
@@ -27,7 +24,7 @@ public class CurrentOrder{
             this.currentdishPrice = name;
         }
 
-        public Integer getCurrentdishQuantity() {
+        Integer getCurrentdishQuantity() {
             return currentdishQuantity;
         }
 

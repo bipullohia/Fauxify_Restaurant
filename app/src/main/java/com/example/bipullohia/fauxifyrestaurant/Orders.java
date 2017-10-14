@@ -1,16 +1,13 @@
 package com.example.bipullohia.fauxifyrestaurant;
 
-/**
- * Created by Bipul Lohia on 9/27/2016.
- */
 
-public class Orders {
-    public String orderId, totalitems, totalprice, customername, customeremail, ordertime,
+class Orders {
+    private String orderId, totalitems, totalprice, customername, customeremail, ordertime,
             orderconfirmed, orderdelivered, totalitemsprice, customeraddress, customerorder, deliveryFee;
 
-    public Orders(String orderId, String totalitems, String totalprice, String customername, String customeremail,
-                  String ordertime, String orderconfirmed, String orderdelivered,
-                  String totalitemsprice, String customeraddress, String customerorder, String deliveryFee) {
+    Orders(String orderId, String totalitems, String totalprice, String customername, String customeremail,
+           String ordertime, String orderconfirmed, String orderdelivered,
+           String totalitemsprice, String customeraddress, String customerorder, String deliveryFee) {
         this.orderId = orderId;
         this.totalitems = totalitems;
         this.totalprice = totalprice;
@@ -23,10 +20,9 @@ public class Orders {
         this.customeraddress = customeraddress;
         this.totalitemsprice = totalitemsprice;
         this.deliveryFee = deliveryFee;
-
     }
 
-    public String getOrderId() {
+    String getOrderId() {
         return orderId;
     }
 
@@ -34,7 +30,7 @@ public class Orders {
         this.orderId = name;
     }
 
-    public String getTotalitems() {
+    String getTotalitems() {
         return totalitems;
     }
 
@@ -42,7 +38,7 @@ public class Orders {
         this.totalitems = name;
     }
 
-    public String getTotalprice() {
+    String getTotalprice() {
         return totalprice;
     }
 
@@ -50,7 +46,7 @@ public class Orders {
         this.totalprice = name;
     }
 
-    public String getCustomername() {
+    String getCustomername() {
         return customername;
     }
 
@@ -58,7 +54,7 @@ public class Orders {
         this.customername = name;
     }
 
-    public String getOrdertime() {
+    String getOrdertime() {
         return ordertime;
     }
 
@@ -66,7 +62,7 @@ public class Orders {
         this.ordertime = name;
     }
 
-    public String getOrderconfirmed() {
+    String getOrderconfirmed() {
         return orderconfirmed;
     }
 
@@ -74,7 +70,7 @@ public class Orders {
         this.orderconfirmed = name;
     }
 
-    public String getOrderdelivered() {
+    String getOrderdelivered() {
         return orderdelivered;
     }
 
@@ -82,7 +78,7 @@ public class Orders {
         this.orderdelivered = name;
     }
 
-    public String getCustomeremail() {
+    String getCustomeremail() {
         return customeremail;
     }
 
@@ -90,7 +86,7 @@ public class Orders {
         this.customeremail = name;
     }
 
-    public String getCustomeraddress() {
+    String getCustomeraddress() {
         return customeraddress;
     }
 
@@ -98,7 +94,7 @@ public class Orders {
         this.customeraddress = name;
     }
 
-    public String getCustomerorder() {
+    String getCustomerorder() {
         return customerorder;
     }
 
@@ -106,7 +102,7 @@ public class Orders {
         this.customerorder = name;
     }
 
-    public String getTotalitemsprice() {
+    String getTotalitemsprice() {
         return totalitemsprice;
     }
 
@@ -114,12 +110,11 @@ public class Orders {
         this.totalitemsprice = name;
     }
 
-    public String getDeliveryFee() {
+    String getDeliveryFee() {
         return deliveryFee;
     }
 
     public void setDeliveryFee(String name) {
         this.deliveryFee = name;
     }
-
 }

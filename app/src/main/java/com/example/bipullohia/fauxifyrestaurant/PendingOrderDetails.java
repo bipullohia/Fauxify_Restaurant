@@ -35,26 +35,22 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-/**
- * Created by Bipul Lohia on 9/28/2016.
- */
+import static com.example.bipullohia.fauxifyrestaurant.R.id.deliverytime;
+
 
 public class PendingOrderDetails extends AppCompatActivity {
 
-    Toolbar toolbar;
-    Spinner spinner;
-    ArrayAdapter<CharSequence> adapter;
+    Toolbar mToolbar;
+    Spinner mSpinner;
+    ArrayAdapter<CharSequence> mArrayAdapter;
 
-    private ArrayList<CurrentOrder> dishesList = new ArrayList<>();
-    private CurrentOrderAdapter currentOrderAdapter;
+    private ArrayList<CurrentOrder> mDishesList = new ArrayList<>();
 
-    String customeremail, dishesdata, orderconfirmed, orderdelivered, deliverytime;
-    Button buttonSetAnotherTime, buttonConfirmDelivery, buttonsubmitDeliveryTime, buttonDeliveryConfirmed;
-    private RecyclerView recyclerView;
-    CardView cardviewonclickSetDeliveryTime, cardviewShowDeliveryTime, cardviewDeliveryConfirmation;
-    TextView customerName, customerAddress, orderId, totalPrice, totalItemPrice, totalItems, orderTime, deliveryTime, deliveryFee;
-
-
+    String mCustomerEmail, mDishesData, mOrderConfirmed, mOrderDelivered, mDeliveryTime;
+    Button mSetAnotherTimeButton, mConfirmDeliveryButton, mSubmitDeliveryTimeButton, mDeliveryConfirmedButton;
+    CardView mSetDeliveryTimeCardView, mShowDeliveryTimeCardView, mDeliveryConfirmationCardView;
+    TextView mCustomerNameTextView, mCustomerAddressTextView, mOrderIdTextView, mTotalPriceTextView, mTotalItemPriceTextView,
+            mTotalItemsTextView, mOrderTimeTextView, mDeliveryTimeTextView, mDeliveryFeeTextView;
 
     @Override
     public void onBackPressed() {
@@ -67,65 +63,61 @@ public class PendingOrderDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pending_order_details);
 
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview_orderdetails);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview_orderdetails);
-
-        currentOrderAdapter = new CurrentOrderAdapter(dishesList);
+        CurrentOrderAdapter currentOrderAdapter = new CurrentOrderAdapter(mDishesList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(currentOrderAdapter);
 
-
-        toolbar = (Toolbar) findViewById(R.id.toolbar_cartactivity);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_pendingorder_details);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Order Details");
 
-        cardviewonclickSetDeliveryTime = (CardView) findViewById(R.id.cardview_confirmdelivery);
-        cardviewShowDeliveryTime = (CardView) findViewById(R.id.cardview_showDeliveryTime);
-        cardviewDeliveryConfirmation = (CardView) findViewById(R.id.cardview_deliveryConfirmation);
+        mSetDeliveryTimeCardView = (CardView) findViewById(R.id.cardview_confirmdelivery);
+        mShowDeliveryTimeCardView = (CardView) findViewById(R.id.cardview_show_deliverytime);
+        mDeliveryConfirmationCardView = (CardView) findViewById(R.id.cardview_deliveryConfirmation);
 
-        buttonConfirmDelivery = (Button) findViewById(R.id.button_confirmdelivery);
-        buttonsubmitDeliveryTime = (Button) findViewById(R.id.button_submitdeliverytime);
-        buttonDeliveryConfirmed = (Button) findViewById(R.id.button_deliveryconfirmed);
-        buttonSetAnotherTime = (Button) findViewById(R.id.button_selectanothertime);
-        customerName = (TextView) findViewById(R.id.orderdetails_customername);
-        customerAddress = (TextView) findViewById(R.id.orderdetails_deliveryaddress);
-        orderId = (TextView) findViewById(R.id.orderdetails_orderid);
-        orderTime = (TextView) findViewById(R.id.orderdetails_ordertime);
-        totalItemPrice = (TextView) findViewById(R.id.orderdetails_totalitemsprice);
-        totalItems = (TextView) findViewById(R.id.orderdetails_totalitems);
-        totalPrice = (TextView) findViewById(R.id.orderdetails_totalprice);
-        deliveryTime = (TextView) findViewById(R.id.deliverytime);
-        deliveryFee = (TextView) findViewById(R.id.orderdetails_deliveryfee);
+        mConfirmDeliveryButton = (Button) findViewById(R.id.button_confirmdelivery);
+        mSubmitDeliveryTimeButton = (Button) findViewById(R.id.button_submit_deliverytime);
+        mDeliveryConfirmedButton = (Button) findViewById(R.id.button_deliveryconfirmed);
+        mSetAnotherTimeButton = (Button) findViewById(R.id.button_selectanothertime);
+        mCustomerNameTextView = (TextView) findViewById(R.id.orderdetails_customername);
+        mCustomerAddressTextView = (TextView) findViewById(R.id.orderdetails_deliveryaddress);
+        mOrderIdTextView = (TextView) findViewById(R.id.orderdetails_orderid);
+        mOrderTimeTextView = (TextView) findViewById(R.id.orderdetails_ordertime);
+        mTotalItemPriceTextView = (TextView) findViewById(R.id.orderdetails_totalitemsprice);
+        mTotalItemsTextView = (TextView) findViewById(R.id.orderdetails_totalitems);
+        mTotalPriceTextView = (TextView) findViewById(R.id.orderdetails_totalprice);
+        mDeliveryTimeTextView = (TextView) findViewById(deliverytime);
+        mDeliveryFeeTextView = (TextView) findViewById(R.id.orderdetails_deliveryfee);
 
-        customerName.setText(getIntent().getStringExtra("customername"));
-        customerAddress.setText(getIntent().getStringExtra("customeraddress"));
-        orderId.setText(getIntent().getStringExtra("orderid"));
-        orderTime.setText(getIntent().getStringExtra("ordertime"));
-        totalItemPrice.setText(getIntent().getStringExtra("totalitemprice"));
-        totalPrice.setText(getIntent().getStringExtra("totalprice"));
-        totalItems.setText(getIntent().getStringExtra("totalitems"));
+        mCustomerNameTextView.setText(getIntent().getStringExtra("customername"));
+        mCustomerAddressTextView.setText(getIntent().getStringExtra("customeraddress"));
+        mOrderIdTextView.setText(getIntent().getStringExtra("orderid"));
+        mOrderTimeTextView.setText(getIntent().getStringExtra("ordertime"));
+        mTotalItemPriceTextView.setText(getIntent().getStringExtra("totalitemprice"));
+        mTotalPriceTextView.setText(getIntent().getStringExtra("totalprice"));
+        mTotalItemsTextView.setText(getIntent().getStringExtra("totalitems"));
 
-        customeremail = getIntent().getStringExtra("ordercustemail");
-        dishesdata = getIntent().getStringExtra("customerorder");
-        orderconfirmed = getIntent().getStringExtra("orderconfirmed");
-        orderdelivered = getIntent().getStringExtra("orderdelivered");
-        deliveryFee.setText(getIntent().getStringExtra("deliveryfee"));
-
+        mCustomerEmail = getIntent().getStringExtra("ordercustemail");
+        mDishesData = getIntent().getStringExtra("customerorder");
+        mOrderConfirmed = getIntent().getStringExtra("orderconfirmed");
+        mOrderDelivered = getIntent().getStringExtra("orderdelivered");
+        mDeliveryFeeTextView.setText(getIntent().getStringExtra("deliveryfee"));
 
         checkDeliveryStatus();
 
         try {
-            JSONArray jsonArray = new JSONArray(dishesdata);
+            JSONArray jsonArray = new JSONArray(mDishesData);
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 CurrentOrder currentOrder = new CurrentOrder(jsonObject.getString("dishname"), jsonObject.getString("dishprice"),
                         jsonObject.getInt("dishquantity"));
-                dishesList.add(currentOrder);
-
+                mDishesList.add(currentOrder);
             }
 
             currentOrderAdapter.notifyDataSetChanged();
@@ -134,71 +126,65 @@ public class PendingOrderDetails extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        spinner = (Spinner) findViewById(R.id.spinner);
-        adapter = ArrayAdapter.createFromResource(this, R.array.Timing, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        mSpinner = (Spinner) findViewById(R.id.spinner_delivery_time);
+        mArrayAdapter = ArrayAdapter.createFromResource(this, R.array.Timing, android.R.layout.simple_spinner_item);
+        mArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(mArrayAdapter);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 if (position == 0) {
-                    buttonsubmitDeliveryTime.setVisibility(View.GONE);
+                    mSubmitDeliveryTimeButton.setVisibility(View.GONE);
                 } else {
-                    buttonsubmitDeliveryTime.setVisibility(View.VISIBLE);
-                    String dtime = spinner.getSelectedItem().toString();
-                    deliverytime = dtime.substring(0, 2);
+                    mSubmitDeliveryTimeButton.setVisibility(View.VISIBLE);
+                    String dtime = mSpinner.getSelectedItem().toString();
+                    mDeliveryTime = dtime.substring(0, 2);
 
-                    Log.e("substring", deliverytime);
+                    Log.e("substring", mDeliveryTime);
                 }
                 Log.e("Position", (String) parent.getItemAtPosition(position));
-
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
-        buttonsubmitDeliveryTime.setOnClickListener(new View.OnClickListener() {
+        mSubmitDeliveryTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cardviewonclickSetDeliveryTime.setVisibility(View.GONE);
-                deliveryTime.setText(deliverytime + " Minutes");
-                cardviewShowDeliveryTime.setVisibility(View.VISIBLE);
-                buttonConfirmDelivery.setVisibility(View.VISIBLE);
+                mSetDeliveryTimeCardView.setVisibility(View.GONE);
+                mDeliveryTimeTextView.setText(mDeliveryTime + " Minutes");
+                mShowDeliveryTimeCardView.setVisibility(View.VISIBLE);
+                mConfirmDeliveryButton.setVisibility(View.VISIBLE);
             }
         });
 
-        buttonSetAnotherTime.setOnClickListener(new View.OnClickListener() {
+        mSetAnotherTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cardviewShowDeliveryTime.setVisibility(View.GONE);
-                cardviewonclickSetDeliveryTime.setVisibility(View.VISIBLE);
+                mShowDeliveryTimeCardView.setVisibility(View.GONE);
+                mSetDeliveryTimeCardView.setVisibility(View.VISIBLE);
             }
         });
 
-        buttonConfirmDelivery.setOnClickListener(new View.OnClickListener() {
+        mConfirmDeliveryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 sendDeliveryDetails();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
-
             }
         });
 
-
-        buttonDeliveryConfirmed.setOnClickListener(new View.OnClickListener() {
+        mDeliveryConfirmedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 confirmDelivery();
-
             }
         });
     }
@@ -231,18 +217,15 @@ public class PendingOrderDetails extends AppCompatActivity {
         AlertDialog alert = alertbuilder.create();
         alert.setTitle("Delivery Confirmation");
         alert.show();
-
     }
 
     private void changeDeliveryStatus() {
 
-        new btaskChangeDeliveryStatus().execute();
-
+        new BGTaskChangeDeliveryStatus().execute();
     }
 
-    class btaskChangeDeliveryStatus extends AsyncTask<Void, Void, String> {
+    private class BGTaskChangeDeliveryStatus extends AsyncTask<Void, Void, String> {
         String json_url;
-
 
         @Override
         protected void onPreExecute() {
@@ -253,15 +236,14 @@ public class PendingOrderDetails extends AppCompatActivity {
             String restId = sharedPref.getString("restId", null);
             String restToken = sharedPref.getString("restToken", null);
 
-            json_url = MainActivity.requestURL + "restaurants/" + restId + "/fauxorders/" + orderId + "?access_token=" + restToken;
-            Log.e("json_url", json_url);
-
+            json_url = MainActivity.mRequestURL + "restaurants/" + restId + "/fauxorders/" + orderId + "?access_token=" + restToken;
+            Log.e("finalURL", json_url);
         }
 
         @Override
         protected String doInBackground(Void... voids) {
-            try {
 
+            try {
                 URL url = new URL(json_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
@@ -282,9 +264,8 @@ public class PendingOrderDetails extends AppCompatActivity {
                 JSONObject jo = new JSONObject();
                 jo.put("delivery", joDelivery);
 
-
                 String json = jo.toString();
-                Log.e("udshc", json);
+                Log.e("testChangeDelStatusPost", json);
                 OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
                 out.write(json);
                 out.flush();
@@ -310,36 +291,31 @@ public class PendingOrderDetails extends AppCompatActivity {
                 e.printStackTrace();
             }
             return null;
-
         }
-
     }
-
 
     private void checkDeliveryStatus() {
 
-        if (orderconfirmed.equals("Not Confirmed") && orderdelivered.equals("Not Delivered")) {
+        if (mOrderConfirmed.equals("Not Confirmed") && mOrderDelivered.equals("Not Delivered")) {
+            mSetDeliveryTimeCardView.setVisibility(View.VISIBLE);
 
-            cardviewonclickSetDeliveryTime.setVisibility(View.VISIBLE);
+        } else if (mOrderConfirmed.equals("Confirmed") && mOrderDelivered.equals("Not Delivered")) {
+            mSetDeliveryTimeCardView.setVisibility(View.GONE);
+            mDeliveryConfirmationCardView.setVisibility(View.VISIBLE);
 
-        } else if (orderconfirmed.equals("Confirmed") && orderdelivered.equals("Not Delivered")) {
-
-            cardviewonclickSetDeliveryTime.setVisibility(View.GONE);
-            cardviewDeliveryConfirmation.setVisibility(View.VISIBLE);
-        } else if (orderconfirmed.equals("Confirmed") && orderdelivered.equals("Delivered")) {
-
-            cardviewDeliveryConfirmation.setVisibility(View.GONE);
-            cardviewonclickSetDeliveryTime.setVisibility(View.GONE);
+        } else if (mOrderConfirmed.equals("Confirmed") && mOrderDelivered.equals("Delivered")) {
+            mDeliveryConfirmationCardView.setVisibility(View.GONE);
+            mSetDeliveryTimeCardView.setVisibility(View.GONE);
         }
     }
 
     private void sendDeliveryDetails() {
-        new BackgroundTask().execute();
+        new BGTaskSendDeliveryDetails().execute();
     }
 
-    class BackgroundTask extends AsyncTask<Void, Void, String> {
-        String json_url;
+    private class BGTaskSendDeliveryDetails extends AsyncTask<Void, Void, String> {
 
+        String json_url;
 
         @Override
         protected void onPreExecute() {
@@ -350,8 +326,8 @@ public class PendingOrderDetails extends AppCompatActivity {
             String restId = sharedPref.getString("restId", null);
             String restToken = sharedPref.getString("restToken", null);
 
-            json_url = MainActivity.requestURL + "restaurants/" + restId + "/fauxorders/" + orderId + "?access_token=" + restToken;
-            Log.e("json_url", json_url);
+            json_url = MainActivity.mRequestURL + "restaurants/" + restId + "/fauxorders/" + orderId + "?access_token=" + restToken;
+            Log.e("finalURL", json_url);
         }
 
         @Override
@@ -378,7 +354,6 @@ public class PendingOrderDetails extends AppCompatActivity {
                 JSONObject jo = new JSONObject();
                 jo.put("delivery", joDelivery);
 
-
                 String json = jo.toString();
                 Log.e("udshc", json);
                 OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
@@ -405,12 +380,8 @@ public class PendingOrderDetails extends AppCompatActivity {
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
+
             return null;
-
         }
-
-
     }
-
-
 }

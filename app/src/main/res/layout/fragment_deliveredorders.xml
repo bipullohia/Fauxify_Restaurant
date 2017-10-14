@@ -6,7 +6,7 @@
     android:clickable="true">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/deliveredorderfragment_recyclerview"
+        android:id="@+id/recyclerview_deliveredorder_frag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"

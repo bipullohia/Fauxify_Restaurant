@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:id="@+id/passcodescreenLinearLayout"
-    android:layout_height="match_parent"
     xmlns:cardView="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_passcodescreen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/white">
 
+    <include layout="@layout/toolbar"
+        android:id="@+id/toolbar_passcodescreen" />
+
     <android.support.v7.widget.CardView
-        android:id="@+id/loginCardview"
+        android:id="@+id/cardview_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_margin="16dp"
         android:layout_gravity="center_vertical"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
@@ -32,8 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
-                android:text="Restaurant Login Details"
-                android:textSize="@dimen/headingCardView" />
+                android:textSize="@dimen/headingCardView"
+                android:text="Restaurant Login Details"/>
 
             <View
                 android:layout_width="match_parent"
@@ -41,18 +44,18 @@
                 android:background="@color/headingSeparatorCardView" />
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/view"
                 android:layout_width="wrap_content"
-                android:layout_gravity="center"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="25dp">
 
                 <EditText
-                    android:id="@+id/restaurantUsername"
+                    android:id="@+id/edittext_rest_username"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/spinner"
                     android:inputType="text"
+                    android:textSize="14sp"
+                    android:maxLines="1"
                     android:layout_centerHorizontal="true"
                     android:hint="Enter Username" />
 
@@ -60,20 +63,20 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="wrap_content"
-                android:layout_marginTop="25dp"
-                android:layout_marginBottom="25dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_height="wrap_content">
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="25dp">
 
                 <EditText
-                    android:id="@+id/restaurantPassword"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/edittext_rest_password"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/spinner"
-                    android:layout_centerHorizontal="true"
-                    android:ems="13"
-                    android:hint="Enter Password"
-                    android:inputType="textPassword" />
+                    android:textSize="14sp"
+                    android:maxLines="1"
+                    android:inputType="textPassword"
+                    android:hint="Enter Password"/>
+
             </android.support.design.widget.TextInputLayout>
 
             <View
@@ -82,17 +85,16 @@
                 android:background="@color/sectionSeparatorCardView" />
 
             <Button
-                android:id="@+id/loginButton"
+                android:id="@+id/button_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:onClick="checkRestaurantExistence"
+                android:textAllCaps="false"
                 android:paddingStart="@dimen/paddingNormalButton"
                 android:paddingEnd="@dimen/paddingNormalButton"
                 android:layout_marginTop="5dp"
-                android:layout_gravity="center"
-                android:onClick="checkRestaurantExistence"
-                android:text="Login"
-                android:textAllCaps="false"
-                android:visibility="visible" />
+                android:text="Login"/>
 
         </LinearLayout>
 

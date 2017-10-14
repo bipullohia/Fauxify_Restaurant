@@ -11,43 +11,38 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by Bipul Lohia on 11/5/2016.
- */
 
-public class DishesOfferedAdapter extends BaseExpandableListAdapter {
+class DishesOfferedAdapter extends BaseExpandableListAdapter {
 
+    private List<String> mHeaderTitlesList;
+    private HashMap<String, List<DishMenu>> mChildTitlesHashMap;
+    private Context mContext;
 
-    private List<String> header_titles;
-    private HashMap<String, List<DishMenu>> child_titles;
-    private Context ctx;
+    DishesOfferedAdapter(Context context, List<String> mHeaderTitlesList, HashMap<String, List<DishMenu>> mChildTitlesHashMap) {
 
-    DishesOfferedAdapter(Context ctx, List<String> header_titles, HashMap<String, List<DishMenu>> child_titles) {
-
-        this.ctx = ctx;
-        this.child_titles = child_titles;
-        this.header_titles = header_titles;
-
+        this.mContext = context;
+        this.mChildTitlesHashMap = mChildTitlesHashMap;
+        this.mHeaderTitlesList = mHeaderTitlesList;
     }
 
     @Override
     public int getGroupCount() {
-        return header_titles.size();
+        return mHeaderTitlesList.size();
     }
 
     @Override
     public int getChildrenCount(int i) {
-        return child_titles.get(header_titles.get(i)).size();
+        return mChildTitlesHashMap.get(mHeaderTitlesList.get(i)).size();
     }
 
     @Override
     public Object getGroup(int i) {
-        return header_titles.get(i);
+        return mHeaderTitlesList.get(i);
     }
 
     @Override
     public Object getChild(int i, int i1) {
-        return child_titles.get(header_titles.get(i)).get(i1);
+        return mChildTitlesHashMap.get(mHeaderTitlesList.get(i)).get(i1);
     }
 
     @Override
@@ -72,46 +67,43 @@ public class DishesOfferedAdapter extends BaseExpandableListAdapter {
 
         if (view == null) {
 
-            LayoutInflater layoutInflater = (LayoutInflater) this.ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater layoutInflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.dishesoffered_parentviewlist, null);
         }
 
-        TextView textView = (TextView) view.findViewById(R.id.parent_textview);
-        textView.setPadding(108, 0, 0, 0);
-         textView.setText(title);
+        TextView titleParentTextView = (TextView) view.findViewById(R.id.textview_parent);
+        titleParentTextView.setPadding(108, 0, 0, 0);
+        titleParentTextView.setText(title);
 
         return view;
     }
 
-
     @Override
     public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
 
-       DishMenu child = (DishMenu) getChild(i,i1);
-
+       DishMenu childDishMenu = (DishMenu) getChild(i,i1);
 
         if (view == null) {
-
-            LayoutInflater layoutInflater = (LayoutInflater) this.ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater layoutInflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.dishesoffered_childviewlist, null);
         }
 
-        ImageView imgVeg = (ImageView) view.findViewById(R.id.isVegDish);
-        ImageView imgNonveg = (ImageView) view.findViewById(R.id.isNonvegDish);
+        ImageView vegImageView = (ImageView) view.findViewById(R.id.isVegDish);
+        ImageView nonVegImageView = (ImageView) view.findViewById(R.id.isNonvegDish);
 
-        TextView textView = (TextView) view.findViewById(R.id.child_textview);
-        TextView textView1 = (TextView) view.findViewById(R.id.child_textviewprice);
-        textView.setText(child.getdishName());
-        textView1.setText(child.getdishPrice());
+        TextView dishNameTextView = (TextView) view.findViewById(R.id.child_dishname_textview);
+        TextView dishPriceTextView = (TextView) view.findViewById(R.id.child_dishprice_textview);
+        dishNameTextView.setText(childDishMenu.getdishName());
+        dishPriceTextView.setText(childDishMenu.getdishPrice());
 
-        if(child.getIsVeg()==1){
-            imgNonveg.setVisibility(View.GONE);
-            imgVeg.setVisibility(View.VISIBLE);
+        if(childDishMenu.getIsVeg()==1){
+            nonVegImageView.setVisibility(View.GONE);
+            vegImageView.setVisibility(View.VISIBLE);
         }
 
-        else if(child.getIsVeg()==0){
-            imgVeg.setVisibility(View.GONE);
-            imgNonveg.setVisibility(View.VISIBLE);
+        else if(childDishMenu.getIsVeg()==0){
+            vegImageView.setVisibility(View.GONE);
+            nonVegImageView.setVisibility(View.VISIBLE);
         }
 
         return view;

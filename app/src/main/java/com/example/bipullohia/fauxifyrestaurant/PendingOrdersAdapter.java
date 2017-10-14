@@ -2,7 +2,6 @@ package com.example.bipullohia.fauxifyrestaurant;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,39 +12,35 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by Bipul Lohia on 9/27/2016.
- */
 
-public class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdapter.MyViewHolder> {
+class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdapter.MyViewHolder> {
 
-    public static ArrayList<Orders> orderList;
+    private static ArrayList<Orders> orderList;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private static final String TAG = "error";
-        public TextView orderId, custName, orderTime, totalPrice, orderDelivered, orderConfirmed;
+    class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        TextView mOrderIdTextView, mCustomerNameTextView, mOrderTimeTextView, mTotalPriceTextView,
+                 mOrderDeliveredTextView, mOrderConfirmedTextView;
         Context context;
-        ImageView redConfirm, greenConfirm, redDeliver, greenDeliver;
+        ImageView mRedConfirmImageView, mGreenConfirmImageView, mRedDeliverTextView, mGreenDeliverTextView;
 
-        public MyViewHolder(View view) {
+        MyViewHolder(View view) {
             super(view);
 
             context = view.getContext();
             view.setOnClickListener(this);
 
-            orderId = (TextView) view.findViewById(R.id.orderrow_orderid);
-            orderTime = (TextView) view.findViewById(R.id.orderTime);
-            custName = (TextView) view.findViewById(R.id.orderrow_custname);
-            //totalItems = (TextView) view.findViewById(R.id.orderrow_totalitems);
-            totalPrice = (TextView) view.findViewById(R.id.orderrow_totalprice);
-            orderConfirmed = (TextView) view.findViewById(R.id.orderrow_orderconfirmed);
-            orderDelivered = (TextView) view.findViewById(R.id.orderrow_orderdelivered);
-            redConfirm = (ImageView) view.findViewById(R.id.redConfirmImg);
-            greenConfirm = (ImageView) view.findViewById(R.id.greenConfirmImg);
-            redDeliver = (ImageView) view.findViewById(R.id.redDeliverImg);
-            greenDeliver = (ImageView) view.findViewById(R.id.greenDeliverImg);
+            mOrderIdTextView = (TextView) view.findViewById(R.id.orderrow_orderid);
+            mOrderTimeTextView = (TextView) view.findViewById(R.id.orderrow_ordertime);
+            mCustomerNameTextView = (TextView) view.findViewById(R.id.orderrow_custname);
+            mTotalPriceTextView = (TextView) view.findViewById(R.id.orderrow_totalprice);
+            mOrderConfirmedTextView = (TextView) view.findViewById(R.id.orderrow_orderconfirmed);
+            mOrderDeliveredTextView = (TextView) view.findViewById(R.id.orderrow_orderdelivered);
+            mRedConfirmImageView = (ImageView) view.findViewById(R.id.img_red_confirm);
+            mGreenConfirmImageView = (ImageView) view.findViewById(R.id.img_green_confirm);
+            mRedDeliverTextView = (ImageView) view.findViewById(R.id.img_deliver_red);
+            mGreenDeliverTextView = (ImageView) view.findViewById(R.id.img_deliver_green);
         }
-
 
         @Override
         public void onClick(View v) {
@@ -70,12 +65,10 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdap
             intent.putExtra("deliveryfee", orders.getDeliveryFee());
 
             context.startActivity(intent);
-
         }
     }
 
-
-    public PendingOrdersAdapter(ArrayList<Orders> orderList) {
+    PendingOrdersAdapter(ArrayList<Orders> orderList) {
         PendingOrdersAdapter.orderList = orderList;
     }
 
@@ -84,21 +77,17 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdap
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.ordersfragment_rowlayout, parent, false);
 
-
-
         return new MyViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Orders orders = orderList.get(position);
-        holder.orderId.setText(orders.getOrderId());
-        //holder.orderTime.setText(orders.getOrdertime());
-        holder.custName.setText(orders.getCustomername());
-        holder.totalPrice.setText(orders.getTotalprice());
-        //holder.totalItems.setText(orders.getTotalitems());
-        holder.orderConfirmed.setText(orders.getOrderconfirmed());
-        holder.orderDelivered.setText(orders.getOrderdelivered());
+        holder.mOrderIdTextView.setText(orders.getOrderId());
+        holder.mCustomerNameTextView.setText(orders.getCustomername());
+        holder.mTotalPriceTextView.setText(orders.getTotalprice());
+        holder.mOrderConfirmedTextView.setText(orders.getOrderconfirmed());
+        holder.mOrderDeliveredTextView.setText(orders.getOrderdelivered());
 
         String timestamp = orders.getOrdertime();
         String orderDate = timestamp.substring(0, 2);
@@ -128,42 +117,35 @@ public class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdap
             orderTiming = orderTiming + timestamp.substring(20);
         }
 
-        holder.orderTime.setText("Ordered on " + orderDate + " " + orderMonth + " " + orderYear + " at " + orderTiming);
+        holder.mOrderTimeTextView.setText("Ordered on " + orderDate + " " + orderMonth + " " + orderYear + " at " + orderTiming);
         //02-10-2017 09:59:15 AM - timestamp format
-
 
         if (orders.getOrderconfirmed().equals("Confirmed")) {
 
-            //holder.orderConfirmed.setTextColor(ContextCompat.getColor(holder.context, R.color.green));
-            holder.redConfirm.setVisibility(View.GONE);
-            holder.greenConfirm.setVisibility(View.VISIBLE);
+            holder.mRedConfirmImageView.setVisibility(View.GONE);
+            holder.mGreenConfirmImageView.setVisibility(View.VISIBLE);
         } else {
 
-            //holder.orderConfirmed.setTextColor(ContextCompat.getColor(holder.context, R.color.red));
-            holder.greenConfirm.setVisibility(View.GONE);
-            holder.redConfirm.setVisibility(View.VISIBLE);
+            holder.mGreenConfirmImageView.setVisibility(View.GONE);
+            holder.mRedConfirmImageView.setVisibility(View.VISIBLE);
         }
-
 
         if (orders.getOrderdelivered().equals("Delivered")) {
 
-            //holder.orderDelivered.setTextColor(ContextCompat.getColor(holder.context, R.color.green));
-            holder.redDeliver.setVisibility(View.GONE);
-            holder.greenDeliver.setVisibility(View.VISIBLE);
+            holder.mRedDeliverTextView.setVisibility(View.GONE);
+            holder.mGreenDeliverTextView.setVisibility(View.VISIBLE);
         } else{
 
-            //holder.orderDelivered.setTextColor(ContextCompat.getColor(holder.context, R.color.red));
-            holder.greenDeliver.setVisibility(View.GONE);
-            holder.redDeliver.setVisibility(View.VISIBLE);
+            holder.mGreenDeliverTextView.setVisibility(View.GONE);
+            holder.mRedDeliverTextView.setVisibility(View.VISIBLE);
         }
 
-        Log.e("dishesinfo", orders.getOrderId());
+        Log.e("dishesinfo orderId", orders.getOrderId());
     }
 
     @Override
     public int getItemCount() {
         return orderList.size();
     }
-
 }
 

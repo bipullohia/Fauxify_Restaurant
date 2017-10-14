@@ -1,21 +1,17 @@
 package com.example.bipullohia.fauxifyrestaurant;
 
-/**
- * Created by Bipul Lohia on 11/6/2016.
- */
 
+class DishMenu {
+    private String dishName, dishPrice, dishId; private Integer isVeg;
 
-public class DishMenu {
-    public String dishName, dishPrice, dishId; public Integer isVeg;
-
-    public DishMenu(String currentdishName, String currentdishPrice, String dishId, Integer isVeg) {
+    DishMenu(String currentdishName, String currentdishPrice, String dishId, Integer isVeg) {
         this.dishName = currentdishName;
         this.dishPrice = currentdishPrice;
         this.dishId = dishId;
         this.isVeg = isVeg;
     }
 
-    public String getdishName() {
+    String getdishName() {
         return dishName;
     }
 
@@ -23,7 +19,7 @@ public class DishMenu {
         this.dishName = name;
     }
 
-    public String getdishPrice() {
+    String getdishPrice() {
         return dishPrice;
     }
 
@@ -31,7 +27,7 @@ public class DishMenu {
         this.dishPrice = name;
     }
 
-    public String getDishId() {
+    String getDishId() {
         return dishId;
     }
 
@@ -39,7 +35,7 @@ public class DishMenu {
         this.dishId = name;
     }
 
-    public Integer getIsVeg() {
+    Integer getIsVeg() {
         return isVeg;
     }
 

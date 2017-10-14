@@ -17,66 +17,64 @@ import java.util.ArrayList;
 
 public class DeliveredOrderDetails extends AppCompatActivity {
 
-    Toolbar toolbar;
+    Toolbar mToolbar;
+    private ArrayList<CurrentOrder> mDishesList = new ArrayList<>();
 
-    private ArrayList<CurrentOrder> dishesList = new ArrayList<>();
-    private CurrentOrderAdapter currentOrderAdapter;
-
-    String customeremail, dishesdata, orderconfirmed, orderdelivered;
-    private RecyclerView recyclerView;
-    TextView customerName, customerAddress, orderId, totalPrice, totalItemPrice, totalItems, orderTime, deliveryTime, deliveryFee;
+    String mCustomerEmail, mDishesData, mOrderConfirmed, mOrderDelivered;
+    TextView mCustomerNameTextView, mCustomerAddressTextView, mOrderIdTextView, mTotalPriceTextView,
+             mTotalItemPriceTextView, mTotalItemsTextView, mOrderTimeTextView, mDeliveryTimeTextView, mDeliveryFeeTextView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivered_order_details);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview_orderdetails);
-
-        currentOrderAdapter = new CurrentOrderAdapter(dishesList);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerview_orderdetails);
+        CurrentOrderAdapter currentOrderAdapter = new CurrentOrderAdapter(mDishesList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(currentOrderAdapter);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_cartactivity);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_deliveredorder_details);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Order Details");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mCustomerNameTextView = (TextView) findViewById(R.id.orderdetails_customername);
+        mCustomerAddressTextView = (TextView) findViewById(R.id.orderdetails_deliveryaddress);
+        mOrderIdTextView = (TextView) findViewById(R.id.orderdetails_orderid);
+        mOrderTimeTextView = (TextView) findViewById(R.id.orderdetails_ordertime);
+        mTotalItemPriceTextView = (TextView) findViewById(R.id.orderdetails_totalitemsprice);
+        mTotalItemsTextView = (TextView) findViewById(R.id.orderdetails_totalitems);
+        mTotalPriceTextView = (TextView) findViewById(R.id.orderdetails_totalprice);
+        mDeliveryTimeTextView = (TextView) findViewById(R.id.deliverytime);
+        mDeliveryFeeTextView = (TextView) findViewById(R.id.orderdetails_deliveryfee);
 
-        customerName = (TextView) findViewById(R.id.orderdetails_customername);
-        customerAddress = (TextView) findViewById(R.id.orderdetails_deliveryaddress);
-        orderId = (TextView) findViewById(R.id.orderdetails_orderid);
-        orderTime = (TextView) findViewById(R.id.orderdetails_ordertime);
-        totalItemPrice = (TextView) findViewById(R.id.orderdetails_totalitemsprice);
-        totalItems = (TextView) findViewById(R.id.orderdetails_totalitems);
-        totalPrice = (TextView) findViewById(R.id.orderdetails_totalprice);
-        deliveryTime = (TextView) findViewById(R.id.deliverytime);
-        deliveryFee = (TextView) findViewById(R.id.orderdetails_deliveryfee);
+        mCustomerNameTextView.setText(getIntent().getStringExtra("customername"));
+        mCustomerAddressTextView.setText(getIntent().getStringExtra("customeraddress"));
+        mOrderIdTextView.setText(getIntent().getStringExtra("orderid"));
+        mOrderTimeTextView.setText(getIntent().getStringExtra("ordertime"));
+        mTotalItemPriceTextView.setText(getIntent().getStringExtra("totalitemprice"));
+        mTotalPriceTextView.setText(getIntent().getStringExtra("totalprice"));
+        mTotalItemsTextView.setText(getIntent().getStringExtra("totalitems"));
+        mDeliveryFeeTextView.setText(getIntent().getStringExtra("deliveryfee"));
 
-        customerName.setText(getIntent().getStringExtra("customername"));
-        customerAddress.setText(getIntent().getStringExtra("customeraddress"));
-        orderId.setText(getIntent().getStringExtra("orderid"));
-        orderTime.setText(getIntent().getStringExtra("ordertime"));
-        totalItemPrice.setText(getIntent().getStringExtra("totalitemprice"));
-        totalPrice.setText(getIntent().getStringExtra("totalprice"));
-        totalItems.setText(getIntent().getStringExtra("totalitems"));
-        customeremail = getIntent().getStringExtra("ordercustemail");
-        dishesdata = getIntent().getStringExtra("customerorder");
-        orderconfirmed = getIntent().getStringExtra("orderconfirmed");
-        orderdelivered = getIntent().getStringExtra("orderdelivered");
-        deliveryFee.setText(getIntent().getStringExtra("deliveryfee"));
+        mDishesData = getIntent().getStringExtra("customerorder");
+
+        //unused info - can be used in the future
+        mCustomerEmail = getIntent().getStringExtra("ordercustemail");
+        mOrderConfirmed = getIntent().getStringExtra("orderconfirmed");
+        mOrderDelivered = getIntent().getStringExtra("orderdelivered");
 
         try {
-            JSONArray jsonArray = new JSONArray(dishesdata);
+            JSONArray jsonArray = new JSONArray(mDishesData);
 
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 CurrentOrder currentOrder = new CurrentOrder(jsonObject.getString("dishname"), jsonObject.getString("dishprice"),
                         jsonObject.getInt("dishquantity"));
-                dishesList.add(currentOrder);
-
+                mDishesList.add(currentOrder);
             }
 
             currentOrderAdapter.notifyDataSetChanged();
@@ -84,8 +82,5 @@ public class DeliveredOrderDetails extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
     }
-
 }

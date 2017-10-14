@@ -38,21 +38,18 @@ import java.util.Iterator;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class DishesOfferedFragment extends Fragment {
 
-    ExpandableListView expandableListView;
-    DishesOfferedAdapter dishesOfferedAdapter;
-    List<String> listParentData;
+    ExpandableListView mExpandableListView;
+    DishesOfferedAdapter mDishesOfferedAdapter;
+    List<String> mParentDataList;
     JSONObject objMenu, jobmenu;
     String categoryName, category;
-    HashMap<String, List<DishMenu>> listChildData;
-    Integer noOfCategories;
-    Button addCategory;
+    HashMap<String, List<DishMenu>> mChildDataHashMap;
+    Integer mNoOfCategories;
+    Button mAddCategoryButton;
     JSONArray jsonArray;
-    ArrayList<String> categories;
+    ArrayList<String> mCategoriesList;
 
     public DishesOfferedFragment() {
         // Required empty public constructor
@@ -66,19 +63,19 @@ public class DishesOfferedFragment extends Fragment {
 
         View rootview = inflater.inflate(R.layout.fragment_dishes_offered, container, false);
 
-        expandableListView = (ExpandableListView) rootview.findViewById(R.id.expandable_listview);
-        addCategory = (Button) rootview.findViewById(R.id.addcategory_fragdishoff);
+        mExpandableListView = (ExpandableListView) rootview.findViewById(R.id.expandable_listview);
+        mAddCategoryButton = (Button) rootview.findViewById(R.id.button_add_category);
 
         prepareDishData();
 
-        addCategory.setOnClickListener(new View.OnClickListener() {
+        mAddCategoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 AlertDialog.Builder alertbuilder = new AlertDialog.Builder(getContext());
                 final EditText txtUrl = new EditText(getContext());
 
-                alertbuilder.setMessage("Enter a new Category name")
+                alertbuilder.setMessage("Enter a new Category name ")
                         .setCancelable(true)
                         .setView(txtUrl)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -92,11 +89,11 @@ public class DishesOfferedFragment extends Fragment {
                                             categoryName = abc.substring(0, 1).toUpperCase() + abc.substring(1);
                                             sendCategoryName();
                                             Toast.makeText(getContext(), categoryName, Toast.LENGTH_SHORT).show();
+
                                         } else {
-
-                                            Toast.makeText(getContext(), "You entered blank text", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(), "You entered blank text. Try again!",
+                                                    Toast.LENGTH_SHORT).show();
                                         }
-
                                     }
                                 }
                         )
@@ -111,25 +108,24 @@ public class DishesOfferedFragment extends Fragment {
                 AlertDialog alert = alertbuilder.create();
                 alert.setTitle("New Category");
                 alert.show();
-
             }
         });
 
-        expandableListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        mExpandableListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                long p = expandableListView.getExpandableListPosition(i);
+                long position = mExpandableListView.getExpandableListPosition(i);
 
-                int itemType = ExpandableListView.getPackedPositionType(p);
-                final int groupPosition = ExpandableListView.getPackedPositionGroup(p);
-                final int childPosition = ExpandableListView.getPackedPositionChild(p);
+                int itemType = ExpandableListView.getPackedPositionType(position);
+                final int groupPosition = ExpandableListView.getPackedPositionGroup(position);
+                final int childPosition = ExpandableListView.getPackedPositionChild(position);
 
                 if (itemType == ExpandableListView.PACKED_POSITION_TYPE_GROUP) {
 
-                    category = listParentData.get(groupPosition);
-                    //Toast.makeText(getContext(), category, Toast.LENGTH_SHORT).show();
-                    CharSequence options[] = new CharSequence[]{"ADD an Item", "DELETE the Category"};
+                    category = mParentDataList.get(groupPosition);
+
+                    CharSequence options[] = new CharSequence[]{"Add an Item", "Delete the Category"};
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setTitle("Select an option for " + category + ":");
@@ -140,16 +136,16 @@ public class DishesOfferedFragment extends Fragment {
                             if (which == 0) {
 
                                 Intent intent = new Intent(getContext(), AddDishIntoCategory.class);
-                                intent.putExtra("Category", category);
+                                intent.putExtra("category", category);
                                 intent.putExtra("categoryData", jsonArray.toString());
-                                intent.putStringArrayListExtra("categoryList", categories);
+                                intent.putStringArrayListExtra("categoryList", mCategoriesList);
 
                                 startActivity(intent);
 
                             } else if (which == 1) {
 
                                 AlertDialog.Builder alertbuilder = new AlertDialog.Builder(getContext());
-                                alertbuilder.setMessage("DELETE Category " + "''" + category + "'' ?")
+                                alertbuilder.setMessage("Delete Category " + "''" + category + "'' ?")
                                         .setCancelable(true)
                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
@@ -169,24 +165,26 @@ public class DishesOfferedFragment extends Fragment {
 
                                 AlertDialog alert = alertbuilder.create();
                                 alert.show();
-
-
                             }
                         }
                     });
                     builder.show();
-
                     return true;
+
                 } else if (itemType == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
 
-                    category = listParentData.get(groupPosition);
+                    category = mParentDataList.get(groupPosition);
 
-                    final String currentitem = listChildData.get(listParentData.get(groupPosition)).get(childPosition).getdishName();
-                    final String currentitemid = listChildData.get(listParentData.get(groupPosition)).get(childPosition).getDishId();
-                    final String currentitemprice = listChildData.get(listParentData.get(groupPosition)).get(childPosition).getdishPrice();
-                    final int currentitemidtype = listChildData.get(listParentData.get(groupPosition)).get(childPosition).getIsVeg();
+                    final String currentitem = mChildDataHashMap
+                            .get(mParentDataList.get(groupPosition)).get(childPosition).getdishName();
+                    final String currentitemid = mChildDataHashMap
+                            .get(mParentDataList.get(groupPosition)).get(childPosition).getDishId();
+                    final String currentitemprice = mChildDataHashMap
+                            .get(mParentDataList.get(groupPosition)).get(childPosition).getdishPrice();
+                    final int currentitemidtype = mChildDataHashMap
+                            .get(mParentDataList.get(groupPosition)).get(childPosition).getIsVeg();
 
-                    CharSequence options[] = new CharSequence[]{"MODIFY " + currentitem, "DELETE " + currentitem};
+                    CharSequence options[] = new CharSequence[]{"Modify " + currentitem, "Delete " + currentitem};
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setTitle("Select an Option:");
@@ -197,7 +195,7 @@ public class DishesOfferedFragment extends Fragment {
                             if (which == 0) {
 
                                 Intent intent1 = new Intent(getContext(), ModifyDishIntoCategory.class);
-                                intent1.putExtra("Category", category);
+                                intent1.putExtra("category", category);
 
                                 intent1.putExtra("dishname", currentitem);
                                 intent1.putExtra("dishprice", currentitemprice);
@@ -205,13 +203,13 @@ public class DishesOfferedFragment extends Fragment {
                                 intent1.putExtra("dishtype", currentitemidtype);
 
                                 intent1.putExtra("categoryData", jsonArray.toString());
-                                intent1.putStringArrayListExtra("categoryList", categories);
+                                intent1.putStringArrayListExtra("categoryList", mCategoriesList);
                                 startActivity(intent1);
 
                             } else if (which == 1) {
 
                                 AlertDialog.Builder alertbuilder1 = new AlertDialog.Builder(getContext());
-                                alertbuilder1.setMessage("DELETE ''" + currentitem + "'' ?")
+                                alertbuilder1.setMessage("Delete ''" + currentitem + "'' ?")
                                         .setCancelable(true)
                                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
@@ -219,66 +217,37 @@ public class DishesOfferedFragment extends Fragment {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
 
-
                                                 jobmenu = new JSONObject();
+                                                for (int i = 0; i < mCategoriesList.size(); i++) {
 
-                                                for (int i = 0; i < categories.size(); i++) {
-
-                                                    if (!categories.get(i).equals(category)) {
+                                                    if (!mCategoriesList.get(i).equals(category)) {
 
                                                         try {
-                                                            jobmenu.accumulate(categories.get(i), jsonArray.get(i));
+                                                            jobmenu.accumulate(mCategoriesList.get(i), jsonArray.get(i));
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();
                                                         }
 
-                                                    } else if (categories.get(i).equals(category)) {
+                                                    } else if (mCategoriesList.get(i).equals(category)) {
 
                                                         JSONObject jobb;
-                                                       // jodishid = new JSONObject();
 
                                                         try {
-
 
                                                             jobb = jsonArray.getJSONObject(i);
                                                             jobb.remove(currentitemid);
-                                                            //Iterator x = jobb.keys();
-
-                                                            //while (x.hasNext()) {
-
-
-                                                            //  String key = (String) x.next();
-
-
-                                                            //   if (!key.equals(currentitemid)) {
-
-                                                            //  jodishid.put(key, jobb.get(key));
-                                                            // }
-                                                            jobmenu.accumulate(categories.get(i), jobb);
+                                                            jobmenu.accumulate(mCategoriesList.get(i), jobb);
 
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();
                                                         }
-
-
                                                     }
-
                                                 }
-
-
-
 
                                             Log.e("final json",String.valueOf(jobmenu));
 
                                             deleteItem();
-
-                                            Toast.makeText(
-
-                                            getContext(),
-
-                                            "Item Deleted "+currentitem,Toast.LENGTH_SHORT).
-
-                                            show();
+                                            Toast.makeText(getContext(),"Item Deleted "+currentitem,Toast.LENGTH_SHORT).show();
 
                                         }
                             })
@@ -292,31 +261,18 @@ public class DishesOfferedFragment extends Fragment {
                             AlertDialog alert = alertbuilder1.create();
                             alert.show();
                         }
-
                     }
                 });
+
                 builder.show();
-
-
                 return true;
             }
-
-            else
-
-            {
+            else{
                 return false;
             }
-
-
         }
-
-
-    }
-
-    );
-
+    });
     return rootview;
-
 }
 
     private void deleteItem() {
@@ -332,30 +288,22 @@ public class DishesOfferedFragment extends Fragment {
             shouldRefreshOnResume = false;
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.detach(DishesOfferedFragment.this).attach(DishesOfferedFragment.this).commit();
-
         }
     }
 
-
     private void deleteCategory() {
-
         new bTaskDeleteCategory().execute();
     }
 
     private void sendCategoryName() {
-
-
         new bTaskAddCategory().execute();
-
     }
 
     private void prepareDishData() {
-
-        new bgroundtaskPrepareDishData().execute();
-
+        new BGTaskPrepareDishData().execute();
     }
 
-class bgroundtaskPrepareDishData extends AsyncTask<Void, Void, String> {
+private class BGTaskPrepareDishData extends AsyncTask<Void, Void, String> {
 
     String json_url;
     String JSON_STRING;
@@ -369,7 +317,7 @@ class bgroundtaskPrepareDishData extends AsyncTask<Void, Void, String> {
         sharedPref = DishesOfferedFragment.this.getActivity().getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
         String restId = sharedPref.getString("restId", null);
 
-        json_url = MainActivity.requestURL + "Restaurants/" + restId;
+        json_url = MainActivity.mRequestURL + "Restaurants/" + restId;
         pd = ProgressDialog.show(getContext(), "", "Loading Dishes offered...", false);
     }
 
@@ -377,7 +325,6 @@ class bgroundtaskPrepareDishData extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... params) {
 
         try {
-
             URL urll = new URL(json_url);
             HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
@@ -393,7 +340,7 @@ class bgroundtaskPrepareDishData extends AsyncTask<Void, Void, String> {
             httpConnection.disconnect();
             String resultjson = stringBuilder.toString().trim();
 
-            categories = new ArrayList<String>();
+            mCategoriesList = new ArrayList<String>();
 
             jobject = new JSONObject(resultjson);
             JSONObject job = jobject.getJSONObject("Menu");
@@ -402,14 +349,14 @@ class bgroundtaskPrepareDishData extends AsyncTask<Void, Void, String> {
 
             Iterator x = job.keys();
             jsonArray = new JSONArray();
-            noOfCategories = 0;
+            mNoOfCategories = 0;
 
             while (x.hasNext()) {
 
                 String key = (String) x.next();
-                categories.add(key);
+                mCategoriesList.add(key);
                 jsonArray.put(job.get(key));
-                noOfCategories++;
+                mNoOfCategories++;
             }
 
         } catch (IOException | JSONException e) {
@@ -422,14 +369,13 @@ class bgroundtaskPrepareDishData extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String s) {
 
-        listParentData = new ArrayList<String>();
-        listChildData = new HashMap<String, List<DishMenu>>();
+        mParentDataList = new ArrayList<String>();
+        mChildDataHashMap = new HashMap<String, List<DishMenu>>();
 
-        for (int i = 0; i <= noOfCategories - 1; i++) {
+        for (int i = 0; i <= mNoOfCategories - 1; i++) {
 
             try {
-
-                listParentData.add(categories.get(i));
+                mParentDataList.add(mCategoriesList.get(i));
                 String categorydetails = String.valueOf(jsonArray.getJSONObject(i));
 
                 JSONObject jo = new JSONObject(categorydetails);
@@ -453,21 +399,20 @@ class bgroundtaskPrepareDishData extends AsyncTask<Void, Void, String> {
                 for (int j = 0; j <= (dishId.size() - 1); j++) {
 
                     JSONObject jsob = new JSONObject(dishDetails.get(j));
-
                     DishMenu dishes = new DishMenu(jsob.getString("dishname"), jsob.getString("dishprice"),
                             dishId.get(j), jsob.getInt("isveg"));
                     dishlist.add(dishes);
                 }
 
-                listChildData.put(listParentData.get(i), dishlist);
+                mChildDataHashMap.put(mParentDataList.get(i), dishlist);
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        dishesOfferedAdapter = new DishesOfferedAdapter(getContext(), listParentData, listChildData);
-        expandableListView.setAdapter(dishesOfferedAdapter);
+        mDishesOfferedAdapter = new DishesOfferedAdapter(getContext(), mParentDataList, mChildDataHashMap);
+        mExpandableListView.setAdapter(mDishesOfferedAdapter);
 
         pd.dismiss();
     }
@@ -477,7 +422,6 @@ class bgroundtaskPrepareDishData extends AsyncTask<Void, Void, String> {
 private class bTaskAddCategory extends AsyncTask<Void, Void, String>
 
 {
-
     String json_url, userId, userToken;
 
     @Override
@@ -488,16 +432,13 @@ private class bTaskAddCategory extends AsyncTask<Void, Void, String>
         userId = sharedPref.getString("restId", null);
         userToken = sharedPref.getString("restToken", null);
 
-        json_url = MainActivity.requestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
-
-
+        json_url = MainActivity.mRequestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
     }
 
     @Override
     protected String doInBackground(Void... voids) {
 
         try {
-
             URL urll = new URL(json_url);
             HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
@@ -540,13 +481,11 @@ private class bTaskAddCategory extends AsyncTask<Void, Void, String>
                 System.out.println(httpConnection.getResponseMessage());
             }
 
-
             Log.e("test", json);
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
         return null;
-
     }
 
     @Override
@@ -571,33 +510,28 @@ private class bTaskDeleteCategory extends AsyncTask<Void, Void, String> {
         userId = sharedPref.getString("restId", null);
         userToken = sharedPref.getString("restToken", null);
 
-        json_url = MainActivity.requestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
+        json_url = MainActivity.mRequestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
 
-        Log.e("categories", categories.toString());
+        Log.e("CategoriesList", mCategoriesList.toString());
 
-        for (int i = 0; i < categories.size(); i++) {
+        for (int i = 0; i < mCategoriesList.size(); i++) {
 
-            if (!categories.get(i).equals(category)) {
+            if (!mCategoriesList.get(i).equals(category)) {
 
-                Log.e("ismatch", String.valueOf(!categories.get(i).equals(category)) + String.valueOf(categories.get(i)) + "  " + category);
-                categories1.add(categories.get(i));
+                Log.e("ismatch", String.valueOf(!mCategoriesList.get(i).equals(category)) + String.valueOf(mCategoriesList.get(i)) + "  " + category);
+                categories1.add(mCategoriesList.get(i));
                 try {
                     jsonArray1.put(jsonArray.get(i));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-
         }
-
-        Log.e("abcdefghi", categories1.toString() + "   " + jsonArray1.toString());
-
     }
 
     @Override
     protected String doInBackground(Void... voids) {
         try {
-
             URL urll = new URL(json_url);
             HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
@@ -608,14 +542,12 @@ private class bTaskDeleteCategory extends AsyncTask<Void, Void, String> {
             httpConnection.setRequestProperty("Accept", "application/json");
             httpConnection.setRequestProperty("Content-Type", "application/json");
 
-
             JSONObject menu = new JSONObject();
             JSONObject job = new JSONObject();
 
             for (int i = 0; i < categories1.size(); i++) {
 
                 job.put(categories1.get(i), jsonArray1.get(i));
-
             }
 
             menu.accumulate("Menu", job);
@@ -641,13 +573,11 @@ private class bTaskDeleteCategory extends AsyncTask<Void, Void, String> {
                 System.out.println(httpConnection.getResponseMessage());
             }
 
-
-            Log.e("test234", json);
+            Log.e("test", json);
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
         return null;
-
     }
 
     @Override
@@ -671,17 +601,15 @@ private class bTaskDeleteItem extends AsyncTask<Void, Void, String>
         userId = sharedPref.getString("restId", null);
         userToken = sharedPref.getString("restToken", null);
 
-        json_url = MainActivity.requestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
-
+        json_url = MainActivity.mRequestURL + "Restaurants/" + userId + "?access_token=" + userToken;
     }
 
     @Override
     protected String doInBackground(Void... voids) {
 
         try {
-
-            URL urll = new URL(json_url);
-            HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
+            URL url = new URL(json_url);
+            HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
 
             httpConnection.setDoOutput(true);
             httpConnection.setDoInput(true);
@@ -689,7 +617,6 @@ private class bTaskDeleteItem extends AsyncTask<Void, Void, String>
             httpConnection.setRequestMethod("PUT");
             httpConnection.setRequestProperty("Accept", "application/json");
             httpConnection.setRequestProperty("Content-Type", "application/json");
-
 
             JSONObject jsonObject = new JSONObject();
             jsonObject.accumulate("Menu", jobmenu);
@@ -716,13 +643,11 @@ private class bTaskDeleteItem extends AsyncTask<Void, Void, String>
                 System.out.println(httpConnection.getResponseMessage());
             }
 
-
             Log.e("test", json);
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
         return null;
-
     }
 
     @Override
@@ -731,7 +656,4 @@ private class bTaskDeleteItem extends AsyncTask<Void, Void, String>
         ft.detach(DishesOfferedFragment.this).attach(DishesOfferedFragment.this).commit();
     }
 }
-
 }
-
-

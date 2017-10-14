@@ -30,19 +30,19 @@ import java.util.Random;
 
 public class AddDishIntoCategory extends AppCompatActivity {
 
-    TextView dishname_heading;
-    Button button_adddishsubmit;
-    RadioButton adddishVeg, adddishNonveg;
-    EditText adddish_dishname, adddish_dishprice;
-    String category, categoryData;
-    ArrayList<String> categoryList;
-    int dishType;
-    Boolean vegDataPresent;
-    JSONArray jaa;
-    JSONObject dishdata, jomenu, jo;
-    Toolbar toolbar;
+    TextView mDishNameHeadingTextView;
+    Button mSubmitButton;
+    RadioButton mVegRadioButton, mNonVegRadioButton;
+    EditText mDishNameEditText, mDishPriceEditText;
+    String mCategory, mCategoryData;
+    ArrayList<String> mCategoryList;
+    int mDishTypeInt;
+    Boolean mIsVegDataPresent;
+    JSONArray mCategoryDataJA;
+    JSONObject mNewDishDataJO, mFinalMenuJO, mParticularCategoryJO;
+    Toolbar mToolbar;
 
-    @Override   //this is to duplicate the effect of back button on UP button of actionbar
+    @Override   //this is to duplicate the effect of 'back' button on 'up' button of actionbar
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -57,109 +57,97 @@ public class AddDishIntoCategory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_dish_into_category);
 
-        dishname_heading = (TextView) findViewById(R.id.textView_adddish_heading);
-        button_adddishsubmit = (Button) findViewById(R.id.button_submit);
-        adddishVeg = (RadioButton) findViewById(R.id.radioBtn_veg);
-        adddishNonveg = (RadioButton) findViewById(R.id.radioBtn_nonveg);
-        adddish_dishname = (EditText) findViewById(R.id.edittext_dishname);
-        adddish_dishprice = (EditText) findViewById(R.id.edittext_dishprice);
+        mDishNameHeadingTextView = (TextView) findViewById(R.id.textview_adddish_heading);
+        mSubmitButton = (Button) findViewById(R.id.button_submit);
+        mVegRadioButton = (RadioButton) findViewById(R.id.radiobutton_veg);
+        mNonVegRadioButton = (RadioButton) findViewById(R.id.radiobutton_nonveg);
+        mDishNameEditText = (EditText) findViewById(R.id.edittext_dishname);
+        mDishPriceEditText = (EditText) findViewById(R.id.edittext_dishprice);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar_adddish);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar_adddish);
+        setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Add Item");
 
-        categoryList = new ArrayList<>();
-        category = getIntent().getStringExtra("Category");
-        categoryList = getIntent().getStringArrayListExtra("categoryList");
-        categoryData = getIntent().getStringExtra("categoryData");
+        mCategoryList = new ArrayList<>();
+        mCategory = getIntent().getStringExtra("category");
+        mCategoryList = getIntent().getStringArrayListExtra("categoryList");
+        mCategoryData = getIntent().getStringExtra("categoryData");
 
-        dishname_heading.setText("Add to " + "''" + category + "''");
+        mDishNameHeadingTextView.setText("Add to " + "''" + mCategory + "''");
 
+        Log.i("checking-Category", mCategory);
+        Log.i("checking-categorydata", mCategoryData);
 
-        Log.e("category", category);
-
-        Log.e("data", categoryList.toString());
-        Log.e("categorydata", categoryData);
-
-        button_adddishsubmit.setOnClickListener(new View.OnClickListener() {
+        mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
-                String dishname1 = adddish_dishname.getText().toString();
-                String dishprice = adddish_dishprice.getText().toString();
-
+                String dishname = mDishNameEditText.getText().toString();
+                String dishprice = mDishPriceEditText.getText().toString();
 
                 checkRadioButtonStatus();
 
-                if (!dishname1.matches("") && !dishprice.matches("") && vegDataPresent) { //this condition is there to
-                    // ensure no empty field is passed
+                if (!dishname.matches("") && !dishprice.matches("") && mIsVegDataPresent) {
+                    //this condition is there to ensure no empty field is passed
 
-                    String dishname = dishname1.substring(0, 1).toUpperCase() + dishname1.substring(1);
+                    String dishnameUpper = dishname.substring(0, 1).toUpperCase() + dishname.substring(1);
 
-                    dishdata = new JSONObject();
+                    mNewDishDataJO = new JSONObject();
 
                     try {
-                        dishdata.put("dishname", dishname);
-                        dishdata.put("dishprice", dishprice);
-                        dishdata.put("isveg", dishType);
-                        Log.e("asdfg", dishdata.toString());
+                        mNewDishDataJO.put("dishname", dishnameUpper);
+                        mNewDishDataJO.put("dishprice", dishprice);
+                        mNewDishDataJO.put("isveg", mDishTypeInt);
+
+                        Log.i("check-new dish data", mNewDishDataJO.toString());
+
+                        mCategoryDataJA = new JSONArray(mCategoryData);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-                    try {
-                        jaa = new JSONArray(categoryData);
+                    mFinalMenuJO = new JSONObject();
+                    mParticularCategoryJO = new JSONObject();
 
+                    Toast.makeText(getApplicationContext(), dishnameUpper + " added to " + mCategory, Toast.LENGTH_SHORT).show();
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    for (int i = 0; i < mCategoryList.size(); i++) {
 
-                    jomenu = new JSONObject();
-                    jo = new JSONObject();
-
-                    Toast.makeText(getApplicationContext(), dishname + " added to " + category, Toast.LENGTH_SHORT).show();
-
-                    for (int i = 0; i < categoryList.size(); i++) {
-
-                        if (!categoryList.get(i).equals(category)) {
+                        if (!mCategoryList.get(i).equals(mCategory)) {
 
                             try {
-                                jomenu.accumulate(categoryList.get(i), jaa.get(i));
+                                mFinalMenuJO.accumulate(mCategoryList.get(i), mCategoryDataJA.get(i));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
-                        } else if (categoryList.get(i).equals(category)) {
-                            Random r = new Random();
+                        } else if (mCategoryList.get(i).equals(mCategory)) {
+
+                            Random r = new Random(); //to give a random id to the newly added dish
+
                             try {
-
-                                jo = jaa.getJSONObject(i);
-                                jo.accumulate(String.valueOf(r.nextInt(8999) + 1000), dishdata);
-
+                                mParticularCategoryJO = mCategoryDataJA.getJSONObject(i);
+                                mParticularCategoryJO.accumulate(String.valueOf(r.nextInt(8999) + 1000), mNewDishDataJO);
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
                             try {
-                                jomenu.accumulate(categoryList.get(i), jo);
+                                mFinalMenuJO.accumulate(mCategoryList.get(i), mParticularCategoryJO);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
-
                     }
 
-                    Log.e("final", jomenu.toString());
-
-                    sendDishData(); // data sent to servers
+                    //Log.i("final data to be sent", mFinalMenuJO.toString());
+                    sendDishData(); // data sent to the server
 
                 } else {
-
+                    //this means no data was entered
                     Toast.makeText(AddDishIntoCategory.this, "Input field is empty!", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -169,33 +157,32 @@ public class AddDishIntoCategory extends AppCompatActivity {
 
     private void sendDishData() {
 
-        new bTaskSendDishData().execute();
+        new BGTaskSendDishData().execute();
     }
 
     private void checkRadioButtonStatus() {
 
-        if((!adddishVeg.isChecked() && !adddishNonveg.isChecked())){ // to check if any radio button of dishtype is selected or not
-            vegDataPresent = false;
+        if((!mVegRadioButton.isChecked() && !mNonVegRadioButton.isChecked())){
+            // to check if any radio button of dishtype is selected or not
+            mIsVegDataPresent = false;
         }
-        else {
 
-            vegDataPresent = true;
-            if (adddishVeg.isChecked()) {
-                dishType = 1;
-            } else if (adddishNonveg.isChecked()) {
-                dishType = 0;
+        else {
+            mIsVegDataPresent = true;
+            if (mVegRadioButton.isChecked()) {
+                mDishTypeInt = 1;
+            } else if (mNonVegRadioButton.isChecked()) {
+                mDishTypeInt = 0;
             }
         }
 
-        Log.i("vegdatapresent", String.valueOf(vegDataPresent));
+        Log.i("is veg data present - ", String.valueOf(mIsVegDataPresent));
     }
 
 
-    private class bTaskSendDishData extends AsyncTask<Void, Void, String>
-
+    private class BGTaskSendDishData extends AsyncTask<Void, Void, String>
     {
-
-        String json_url, userId, userToken;
+        String finalURL, userId, userToken;
 
         @Override
         protected void onPreExecute() {
@@ -205,8 +192,7 @@ public class AddDishIntoCategory extends AppCompatActivity {
             userId = sharedPref.getString("restId", null);
             userToken = sharedPref.getString("restToken", null);
 
-            json_url = MainActivity.requestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
-
+            finalURL = MainActivity.mRequestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
         }
 
         @Override
@@ -214,8 +200,8 @@ public class AddDishIntoCategory extends AppCompatActivity {
 
             try {
 
-                URL urll = new URL(json_url);
-                HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
+                URL url = new URL(finalURL);
+                HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
 
                 httpConnection.setDoOutput(true);
                 httpConnection.setDoInput(true);
@@ -224,9 +210,8 @@ public class AddDishIntoCategory extends AppCompatActivity {
                 httpConnection.setRequestProperty("Accept", "application/json");
                 httpConnection.setRequestProperty("Content-Type", "application/json");
 
-
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.accumulate("Menu", jomenu);
+                jsonObject.accumulate("Menu", mFinalMenuJO);
 
                 String json = jsonObject.toString();
 
@@ -250,21 +235,18 @@ public class AddDishIntoCategory extends AppCompatActivity {
                     System.out.println(httpConnection.getResponseMessage());
                 }
 
+                Log.i("test the sent data", json);
 
-                Log.e("test", json);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
             return null;
-
         }
 
         @Override
         protected void onPostExecute(String s) {
             DishesOfferedFragment.shouldRefreshOnResume = true;
             finish();
-
         }
     }
-
 }

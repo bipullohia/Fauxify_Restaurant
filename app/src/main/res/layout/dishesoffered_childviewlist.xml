@@ -1,69 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    android:orientation="horizontal"
     android:padding="12dp">
 
     <ImageView
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:layout_margin="5dp"
         android:id="@+id/isVegDish"
-        android:visibility="gone"
-        android:layout_gravity="center_vertical"
+        android:contentDescription="Vegetarian Dish"
         android:src="@drawable/dish_type_veg"
-        android:contentDescription="Vegetarian Dish" />
+        android:visibility="gone"
+        android:layout_margin="5dp"
+        android:layout_gravity="center_vertical"
+        android:layout_width="10dp"
+        android:layout_height="10dp"/>
 
     <ImageView
-        android:layout_width="10dp"
-        android:layout_margin="5dp"
-        android:layout_height="10dp"
         android:id="@+id/isNonvegDish"
-        android:visibility="gone"
-        android:layout_gravity="center_vertical"
+        android:contentDescription="Non-Vegetarian Dish"
         android:src="@drawable/dish_type_nonveg"
-        android:contentDescription="Non-Vegetarian Dish" />
+        android:visibility="gone"
+        android:layout_margin="5dp"
+        android:layout_gravity="center_vertical"
+        android:layout_width="10dp"
+        android:layout_height="10dp"/>
 
     <TextView
-        android:layout_weight="3"
+        android:id="@+id/child_dishname_textview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="3"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:id="@+id/child_textview"
+        android:gravity="center_vertical"
         android:textSize="14sp"
-        android:text="Child Option"
-        android:gravity="center_vertical"/>
-
+        android:text="Child Option"/>
 
     <LinearLayout
-
-
         android:layout_width="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:gravity="end"
-        android:layout_height="wrap_content">
+        android:orientation="horizontal"
+        android:gravity="end">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:gravity="center_vertical"
             android:paddingEnd="4dp"
             android:paddingStart="4dp"
-            android:text="@string/Rs"
-            android:gravity="center_vertical"/>
+            android:textSize="14sp"
+            android:text="@string/Rs"/>
 
         <TextView
+            android:id="@+id/child_dishprice_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/child_textviewprice"
+            android:gravity="center_vertical"
             android:textSize="14sp"
-            android:text="000"
-            android:gravity="center_vertical"/>
-
+            android:text="XXX"/>
 
     </LinearLayout>
 

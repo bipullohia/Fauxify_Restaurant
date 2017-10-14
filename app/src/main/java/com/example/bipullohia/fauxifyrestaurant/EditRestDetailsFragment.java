@@ -31,50 +31,41 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class EditRestDetailsFragment extends Fragment {
 
-
-    EditText restType, restDelFee, restDelTime, restMinOrder, restFreeDelAmount;
-    TextView restName;
-    Button buttonSubmitNewDetails;
-    String restaurantType, restaurantDelFee, restaurantDelTime, restaurantMinOrder, restaurantName, restaurantFreeDelAmount;
-    String newRestType, newRestDelFee, newRestDelTime, newRestMinOrder, newRestFreeDelAmount;
-
+    EditText mRestTypeEditText, mRestDelFeeTextView, mRestDelTimeTextView, mRestMinOrderTextView, mRestFreeDelAmountTextView;
+    TextView mRestNameTextView;
+    Button mSubmitNewDetailsButton;
+    String mRestaurantType, mRestaurantDelFee, mRestaurantDelTime, mRestaurantMinOrder, mRestaurantName, mRestaurantFreeDelAmount;
+    String mNewRestType, mNewRestDelFee, mNewRestDelTime, mNewRestMinOrder, mNewRestFreeDelAmount;
 
     public EditRestDetailsFragment() {
         // Required empty public constructor
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootview = inflater.inflate(R.layout.fragment_edit_rest_details, container, false);
 
-        restName = (TextView) rootview.findViewById(R.id.restNameTextview);
-        restDelFee = (EditText) rootview.findViewById(R.id.restDelFeeEditText);
-        restDelTime = (EditText) rootview.findViewById(R.id.restDelTimeEditText);
-        restMinOrder = (EditText) rootview.findViewById(R.id.restMinOrderEditText);
-        restType = (EditText) rootview.findViewById(R.id.restTypeEditText);
-        restFreeDelAmount = (EditText) rootview.findViewById(R.id.restFreeDelAmountEditText);
-        buttonSubmitNewDetails = (Button) rootview.findViewById(R.id.submitButtonEditRest);
-
+        mRestNameTextView = (TextView) rootview.findViewById(R.id.textview_rest_name);
+        mRestDelFeeTextView = (EditText) rootview.findViewById(R.id.edittext_deliveryfee_rest);
+        mRestDelTimeTextView = (EditText) rootview.findViewById(R.id.edittext_deliverytime_rest);
+        mRestMinOrderTextView = (EditText) rootview.findViewById(R.id.edittext_minorder_rest);
+        mRestTypeEditText = (EditText) rootview.findViewById(R.id.edittext_restaurant_type);
+        mRestFreeDelAmountTextView = (EditText) rootview.findViewById(R.id.edittext_free_deliveryamount_rest);
+        mSubmitNewDetailsButton = (Button) rootview.findViewById(R.id.button_submit_editrestaurant);
 
         updateOldValues();
 
-        buttonSubmitNewDetails.setOnClickListener(new View.OnClickListener() {
+        mSubmitNewDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                newRestDelFee = restDelFee.getText().toString();
-                newRestDelTime = restDelTime.getText().toString();
-                newRestMinOrder = restMinOrder.getText().toString();
-                newRestType = restType.getText().toString();
-                newRestFreeDelAmount = restFreeDelAmount.getText().toString();
+                mNewRestDelFee = mRestDelFeeTextView.getText().toString();
+                mNewRestDelTime = mRestDelTimeTextView.getText().toString();
+                mNewRestMinOrder = mRestMinOrderTextView.getText().toString();
+                mNewRestType = mRestTypeEditText.getText().toString();
+                mNewRestFreeDelAmount = mRestFreeDelAmountTextView.getText().toString();
 
                 AlertDialog.Builder alertbuilder = new AlertDialog.Builder(getContext());
                 alertbuilder.setMessage("Do you want to update these details?")
@@ -99,8 +90,6 @@ public class EditRestDetailsFragment extends Fragment {
 
                 AlertDialog alert = alertbuilder.create();
                 alert.show();
-
-
             }
         });
 
@@ -109,14 +98,14 @@ public class EditRestDetailsFragment extends Fragment {
 
     private void updateOldValues() {
 
-        new bgroundtask().execute();
+        new BGTaskUpdateOldValues().execute();
     }
 
-    class bgroundtask extends AsyncTask<Void, Void, String> {
+    private class BGTaskUpdateOldValues extends AsyncTask<Void, Void, String> {
 
         String json_url;
         String JSON_STRING;
-        ProgressDialog pd;
+        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
@@ -125,15 +114,14 @@ public class EditRestDetailsFragment extends Fragment {
             sharedPref = EditRestDetailsFragment.this.getActivity().getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
             String restId = sharedPref.getString("restId", null);
 
-            json_url = MainActivity.requestURL + "Restaurants/" + restId;
-            pd = ProgressDialog.show(getContext(), "", "Loading Restaurant details...", false);
+            json_url = MainActivity.mRequestURL + "Restaurants/" + restId;
+            progressDialog = ProgressDialog.show(getContext(), "", "Loading Restaurant details...", false);
         }
 
         @Override
         protected String doInBackground(Void... params) {
 
             try {
-
                 URL urll = new URL(json_url);
                 HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
@@ -151,13 +139,12 @@ public class EditRestDetailsFragment extends Fragment {
 
                 JSONObject jo = new JSONObject(resultjson);
 
-                restaurantName = jo.getString("Restname");
-                restaurantDelFee = jo.getString("Deliveryfee");
-                restaurantDelTime = jo.getString("Deliversin");
-                restaurantType = jo.getString("Resttype");
-                restaurantMinOrder = jo.getString("Minorder");
-                restaurantFreeDelAmount = jo.getString("freeDeliveryAmount");
-
+                mRestaurantName = jo.getString("Restname");
+                mRestaurantDelFee = jo.getString("Deliveryfee");
+                mRestaurantDelTime = jo.getString("Deliversin");
+                mRestaurantType = jo.getString("Resttype");
+                mRestaurantMinOrder = jo.getString("Minorder");
+                mRestaurantFreeDelAmount = jo.getString("freeDeliveryAmount");
 
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
@@ -169,24 +156,24 @@ public class EditRestDetailsFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
 
-            restMinOrder.setText(restaurantMinOrder);
-            restDelTime.setText(restaurantDelTime.substring(0, 2));
-            restName.setText(restaurantName);
-            restType.setText(restaurantType);
-            restDelFee.setText(restaurantDelFee);
-            restFreeDelAmount.setText(restaurantFreeDelAmount);
+            mRestMinOrderTextView.setText(mRestaurantMinOrder);
+            mRestDelTimeTextView.setText(mRestaurantDelTime.substring(0, 2));
+            mRestNameTextView.setText(mRestaurantName);
+            mRestTypeEditText.setText(mRestaurantType);
+            mRestDelFeeTextView.setText(mRestaurantDelFee);
+            mRestFreeDelAmountTextView.setText(mRestaurantFreeDelAmount);
 
-            pd.dismiss();
+            progressDialog.dismiss();
         }
     }
 
     public void submitNewDetails() {
 
-        new backgroundTask().execute();
-        Log.i("status", newRestDelFee + newRestType + newRestDelTime + newRestMinOrder + newRestFreeDelAmount);
+        new BGTaskSubmitNewDetails().execute();
+        Log.i("status", mNewRestDelFee + mNewRestType + mNewRestDelTime + mNewRestMinOrder + mNewRestFreeDelAmount);
     }
 
-    class backgroundTask extends AsyncTask<Void, Void, String> {
+    private class BGTaskSubmitNewDetails extends AsyncTask<Void, Void, String> {
 
         String json_url, userId, userToken;
 
@@ -198,7 +185,7 @@ public class EditRestDetailsFragment extends Fragment {
             userId = sharedPref.getString("restId", null);
             userToken = sharedPref.getString("restToken", null);
 
-            json_url = MainActivity.requestURL + "Restaurants/" + userId + "?access_token=" + userToken;
+            json_url = MainActivity.mRequestURL + "Restaurants/" + userId + "?access_token=" + userToken;
         }
 
         @Override
@@ -217,13 +204,13 @@ public class EditRestDetailsFragment extends Fragment {
 
                 JSONObject jsonObject = new JSONObject();
 
-                jsonObject.put("Resttype", newRestType);
-                jsonObject.put("Deliversin", newRestDelTime + " minutes");
+                jsonObject.put("Resttype", mNewRestType);
+                jsonObject.put("Deliversin", mNewRestDelTime + " minutes");
 
-                Log.i("del time", newRestDelTime + " minutes");
-                jsonObject.put("Minorder", newRestMinOrder);
-                jsonObject.put("Deliveryfee", newRestDelFee);
-                jsonObject.put("freeDeliveryAmount", newRestFreeDelAmount);
+                Log.i("del time", mNewRestDelTime + " minutes");
+                jsonObject.put("Minorder", mNewRestMinOrder);
+                jsonObject.put("Deliveryfee", mNewRestDelFee);
+                jsonObject.put("freeDeliveryAmount", mNewRestFreeDelAmount);
 
                 String json = jsonObject.toString();
 
@@ -247,10 +234,11 @@ public class EditRestDetailsFragment extends Fragment {
                     System.out.println(httpURLConnection.getResponseMessage());
                 }
 
-                Log.e("test", json);
+                Log.i("test-submitNewDetails", json);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
+
             return null;
         }
     }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="210dp"
+    android:orientation="vertical"
     android:gravity="bottom"
     android:background="@drawable/restaurantdetails"
     android:padding="@dimen/activity_horizontal_margin">
@@ -14,26 +14,26 @@
         android:layout_marginBottom="8dp">
 
         <TextView
+            android:id="@+id/navheader_rest_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Restaurant Name"
-            android:textSize="16sp"
-            android:id="@+id/restNameNavHeader"
             android:layout_marginBottom="3dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textColor="@color/colorAccent"
-            android:layout_marginLeft="10dp"/>
+            android:textSize="16sp"
+            android:text="Restaurant Name"/>
 
         <TextView
+            android:id="@+id/navheader_rest_type"
             android:layout_width="wrap_content"
-            android:id="@+id/restTypeNavHeader"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginBottom="3dp"
+            android:textColor="@color/white"
             android:textSize="14sp"
-            android:text="Type"
-            android:layout_marginLeft="10sp"
-            android:textColor="@color/white"/>
-
-
+            android:text="Type"/>
 
     </LinearLayout>
 
