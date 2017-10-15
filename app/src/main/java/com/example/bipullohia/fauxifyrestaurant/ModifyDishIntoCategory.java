@@ -64,7 +64,7 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_adddish);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //to display the '<-' up button on actionbar
         getSupportActionBar().setTitle("Modify Item");
 
         mCategoryList = new ArrayList<>();
@@ -161,7 +161,6 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-
                 }
                 Log.e("final-menu", mFinalMenuJO.toString());
 
@@ -171,7 +170,6 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
     }
 
     private void sendDishData() {
-
         new BGTaskSendDishData().execute();
     }
 

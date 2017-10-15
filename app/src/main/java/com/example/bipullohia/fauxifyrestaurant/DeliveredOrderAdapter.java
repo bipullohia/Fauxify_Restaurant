@@ -52,22 +52,21 @@ class DeliveredOrderAdapter extends RecyclerView.Adapter<DeliveredOrderAdapter.M
             Orders orders = orderList.get(position);
 
             intent.putExtra("orderid",orders.getOrderId());
-            intent.putExtra("customername",orders.getCustomername());
-            intent.putExtra("ordercustemail", orders.getCustomeremail());
-            intent.putExtra("totalitems",orders.getTotalitems());
-            intent.putExtra("totalprice", orders.getTotalprice());
-            intent.putExtra("ordertime", orders.getOrdertime());
-            intent.putExtra("orderconfirmed", orders.getOrderconfirmed());
-            intent.putExtra("orderdelivered", orders.getOrderdelivered());
-            intent.putExtra("customerorder", orders.getCustomerorder());
-            intent.putExtra("totalitemprice", orders.getTotalitemsprice());
-            intent.putExtra("customeraddress", orders.getCustomeraddress());
+            intent.putExtra("customername",orders.getCustomerName());
+            intent.putExtra("ordercustemail", orders.getCustomerEmail());
+            intent.putExtra("totalitems",orders.getTotalItems());
+            intent.putExtra("totalprice", orders.getTotalPrice());
+            intent.putExtra("ordertime", orders.getOrderTime());
+            intent.putExtra("orderconfirmed", orders.getOrderConfirmed());
+            intent.putExtra("orderdelivered", orders.getOrderDelivered());
+            intent.putExtra("customerorder", orders.getCustomerOrder());
+            intent.putExtra("totalitemprice", orders.getTotalItemsPrice());
+            intent.putExtra("customeraddress", orders.getCustomerAddress());
             intent.putExtra("deliveryfee", orders.getDeliveryFee());
 
             context.startActivity(intent);
         }
     }
-
 
     DeliveredOrderAdapter(ArrayList<Orders> orderList)
     {
@@ -86,12 +85,12 @@ class DeliveredOrderAdapter extends RecyclerView.Adapter<DeliveredOrderAdapter.M
     public void onBindViewHolder(DeliveredOrderAdapter.MyViewHolder holder, int position) {
         Orders orders = orderList.get(position);
         holder.orderIdTextView.setText(orders.getOrderId());
-        holder.custNameTextView.setText(orders.getCustomername());
-        holder.totalPriceTextView.setText(orders.getTotalprice());
-        holder.orderConfirmedTextView.setText(orders.getOrderconfirmed());
-        holder.orderDeliveredTextView.setText(orders.getOrderdelivered());
+        holder.custNameTextView.setText(orders.getCustomerName());
+        holder.totalPriceTextView.setText(orders.getTotalPrice());
+        holder.orderConfirmedTextView.setText(orders.getOrderConfirmed());
+        holder.orderDeliveredTextView.setText(orders.getOrderDelivered());
 
-        String timestamp = orders.getOrdertime();
+        String timestamp = orders.getOrderTime();
         String orderDate = timestamp.substring(0, 2);
         Log.d("orderdate", orderDate);
 
@@ -121,7 +120,7 @@ class DeliveredOrderAdapter extends RecyclerView.Adapter<DeliveredOrderAdapter.M
 
         holder.orderTimeTextView.setText("Ordered on " + orderDate + " " + orderMonth + " " + orderYear + " at " + orderTiming);
 
-        if (orders.getOrderconfirmed().equals("Confirmed")) {
+        if (orders.getOrderConfirmed().equals("Confirmed")) {
             holder.redConfirmImageView.setVisibility(View.GONE);
             holder.greenConfirmImageView.setVisibility(View.VISIBLE);
 
@@ -130,7 +129,7 @@ class DeliveredOrderAdapter extends RecyclerView.Adapter<DeliveredOrderAdapter.M
             holder.redConfirmImageView.setVisibility(View.VISIBLE);
         }
 
-        if (orders.getOrderdelivered().equals("Delivered")) {
+        if (orders.getOrderDelivered().equals("Delivered")) {
             holder.redDeliverImageView.setVisibility(View.GONE);
             holder.greenDeliverImageView.setVisibility(View.VISIBLE);
 
@@ -139,7 +138,7 @@ class DeliveredOrderAdapter extends RecyclerView.Adapter<DeliveredOrderAdapter.M
             holder.redDeliverImageView.setVisibility(View.VISIBLE);
         }
 
-        Log.e("dishesinfo", orders.getCustomerorder());
+        Log.e("dishesinfo", orders.getCustomerOrder());
     }
 
     @Override

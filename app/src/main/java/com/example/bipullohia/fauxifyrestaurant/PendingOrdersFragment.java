@@ -123,7 +123,7 @@ public class PendingOrdersFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
 
-            String totalitems, totalitemprice, orderconfirmed, orderdelivered, dishesinfo, deliveryfee;
+            String totalItems, totalItemPrice, orderConfirmed, orderDelivered, dishesInfo, deliveryFee;
             if (jsonArray != null) {
                 Log.e("Jsonobject length", String.valueOf(jsonArray.length()));
                 for (int j = (jsonArray.length() - 1); j >= 0; j--) {
@@ -136,30 +136,30 @@ public class PendingOrdersFragment extends Fragment {
                         JSONObject joOrderinfo;
                         joOrderinfo = jobject.getJSONObject("orderinfo");
 
-                        totalitems = joOrderinfo.getString("totalitems");
-                        totalitemprice = joOrderinfo.getString("totalitemprice");
-                        dishesinfo = joOrderinfo.getString("dishesinfo");
-                        deliveryfee = joOrderinfo.getString("deliveryfee");
+                        totalItems = joOrderinfo.getString("totalitems");
+                        totalItemPrice = joOrderinfo.getString("totalitemprice");
+                        dishesInfo = joOrderinfo.getString("dishesinfo");
+                        deliveryFee = joOrderinfo.getString("deliveryfee");
 
                         String oconfirmed = joDelivery.getString("orderconfirmed");
                         String odelivered = joDelivery.getString("orderdelivered");
 
                         if (oconfirmed.equals("1")) {
-                            orderconfirmed = "Confirmed";
+                            orderConfirmed = "Confirmed";
                         } else {
-                            orderconfirmed = "Not Confirmed";
+                            orderConfirmed = "Not Confirmed";
                         }
 
                         if (odelivered.equals("1")) {
-                            orderdelivered = "Delivered";
+                            orderDelivered = "Delivered";
                         } else {
-                            orderdelivered = "Not Delivered";
+                            orderDelivered = "Not Delivered";
                         }
-                        if (orderdelivered.equals("Not Delivered")) {
-                            Orders orders = new Orders(jobject.getString("orderid"), totalitems,
+                        if (orderDelivered.equals("Not Delivered")) {
+                            Orders orders = new Orders(jobject.getString("orderid"), totalItems,
                                     jobject.getString("ordertotal"), jobject.getString("customername"),
-                                    jobject.getString("customeremail"), jobject.getString("ordertiming"), orderconfirmed,
-                                    orderdelivered, totalitemprice, jobject.getString("customeraddress"), dishesinfo, deliveryfee);
+                                    jobject.getString("customeremail"), jobject.getString("ordertiming"), orderConfirmed,
+                                    orderDelivered, totalItemPrice, jobject.getString("customeraddress"), dishesInfo, deliveryFee);
 
                             mOrderList.add(orders);
                         }

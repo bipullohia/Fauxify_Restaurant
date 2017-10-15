@@ -227,8 +227,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         protected String doInBackground(Void... params) {
 
             try {
-                URL urll = new URL(json_url);
-                HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
+                URL url = new URL(json_url);
+                HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
 
                 InputStream inputStream = httpConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 inputStream.close();
                 httpConnection.disconnect();
                 String resultjson = stringBuilder.toString().trim();
-                Log.e("result456", resultjson);
+                Log.e("result-checkRestStatus", resultjson);
 
                 jobject = new JSONObject(resultjson);
 

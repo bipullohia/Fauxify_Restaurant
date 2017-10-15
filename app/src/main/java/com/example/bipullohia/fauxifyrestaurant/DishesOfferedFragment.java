@@ -233,7 +233,6 @@ public class DishesOfferedFragment extends Fragment {
                                                         JSONObject jobb;
 
                                                         try {
-
                                                             jobb = jsonArray.getJSONObject(i);
                                                             jobb.remove(currentitemid);
                                                             jobmenu.accumulate(mCategoriesList.get(i), jobb);
@@ -248,9 +247,9 @@ public class DishesOfferedFragment extends Fragment {
 
                                             deleteItem();
                                             Toast.makeText(getContext(),"Item Deleted "+currentitem,Toast.LENGTH_SHORT).show();
-
                                         }
                             })
+
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -277,7 +276,7 @@ public class DishesOfferedFragment extends Fragment {
 
     private void deleteItem() {
 
-        new bTaskDeleteItem().execute();
+        new BGTaskDeleteItem().execute();
     }
 
     @Override
@@ -292,11 +291,11 @@ public class DishesOfferedFragment extends Fragment {
     }
 
     private void deleteCategory() {
-        new bTaskDeleteCategory().execute();
+        new BGTaskDeleteCategory().execute();
     }
 
     private void sendCategoryName() {
-        new bTaskAddCategory().execute();
+        new BGTaskAddCategory().execute();
     }
 
     private void prepareDishData() {
@@ -419,7 +418,7 @@ private class BGTaskPrepareDishData extends AsyncTask<Void, Void, String> {
 }
 
 
-private class bTaskAddCategory extends AsyncTask<Void, Void, String>
+private class BGTaskAddCategory extends AsyncTask<Void, Void, String>
 
 {
     String json_url, userId, userToken;
@@ -496,7 +495,7 @@ private class bTaskAddCategory extends AsyncTask<Void, Void, String>
     }
 }
 
-private class bTaskDeleteCategory extends AsyncTask<Void, Void, String> {
+private class BGTaskDeleteCategory extends AsyncTask<Void, Void, String> {
 
     JSONArray jsonArray1 = new JSONArray();
     ArrayList<String> categories1 = new ArrayList<>();
@@ -532,8 +531,8 @@ private class bTaskDeleteCategory extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... voids) {
         try {
-            URL urll = new URL(json_url);
-            HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
+            URL url = new URL(json_url);
+            HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
 
             httpConnection.setDoOutput(true);
             httpConnection.setDoInput(true);
@@ -546,7 +545,6 @@ private class bTaskDeleteCategory extends AsyncTask<Void, Void, String> {
             JSONObject job = new JSONObject();
 
             for (int i = 0; i < categories1.size(); i++) {
-
                 job.put(categories1.get(i), jsonArray1.get(i));
             }
 
@@ -587,10 +585,9 @@ private class bTaskDeleteCategory extends AsyncTask<Void, Void, String> {
     }
 }
 
-private class bTaskDeleteItem extends AsyncTask<Void, Void, String>
+private class BGTaskDeleteItem extends AsyncTask<Void, Void, String>
 
 {
-
     String json_url, userId, userToken;
 
     @Override

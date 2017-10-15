@@ -66,7 +66,7 @@ public class AddDishIntoCategory extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_adddish);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //to display the up button on actionbar
         getSupportActionBar().setTitle("Add Item");
 
         mCategoryList = new ArrayList<>();
@@ -152,7 +152,6 @@ public class AddDishIntoCategory extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void sendDishData() {
@@ -199,7 +198,6 @@ public class AddDishIntoCategory extends AppCompatActivity {
         protected String doInBackground(Void... voids) {
 
             try {
-
                 URL url = new URL(finalURL);
                 HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
 

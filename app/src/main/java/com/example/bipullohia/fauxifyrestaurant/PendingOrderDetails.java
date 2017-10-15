@@ -73,7 +73,7 @@ public class PendingOrderDetails extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_pendingorder_details);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //to display up button on actionbar
         getSupportActionBar().setTitle("Order Details");
 
         mSetDeliveryTimeCardView = (CardView) findViewById(R.id.cardview_confirmdelivery);
@@ -220,7 +220,6 @@ public class PendingOrderDetails extends AppCompatActivity {
     }
 
     private void changeDeliveryStatus() {
-
         new BGTaskChangeDeliveryStatus().execute();
     }
 
@@ -332,8 +331,8 @@ public class PendingOrderDetails extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... voids) {
-            try {
 
+            try {
                 URL url = new URL(json_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
@@ -367,11 +366,14 @@ public class PendingOrderDetails extends AppCompatActivity {
                     BufferedReader br = new BufferedReader(
                             new InputStreamReader(httpURLConnection.getInputStream(), "utf-8"));
                     String line = null;
+
                     while ((line = br.readLine()) != null) {
                         sb.append(line + "\n");
                     }
+
                     br.close();
                     System.out.println("" + sb.toString());
+
                 } else {
                     System.out.println(httpURLConnection.getResponseMessage());
                 }

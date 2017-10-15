@@ -42,5 +42,4 @@ class DishMenu {
     public void setIsVeg(Integer name) {
         this.isVeg = name;
     }
-
 }

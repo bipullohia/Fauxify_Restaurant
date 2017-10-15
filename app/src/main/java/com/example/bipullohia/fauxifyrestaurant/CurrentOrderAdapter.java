@@ -16,7 +16,7 @@ class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapter.MyVie
     private ArrayList<CurrentOrder> dishesListInCart;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        private static final String TAG = "error";
+
         TextView dishNameTextView, dishPriceTextView, dishQuantityTextView, dishAmountTextView;
 
         Context context;
@@ -60,6 +60,5 @@ class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapter.MyVie
     public int getItemCount() {
         return dishesListInCart.size();
     }
-
 }
 

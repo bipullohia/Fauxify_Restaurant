@@ -62,7 +62,7 @@ public class DeliveredOrderDetails extends AppCompatActivity {
 
         mDishesData = getIntent().getStringExtra("customerorder");
 
-        //unused info - can be used in the future
+        //unused info - can be used in the future for extended functionality
         mCustomerEmail = getIntent().getStringExtra("ordercustemail");
         mOrderConfirmed = getIntent().getStringExtra("orderconfirmed");
         mOrderDelivered = getIntent().getStringExtra("orderdelivered");

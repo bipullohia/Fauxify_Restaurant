@@ -97,7 +97,6 @@ public class EditRestDetailsFragment extends Fragment {
     }
 
     private void updateOldValues() {
-
         new BGTaskUpdateOldValues().execute();
     }
 

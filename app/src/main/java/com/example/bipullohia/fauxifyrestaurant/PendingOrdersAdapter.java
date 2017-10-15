@@ -52,16 +52,16 @@ class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdapter.MyV
             Orders orders = orderList.get(position);
 
             intent.putExtra("orderid", orders.getOrderId());
-            intent.putExtra("customername", orders.getCustomername());
-            intent.putExtra("ordercustemail", orders.getCustomeremail());
-            intent.putExtra("totalitems", orders.getTotalitems());
-            intent.putExtra("totalprice", orders.getTotalprice());
-            intent.putExtra("ordertime", orders.getOrdertime());
-            intent.putExtra("orderconfirmed", orders.getOrderconfirmed());
-            intent.putExtra("orderdelivered", orders.getOrderdelivered());
-            intent.putExtra("customerorder", orders.getCustomerorder());
-            intent.putExtra("totalitemprice", orders.getTotalitemsprice());
-            intent.putExtra("customeraddress", orders.getCustomeraddress());
+            intent.putExtra("customername", orders.getCustomerName());
+            intent.putExtra("ordercustemail", orders.getCustomerEmail());
+            intent.putExtra("totalitems", orders.getTotalItems());
+            intent.putExtra("totalprice", orders.getTotalPrice());
+            intent.putExtra("ordertime", orders.getOrderTime());
+            intent.putExtra("orderconfirmed", orders.getOrderConfirmed());
+            intent.putExtra("orderdelivered", orders.getOrderDelivered());
+            intent.putExtra("customerorder", orders.getCustomerOrder());
+            intent.putExtra("totalitemprice", orders.getTotalItemsPrice());
+            intent.putExtra("customeraddress", orders.getCustomerAddress());
             intent.putExtra("deliveryfee", orders.getDeliveryFee());
 
             context.startActivity(intent);
@@ -84,12 +84,12 @@ class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdapter.MyV
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Orders orders = orderList.get(position);
         holder.mOrderIdTextView.setText(orders.getOrderId());
-        holder.mCustomerNameTextView.setText(orders.getCustomername());
-        holder.mTotalPriceTextView.setText(orders.getTotalprice());
-        holder.mOrderConfirmedTextView.setText(orders.getOrderconfirmed());
-        holder.mOrderDeliveredTextView.setText(orders.getOrderdelivered());
+        holder.mCustomerNameTextView.setText(orders.getCustomerName());
+        holder.mTotalPriceTextView.setText(orders.getTotalPrice());
+        holder.mOrderConfirmedTextView.setText(orders.getOrderConfirmed());
+        holder.mOrderDeliveredTextView.setText(orders.getOrderDelivered());
 
-        String timestamp = orders.getOrdertime();
+        String timestamp = orders.getOrderTime();
         String orderDate = timestamp.substring(0, 2);
         Log.d("orderdate", orderDate);
 
@@ -120,7 +120,7 @@ class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdapter.MyV
         holder.mOrderTimeTextView.setText("Ordered on " + orderDate + " " + orderMonth + " " + orderYear + " at " + orderTiming);
         //02-10-2017 09:59:15 AM - timestamp format
 
-        if (orders.getOrderconfirmed().equals("Confirmed")) {
+        if (orders.getOrderConfirmed().equals("Confirmed")) {
 
             holder.mRedConfirmImageView.setVisibility(View.GONE);
             holder.mGreenConfirmImageView.setVisibility(View.VISIBLE);
@@ -130,7 +130,7 @@ class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdapter.MyV
             holder.mRedConfirmImageView.setVisibility(View.VISIBLE);
         }
 
-        if (orders.getOrderdelivered().equals("Delivered")) {
+        if (orders.getOrderDelivered().equals("Delivered")) {
 
             holder.mRedDeliverTextView.setVisibility(View.GONE);
             holder.mGreenDeliverTextView.setVisibility(View.VISIBLE);

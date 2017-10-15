@@ -119,8 +119,8 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
 
         @Override
         protected String doInBackground(Void... voids) {
-            try {
 
+            try {
                 URL urll = new URL(json_checkurl);
                 HttpURLConnection httpConnection = (HttpURLConnection) urll.openConnection();
 
@@ -164,7 +164,6 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
     }
 
     private void LoginRestaurant() {
-
         new BGTaskLoginUser().execute();
     }
 
@@ -227,8 +226,8 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
                     editor.apply();
 
                     //Log.i("details", token + "   " + userId);
-
                     System.out.println("" + sb.toString());
+
                 } else {
                     System.out.println(httpURLConnection.getResponseMessage());
                     issuccess = false;

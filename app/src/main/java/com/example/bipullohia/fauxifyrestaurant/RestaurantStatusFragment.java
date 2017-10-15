@@ -38,7 +38,6 @@ public class RestaurantStatusFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View rootview = inflater.inflate(R.layout.fragment_restaurant_status, container, false);
 
         mRestStatusSwitch = (Switch) rootview.findViewById(R.id.switch_rest_status);
@@ -106,7 +105,7 @@ public class RestaurantStatusFragment extends Fragment {
     private class BGTaskChangeRestaurantStatus extends AsyncTask<Void, Void, String> {
 
         String json_url, userId, userToken;
-        ProgressDialog pd;
+        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
@@ -117,7 +116,7 @@ public class RestaurantStatusFragment extends Fragment {
             userToken = sharedPref.getString("restToken", null);
 
             json_url = MainActivity.mRequestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
-            pd = ProgressDialog.show(getContext(), "", "Loading Restaurant status...", false);
+            progressDialog = ProgressDialog.show(getContext(), "", "Loading Restaurant status...", false);
         }
 
         @Override
@@ -179,7 +178,7 @@ public class RestaurantStatusFragment extends Fragment {
             //this code will restart this activity, thus updating the latest restaurant status
             getActivity().finish();
             startActivity(getActivity().getIntent());
-            pd.dismiss();
+            progressDialog.dismiss();
         }
     }
 }

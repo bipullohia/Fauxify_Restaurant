@@ -2,23 +2,23 @@ package com.example.bipullohia.fauxifyrestaurant;
 
 
 class Orders {
-    private String orderId, totalitems, totalprice, customername, customeremail, ordertime,
-            orderconfirmed, orderdelivered, totalitemsprice, customeraddress, customerorder, deliveryFee;
+    private String orderId, totalItems, totalPrice, customerName, customerEmail, orderTime,
+            orderConfirmed, orderDelivered, totalItemsPrice, customerAddress, customerOrder, deliveryFee;
 
-    Orders(String orderId, String totalitems, String totalprice, String customername, String customeremail,
-           String ordertime, String orderconfirmed, String orderdelivered,
-           String totalitemsprice, String customeraddress, String customerorder, String deliveryFee) {
+    Orders(String orderId, String totalItems, String totalPrice, String customerName, String customerEmail,
+           String orderTime, String orderConfirmed, String orderDelivered,
+           String totalItemsPrice, String customerAddress, String customerOrder, String deliveryFee) {
         this.orderId = orderId;
-        this.totalitems = totalitems;
-        this.totalprice = totalprice;
-        this.customeremail = customeremail;
-        this.customername = customername;
-        this.ordertime = ordertime;
-        this.orderconfirmed = orderconfirmed;
-        this.orderdelivered = orderdelivered;
-        this.customerorder = customerorder;
-        this.customeraddress = customeraddress;
-        this.totalitemsprice = totalitemsprice;
+        this.totalItems = totalItems;
+        this.totalPrice = totalPrice;
+        this.customerEmail = customerEmail;
+        this.customerName = customerName;
+        this.orderTime = orderTime;
+        this.orderConfirmed = orderConfirmed;
+        this.orderDelivered = orderDelivered;
+        this.customerOrder = customerOrder;
+        this.customerAddress = customerAddress;
+        this.totalItemsPrice = totalItemsPrice;
         this.deliveryFee = deliveryFee;
     }
 
@@ -30,84 +30,84 @@ class Orders {
         this.orderId = name;
     }
 
-    String getTotalitems() {
-        return totalitems;
+    String getTotalItems() {
+        return totalItems;
     }
 
-    public void setTotalitems(String name) {
-        this.totalitems = name;
+    public void setTotalItems(String name) {
+        this.totalItems = name;
     }
 
-    String getTotalprice() {
-        return totalprice;
+    String getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setTotalprice(String name) {
-        this.totalprice = name;
+    public void setTotalPrice(String name) {
+        this.totalPrice = name;
     }
 
-    String getCustomername() {
-        return customername;
+    String getCustomerName() {
+        return customerName;
     }
 
-    public void setCustomername(String name) {
-        this.customername = name;
+    public void setCustomerName(String name) {
+        this.customerName = name;
     }
 
-    String getOrdertime() {
-        return ordertime;
+    String getOrderTime() {
+        return orderTime;
     }
 
-    public void setOrdertime(String name) {
-        this.ordertime = name;
+    public void setOrderTime(String name) {
+        this.orderTime = name;
     }
 
-    String getOrderconfirmed() {
-        return orderconfirmed;
+    String getOrderConfirmed() {
+        return orderConfirmed;
     }
 
-    public void setOrderconfirmed(String name) {
-        this.orderconfirmed = name;
+    public void setOrderConfirmed(String name) {
+        this.orderConfirmed = name;
     }
 
-    String getOrderdelivered() {
-        return orderdelivered;
+    String getOrderDelivered() {
+        return orderDelivered;
     }
 
-    public void setOrderdelivered(String name) {
-        this.orderdelivered = name;
+    public void setOrderDelivered(String name) {
+        this.orderDelivered = name;
     }
 
-    String getCustomeremail() {
-        return customeremail;
+    String getCustomerEmail() {
+        return customerEmail;
     }
 
-    public void setCustomeremail(String name) {
-        this.customeremail = name;
+    public void setCustomerEmail(String name) {
+        this.customerEmail = name;
     }
 
-    String getCustomeraddress() {
-        return customeraddress;
+    String getCustomerAddress() {
+        return customerAddress;
     }
 
-    public void setCustomeraddress(String name) {
-        this.customeraddress = name;
+    public void setCustomerAddress(String name) {
+        this.customerAddress = name;
     }
 
-    String getCustomerorder() {
-        return customerorder;
+    String getCustomerOrder() {
+        return customerOrder;
     }
 
-    public void setCustomerorder(String name) {
-        this.customerorder = name;
+    public void setCustomerOrder(String name) {
+        this.customerOrder = name;
     }
 
-    String getTotalitemsprice() {
-        return totalitemsprice;
+    String getTotalItemsPrice() {
+        return totalItemsPrice;
     }
 
-    public void setTotalitemsprice(String name) {
-        this.totalitemsprice = name;
+    public void setTotalItemsPrice(String name) {
+        this.totalItemsPrice = name;
     }
 
     String getDeliveryFee() {

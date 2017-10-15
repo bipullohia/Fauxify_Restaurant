@@ -31,5 +31,4 @@ class CurrentOrder{
         public void setCurrentdishQuantity(Integer name) {
             this.currentdishQuantity = name;
         }
-
 }
