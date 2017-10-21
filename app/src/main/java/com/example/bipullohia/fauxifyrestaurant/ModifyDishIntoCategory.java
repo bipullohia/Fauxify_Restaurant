@@ -65,7 +65,7 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_adddish);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //to display the '<-' up button on actionbar
-        getSupportActionBar().setTitle("Modify Item");
+        getSupportActionBar().setTitle(R.string.modify_item);
 
         mCategoryList = new ArrayList<>();
         mCategory = getIntent().getStringExtra("category");
@@ -195,7 +195,7 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
             userId = sharedPref.getString("restId", null);
             userToken = sharedPref.getString("restToken", null);
 
-            json_url = MainActivity.mRequestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
+            json_url = getString(R.string.request_url) + "Restaurants/" + userId + "?access_token=" + userToken ;
         }
 
         @Override
@@ -247,7 +247,7 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             DishesOfferedFragment.shouldRefreshOnResume = true;
-            Toast.makeText(getApplicationContext(), "Item Modified", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.item_modified, Toast.LENGTH_SHORT).show();
 
             finish();
         }

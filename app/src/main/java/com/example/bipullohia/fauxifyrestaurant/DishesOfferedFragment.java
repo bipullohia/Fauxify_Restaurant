@@ -75,10 +75,10 @@ public class DishesOfferedFragment extends Fragment {
                 AlertDialog.Builder alertbuilder = new AlertDialog.Builder(getContext());
                 final EditText txtUrl = new EditText(getContext());
 
-                alertbuilder.setMessage("Enter a new Category name ")
+                alertbuilder.setMessage(R.string.enter_new_category)
                         .setCancelable(true)
                         .setView(txtUrl)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -91,14 +91,14 @@ public class DishesOfferedFragment extends Fragment {
                                             Toast.makeText(getContext(), categoryName, Toast.LENGTH_SHORT).show();
 
                                         } else {
-                                            Toast.makeText(getContext(), "You entered blank text. Try again!",
+                                            Toast.makeText(getContext(), R.string.blank_text_try_again,
                                                     Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 }
                         )
 
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.cancel();
@@ -106,7 +106,7 @@ public class DishesOfferedFragment extends Fragment {
                         });
 
                 AlertDialog alert = alertbuilder.create();
-                alert.setTitle("New Category");
+                alert.setTitle(getString(R.string.new_category));
                 alert.show();
             }
         });
@@ -125,7 +125,8 @@ public class DishesOfferedFragment extends Fragment {
 
                     category = mParentDataList.get(groupPosition);
 
-                    CharSequence options[] = new CharSequence[]{"Add an Item", "Delete the Category"};
+                    CharSequence options[] = new CharSequence[]{getString(R.string.add_an_item),
+                                                                getString(R.string.delete_the_category)};
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setTitle("Select an option for " + category + ":");
@@ -147,7 +148,7 @@ public class DishesOfferedFragment extends Fragment {
                                 AlertDialog.Builder alertbuilder = new AlertDialog.Builder(getContext());
                                 alertbuilder.setMessage("Delete Category " + "''" + category + "'' ?")
                                         .setCancelable(true)
-                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
 
                                             @Override
@@ -156,7 +157,7 @@ public class DishesOfferedFragment extends Fragment {
                                                 deleteCategory();
                                             }
                                         })
-                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 dialog.cancel();
@@ -187,7 +188,7 @@ public class DishesOfferedFragment extends Fragment {
                     CharSequence options[] = new CharSequence[]{"Modify " + currentitem, "Delete " + currentitem};
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Select an Option:");
+                    builder.setTitle(R.string.select_an_option);
                     builder.setItems(options, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -211,7 +212,7 @@ public class DishesOfferedFragment extends Fragment {
                                 AlertDialog.Builder alertbuilder1 = new AlertDialog.Builder(getContext());
                                 alertbuilder1.setMessage("Delete ''" + currentitem + "'' ?")
                                         .setCancelable(true)
-                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
 
                                             @Override
@@ -250,7 +251,7 @@ public class DishesOfferedFragment extends Fragment {
                                         }
                             })
 
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.cancel();
@@ -275,7 +276,6 @@ public class DishesOfferedFragment extends Fragment {
 }
 
     private void deleteItem() {
-
         new BGTaskDeleteItem().execute();
     }
 
@@ -316,8 +316,8 @@ private class BGTaskPrepareDishData extends AsyncTask<Void, Void, String> {
         sharedPref = DishesOfferedFragment.this.getActivity().getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
         String restId = sharedPref.getString("restId", null);
 
-        json_url = MainActivity.mRequestURL + "Restaurants/" + restId;
-        pd = ProgressDialog.show(getContext(), "", "Loading Dishes offered...", false);
+        json_url = getString(R.string.request_url) + "Restaurants/" + restId;
+        pd = ProgressDialog.show(getContext(), "", getString(R.string.loading_dishes_offered), false);
     }
 
     @Override
@@ -431,7 +431,7 @@ private class BGTaskAddCategory extends AsyncTask<Void, Void, String>
         userId = sharedPref.getString("restId", null);
         userToken = sharedPref.getString("restToken", null);
 
-        json_url = MainActivity.mRequestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
+        json_url = getString(R.string.request_url) + "Restaurants/" + userId + "?access_token=" + userToken ;
     }
 
     @Override
@@ -509,7 +509,7 @@ private class BGTaskDeleteCategory extends AsyncTask<Void, Void, String> {
         userId = sharedPref.getString("restId", null);
         userToken = sharedPref.getString("restToken", null);
 
-        json_url = MainActivity.mRequestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
+        json_url = getString(R.string.request_url) + "Restaurants/" + userId + "?access_token=" + userToken ;
 
         Log.e("CategoriesList", mCategoriesList.toString());
 
@@ -598,7 +598,7 @@ private class BGTaskDeleteItem extends AsyncTask<Void, Void, String>
         userId = sharedPref.getString("restId", null);
         userToken = sharedPref.getString("restToken", null);
 
-        json_url = MainActivity.mRequestURL + "Restaurants/" + userId + "?access_token=" + userToken;
+        json_url = getString(R.string.request_url) + "Restaurants/" + userId + "?access_token=" + userToken;
     }
 
     @Override

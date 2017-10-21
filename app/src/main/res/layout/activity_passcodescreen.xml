@@ -36,7 +36,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="5dp"
                 android:textSize="@dimen/headingCardView"
-                android:text="Restaurant Login Details"/>
+                android:text="@string/restaurant_login_details"/>
 
             <View
                 android:layout_width="match_parent"
@@ -57,7 +57,7 @@
                     android:textSize="14sp"
                     android:maxLines="1"
                     android:layout_centerHorizontal="true"
-                    android:hint="Enter Username" />
+                    android:hint="@string/enter_username" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -75,7 +75,7 @@
                     android:textSize="14sp"
                     android:maxLines="1"
                     android:inputType="textPassword"
-                    android:hint="Enter Password"/>
+                    android:hint="@string/enter_password"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -94,7 +94,7 @@
                 android:paddingStart="@dimen/paddingNormalButton"
                 android:paddingEnd="@dimen/paddingNormalButton"
                 android:layout_marginTop="5dp"
-                android:text="Login"/>
+                android:text="@string/login"/>
 
         </LinearLayout>
 

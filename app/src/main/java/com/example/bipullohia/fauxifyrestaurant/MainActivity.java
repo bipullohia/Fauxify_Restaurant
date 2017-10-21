@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     DrawerLayout mDrawerLayout;
     Toolbar mToolbar;
     static TextView mRestStatusTextview;
-    static String mRequestURL;
     static String RestStatus;
     FragmentTransaction mFragmentTransaction;
     TextView mRestTypeNavHeader, mRestNameNavHeader;
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Tap 'back' again to exit", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.tap_back_again_exit, Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
 
@@ -75,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         mRestStatusTextview = (TextView) findViewById(R.id.textview_rest_status);
-        mRequestURL = "http://fauxify.com/api/";
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_main_activity);
         setSupportActionBar(mToolbar);
@@ -87,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigationView);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -98,10 +96,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new PendingOrdersFragment()).commit();
             navigationView.getMenu().getItem(0).setChecked(true);
-            getSupportActionBar().setTitle("Pending Orders");
+            getSupportActionBar().setTitle(R.string.pending_orders);
         }
 
-        navigationView = (NavigationView) findViewById(R.id.navigationView);
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -112,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         mFragmentTransaction = getSupportFragmentManager().beginTransaction();
                         mFragmentTransaction.replace(R.id.main_container, new PendingOrdersFragment());
                         mFragmentTransaction.commit();
-                        getSupportActionBar().setTitle("Pending Orders");
+                        getSupportActionBar().setTitle(R.string.pending_orders);
                         mDrawerLayout.closeDrawers();
                         break;
 
@@ -120,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         mFragmentTransaction = getSupportFragmentManager().beginTransaction();
                         mFragmentTransaction.replace(R.id.main_container, new DeliveredOrdersFragment());
                         mFragmentTransaction.commit();
-                        getSupportActionBar().setTitle("Delivered Orders");
+                        getSupportActionBar().setTitle(R.string.delivered_orders);
                         getSupportActionBar().setSubtitle(null);
                         mDrawerLayout.closeDrawers();
                         break;
@@ -129,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         mFragmentTransaction = getSupportFragmentManager().beginTransaction();
                         mFragmentTransaction.replace(R.id.main_container, new DishesOfferedFragment());
                         mFragmentTransaction.commit();
-                        getSupportActionBar().setTitle("Dishes Offered");
+                        getSupportActionBar().setTitle(R.string.dishes_offered);
                         getSupportActionBar().setSubtitle(null);
                         mDrawerLayout.closeDrawers();
                         break;
@@ -138,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         mFragmentTransaction = getSupportFragmentManager().beginTransaction();
                         mFragmentTransaction.replace(R.id.main_container, new RestaurantStatusFragment());
                         mFragmentTransaction.commit();
-                        getSupportActionBar().setTitle("Restaurant Status");
+                        getSupportActionBar().setTitle(R.string.restaurant_status);
                         getSupportActionBar().setSubtitle(null);
                         mDrawerLayout.closeDrawers();
                         break;
@@ -147,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         mFragmentTransaction = getSupportFragmentManager().beginTransaction();
                         mFragmentTransaction.replace(R.id.main_container, new EditRestDetailsFragment());
                         mFragmentTransaction.commit();
-                        getSupportActionBar().setTitle("Edit Restarant Details");
+                        getSupportActionBar().setTitle(R.string.edit_restaurant_details);
                         getSupportActionBar().setSubtitle(null);
                         mDrawerLayout.closeDrawers();
                         break;
@@ -220,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             userId = sharedPref.getString("restId", null);
             userToken = sharedPref.getString("restToken", null);
 
-            json_url = MainActivity.mRequestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
+            json_url = getString(R.string.request_url) + "Restaurants/" + userId + "?access_token=" + userToken ;
         }
 
         @Override
@@ -265,11 +263,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mRestTypeNavHeader.setText(restType);
 
                 if (RestStatus.equals("open")) {
-                    mRestStatusTextview.setText("Restaurant is Active");
+                    mRestStatusTextview.setText(R.string.restaurant_is_active);
                     mRestStatusTextview.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.green));
 
                 } else {
-                    mRestStatusTextview.setText("Restaurant is Inactive");
+                    mRestStatusTextview.setText(R.string.restaurant_is_inactive);
                     mRestStatusTextview.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
                 }
 

@@ -66,7 +66,6 @@ class DishesOfferedAdapter extends BaseExpandableListAdapter {
         String title = (String) this.getGroup(i);
 
         if (view == null) {
-
             LayoutInflater layoutInflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.dishesoffered_parentviewlist, null);
         }

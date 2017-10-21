@@ -61,7 +61,7 @@ public class RestaurantStatusFragment extends Fragment {
                 AlertDialog.Builder alertbuilder = new AlertDialog.Builder(getContext());
                 alertbuilder.setMessage("Set Restaurant as " + mOppositeOfRestStatus + "?")
                         .setCancelable(false)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -76,7 +76,7 @@ public class RestaurantStatusFragment extends Fragment {
                             }
                         })
 
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -90,7 +90,7 @@ public class RestaurantStatusFragment extends Fragment {
                         });
 
                 AlertDialog alertDialog = alertbuilder.create();
-                alertDialog.setTitle("Change Restaurant Status");
+                alertDialog.setTitle(getString(R.string.change_restaurant_status));
                 alertDialog.show();
             }
         });
@@ -115,7 +115,7 @@ public class RestaurantStatusFragment extends Fragment {
             userId = sharedPref.getString("restId", null);
             userToken = sharedPref.getString("restToken", null);
 
-            json_url = MainActivity.mRequestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
+            json_url = getString(R.string.request_url) + "Restaurants/" + userId + "?access_token=" + userToken ;
             progressDialog = ProgressDialog.show(getContext(), "", "Loading Restaurant status...", false);
         }
 

@@ -9,9 +9,7 @@
     </style>
 
     <style name="NavigationTheme" parent="AppTheme">
-
        <item name="android:listPreferredItemHeightSmall">55dp</item>
-
     </style>
 
 </resources>

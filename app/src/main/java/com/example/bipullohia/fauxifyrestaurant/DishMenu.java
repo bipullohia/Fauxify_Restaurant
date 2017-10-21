@@ -1,6 +1,5 @@
 package com.example.bipullohia.fauxifyrestaurant;
 
-
 class DishMenu {
     private String dishName, dishPrice, dishId; private Integer isVeg;
 
@@ -39,7 +38,5 @@ class DishMenu {
         return isVeg;
     }
 
-    public void setIsVeg(Integer name) {
-        this.isVeg = name;
-    }
+    public void setIsVeg(Integer name) { this.isVeg = name; }
 }

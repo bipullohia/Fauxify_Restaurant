@@ -33,7 +33,7 @@
                 android:layout_marginRight="10dp">
 
                 <ImageView
-                    android:contentDescription="Vegetarian Dish"
+                    android:contentDescription="@string/vegetarian_dish_imageview"
                     android:src="@drawable/dish_type_veg"
                     android:id="@+id/img_green_confirm"
                     android:visibility="gone"
@@ -43,7 +43,7 @@
                     android:layout_height="8dp"/>
 
                 <ImageView
-                    android:contentDescription="Non-Vegetarian Dish"
+                    android:contentDescription="@string/non_vegetarian_dish_imageview"
                     android:src="@drawable/dish_type_nonveg"
                     android:id="@+id/img_red_confirm"
                     android:visibility="visible"
@@ -59,17 +59,18 @@
                     android:layout_gravity="center_vertical"
                     android:textAlignment="center"
                     android:textSize="11sp"
-                    android:text="Default Status"/>
+                    android:text="@string/default_status"/>
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp">
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
 
                 <ImageView
-                    android:contentDescription="Vegetarian Dish"
+                    android:contentDescription="@string/vegetarian_dish_imageview"
                     android:src="@drawable/dish_type_veg"
                     android:id="@+id/img_deliver_green"
                     android:visibility="gone"
@@ -79,7 +80,7 @@
                     android:layout_height="8dp"/>
 
                 <ImageView
-                    android:contentDescription="Non-Vegetarian Dish"
+                    android:contentDescription="@string/non_vegetarian_dish_imageview"
                     android:src="@drawable/dish_type_nonveg"
                     android:id="@+id/img_deliver_red"
                     android:visibility="visible"
@@ -95,7 +96,7 @@
                     android:layout_gravity="center_vertical"
                     android:textAlignment="center"
                     android:textSize="11sp"
-                    android:text="Default Status"/>
+                    android:text="@string/default_status"/>
 
             </LinearLayout>
 
@@ -120,7 +121,7 @@
                 android:paddingBottom="2dp"
                 android:textColor="@color/colorPrimaryText"
                 android:textSize="16sp"
-                android:text="Restaurant Name"/>
+                android:text="@string/restaurant_name"/>
 
             <TextView
                 android:id="@+id/orderrow_ordertime"
@@ -128,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="2dp"
                 android:textSize="12sp"
-                android:text="Ordered on 03 Oct 2017 at 7.14PM"/>
+                android:text="@string/xxxx_xxxx"/>
 
         </LinearLayout>
 
@@ -153,15 +154,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
                     android:textSize="14sp"
-                    android:text="Order Id  "/>
+                    android:text="@string/order_id"/>
 
                 <TextView
                     android:id="@+id/orderrow_orderid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:text="00000000"/>
+                    android:text="@string/xxx"/>
 
             </LinearLayout>
 
@@ -175,7 +178,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:text="Total "/>
+                    android:text="@string/total"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -190,7 +193,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:text="000" />
+                    android:text="@string/xxx" />
 
             </LinearLayout>
 

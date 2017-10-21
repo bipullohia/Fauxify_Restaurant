@@ -45,7 +45,7 @@
                         android:gravity="center"
                         android:paddingBottom="5dp"
                         android:textSize="@dimen/headingCardView"
-                        android:text="Item Summary and Details"/>
+                        android:text="@string/item_summary_and_details"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -80,7 +80,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="14sp"
-                            android:text="Total Items"/>
+                            android:text="@string/total_items"/>
 
                         <TextView
                             android:id="@+id/orderdetails_totalitems"
@@ -89,7 +89,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:textSize="14sp"
-                            android:text="X"/>
+                            android:text="@string/xxx"/>
 
                     </LinearLayout>
 
@@ -106,7 +106,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="14sp"
-                            android:text="Total Items Amount"/>
+                            android:text="@string/total_items_amount"/>
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -127,7 +127,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="14sp"
-                                android:text="XXX"/>
+                                android:text="@string/xxx"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -146,14 +146,13 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="14sp"
-                            android:text="Delivery Fee"/>
+                            android:text="@string/delivery_fee"/>
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="end">
-
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -168,7 +167,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="14sp"
-                                android:text="XX"/>
+                                android:text="@string/xxx"/>
+
                         </LinearLayout>
 
                     </LinearLayout>
@@ -191,7 +191,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="15sp"
-                            android:text="Final Amount" />
+                            android:text="@string/final_amount" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -213,7 +213,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="15sp"
-                                android:text="XXX" />
+                                android:text="@string/xxx" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -245,7 +245,7 @@
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
                         android:textSize="@dimen/headingCardView"
-                        android:text="Other Details"/>
+                        android:text="@string/other_details"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -265,7 +265,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="14sp"
-                            android:text="Order Id"/>
+                            android:text="@string/order_id"/>
 
                         <TextView
                             android:id="@+id/orderdetails_orderid"
@@ -274,7 +274,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:textSize="14sp"
-                            android:text="XXXXXXXXXXXXXX"/>
+                            android:text="@string/xxx"/>
 
                     </LinearLayout>
 
@@ -291,7 +291,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="14sp"
-                            android:text="Customer Name"/>
+                            android:text="@string/customer_name"/>
 
                         <TextView
                             android:id="@+id/orderdetails_customername"
@@ -300,7 +300,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:textSize="14sp"
-                            android:text="XXXXXX XXXXXX"/>
+                            android:text="@string/xxx"/>
 
                     </LinearLayout>
 
@@ -317,7 +317,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textSize="14sp"
-                            android:text="Order Time"/>
+                            android:text="@string/order_time"/>
 
                         <TextView
                             android:id="@+id/orderdetails_ordertime"
@@ -326,7 +326,7 @@
                             android:layout_weight="1"
                             android:gravity="end"
                             android:textSize="14sp"
-                            android:text="XXXXXXX"/>
+                            android:text="@string/xxx"/>
 
                     </LinearLayout>
 
@@ -357,7 +357,7 @@
                         android:layout_gravity="center"
                         android:layout_marginBottom="5dp"
                         android:textSize="@dimen/headingCardView"
-                        android:text="Delivery Address"/>
+                        android:text="@string/delivery_address"/>
 
                     <View
                         android:layout_width="match_parent"
@@ -372,7 +372,7 @@
                         android:padding="10dp"
                         android:textAlignment="center"
                         android:textSize="15sp"
-                        android:text="XXXXXXX"/>
+                        android:text="@string/xxx"/>
 
                 </LinearLayout>
 

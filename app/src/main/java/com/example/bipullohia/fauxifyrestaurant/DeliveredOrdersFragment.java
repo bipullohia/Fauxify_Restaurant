@@ -69,10 +69,10 @@ public class DeliveredOrdersFragment extends Fragment {
             String restId = sharedPref.getString("restId", null);
             String restToken = sharedPref.getString("restToken", null);
 
-            urlFinal = MainActivity.mRequestURL + "restaurants/" + restId + "/fauxorders?access_token=" + restToken;
+            urlFinal = getString(R.string.request_url) + "restaurants/" + restId + "/fauxorders?access_token=" + restToken;
             Log.e("finalURL", urlFinal);
 
-            progressDialog = ProgressDialog.show(getContext(), "", "Loading Delivered orders...", false);
+            progressDialog = ProgressDialog.show(getContext(), "", getString(R.string.loading_delivered_orders), false);
         }
 
         @Override

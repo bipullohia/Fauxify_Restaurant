@@ -38,7 +38,7 @@
                     android:layout_marginTop="5dp"
                     android:gravity="center"
                     android:textSize="18sp"
-                    android:text="Restaurant Name"/>
+                    android:text="@string/restaurant_name"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -58,7 +58,7 @@
                         android:layout_marginStart="40dp"
                         android:maxLength="25"
                         android:maxLines="1"
-                        android:hint="Restaurant Type" />
+                        android:hint="@string/restaurant_type" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -75,7 +75,7 @@
                         android:layout_marginEnd="40dp"
                         android:maxLength="3"
                         android:inputType="number"
-                        android:hint="Minimum Order (Rs)"/>
+                        android:hint="@string/minimum_order_rs"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -92,7 +92,7 @@
                         android:layout_marginStart="40dp"
                         android:maxLength="3"
                         android:inputType="number"
-                        android:hint="Delivery Time (minutes)"/>
+                        android:hint="@string/delivery_time_minutes"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -110,7 +110,7 @@
                         android:layout_marginEnd="40dp"
                         android:maxLength="3"
                         android:inputType="number"
-                        android:hint="Delivery Fee (Rs)"/>
+                        android:hint="@string/delivery_fee_rs"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -127,7 +127,7 @@
                         android:layout_marginStart="40dp"
                         android:maxLength="3"
                         android:inputType="number"
-                        android:hint="Amount for free delivery (Rs)"/>
+                        android:hint="@string/amount_for_free_delivery_rs"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -145,7 +145,7 @@
                     android:paddingStart="@dimen/paddingNormalButton"
                     android:paddingEnd="@dimen/paddingNormalButton"
                     android:textAllCaps="false"
-                    android:text="Submit"/>
+                    android:text="@string/submit"/>
 
             </LinearLayout>
 

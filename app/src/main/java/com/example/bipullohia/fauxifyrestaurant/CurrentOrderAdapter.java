@@ -18,7 +18,6 @@ class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapter.MyVie
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView dishNameTextView, dishPriceTextView, dishQuantityTextView, dishAmountTextView;
-
         Context context;
 
         MyViewHolder(View view) {

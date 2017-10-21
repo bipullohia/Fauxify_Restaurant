@@ -10,9 +10,7 @@ class CurrentOrder{
             this.currentdishQuantity = currentdishQuantity;
         }
 
-        String getCurrentdishName() {
-            return currentdishName;
-        }
+        String getCurrentdishName() { return currentdishName; }
 
         public void setCurrentdishName(String name) { this.currentdishName = name; }
 
@@ -28,7 +26,5 @@ class CurrentOrder{
             return currentdishQuantity;
         }
 
-        public void setCurrentdishQuantity(Integer name) {
-            this.currentdishQuantity = name;
-        }
+        public void setCurrentdishQuantity(Integer name) { this.currentdishQuantity = name; }
 }

@@ -68,9 +68,9 @@ public class EditRestDetailsFragment extends Fragment {
                 mNewRestFreeDelAmount = mRestFreeDelAmountTextView.getText().toString();
 
                 AlertDialog.Builder alertbuilder = new AlertDialog.Builder(getContext());
-                alertbuilder.setMessage("Do you want to update these details?")
+                alertbuilder.setMessage(R.string.update_details_ques)
                         .setCancelable(true)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -78,10 +78,10 @@ public class EditRestDetailsFragment extends Fragment {
                                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                                 ft.detach(EditRestDetailsFragment.this).attach(EditRestDetailsFragment.this).commit();
 
-                                Toast.makeText(getContext(), "New details updated", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), R.string.new_details_updated, Toast.LENGTH_LONG).show();
                             }
                         })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.cancel();
@@ -113,8 +113,8 @@ public class EditRestDetailsFragment extends Fragment {
             sharedPref = EditRestDetailsFragment.this.getActivity().getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
             String restId = sharedPref.getString("restId", null);
 
-            json_url = MainActivity.mRequestURL + "Restaurants/" + restId;
-            progressDialog = ProgressDialog.show(getContext(), "", "Loading Restaurant details...", false);
+            json_url = getString(R.string.request_url) + "Restaurants/" + restId;
+            progressDialog = ProgressDialog.show(getContext(), "", getString(R.string.loading_rest_details), false);
         }
 
         @Override
@@ -184,7 +184,7 @@ public class EditRestDetailsFragment extends Fragment {
             userId = sharedPref.getString("restId", null);
             userToken = sharedPref.getString("restToken", null);
 
-            json_url = MainActivity.mRequestURL + "Restaurants/" + userId + "?access_token=" + userToken;
+            json_url = getString(R.string.request_url) + "Restaurants/" + userId + "?access_token=" + userToken;
         }
 
         @Override

@@ -29,7 +29,7 @@
                 android:gravity="center"
                 android:paddingBottom="5dp"
                 android:textSize="@dimen/headingCardView"
-                android:text="Categories Offered"/>
+                android:text="@string/categories_offered"/>
 
             <View
                 android:layout_width="match_parent"
@@ -46,7 +46,7 @@
                 android:layout_marginLeft="15dp"
                 android:minHeight="5dp"
                 android:textAllCaps="false"
-                android:text="Add New Category"/>
+                android:text="@string/add_new_category"/>
 
             <View
                 android:layout_width="match_parent"

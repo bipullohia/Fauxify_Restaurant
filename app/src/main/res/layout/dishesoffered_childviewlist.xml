@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/isVegDish"
-        android:contentDescription="Vegetarian Dish"
+        android:contentDescription="@string/vegetarian_dish"
         android:src="@drawable/dish_type_veg"
         android:visibility="gone"
         android:layout_margin="5dp"
@@ -18,7 +18,7 @@
 
     <ImageView
         android:id="@+id/isNonvegDish"
-        android:contentDescription="Non-Vegetarian Dish"
+        android:contentDescription="@string/non_vegetarian_dish"
         android:src="@drawable/dish_type_nonveg"
         android:visibility="gone"
         android:layout_margin="5dp"
@@ -35,7 +35,7 @@
         android:layout_marginRight="10dp"
         android:gravity="center_vertical"
         android:textSize="14sp"
-        android:text="Child Option"/>
+        android:text="@string/xxxx_xxxx"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:textSize="14sp"
-            android:text="XXX"/>
+            android:text="@string/xxx"/>
 
     </LinearLayout>
 

@@ -85,10 +85,10 @@ public class PendingOrdersFragment extends Fragment {
             String restId = sharedPref.getString("restId", null);
             String restToken = sharedPref.getString("restToken", null);
 
-            json_url = MainActivity.mRequestURL + "restaurants/" + restId + "/fauxorders?access_token=" + restToken;
+            json_url = getString(R.string.request_url) + "restaurants/" + restId + "/fauxorders?access_token=" + restToken;
             Log.e("finalURL", json_url);
 
-            pd = ProgressDialog.show(getContext(), "", "Loading Pending orders...", false);
+            pd = ProgressDialog.show(getContext(), "", getString(R.string.loading_pending_orders), false);
         }
 
         @Override

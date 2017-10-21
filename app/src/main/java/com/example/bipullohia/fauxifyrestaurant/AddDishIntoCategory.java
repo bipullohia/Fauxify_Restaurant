@@ -67,7 +67,7 @@ public class AddDishIntoCategory extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_adddish);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //to display the up button on actionbar
-        getSupportActionBar().setTitle("Add Item");
+        getSupportActionBar().setTitle(R.string.add_item);
 
         mCategoryList = new ArrayList<>();
         mCategory = getIntent().getStringExtra("category");
@@ -148,14 +148,13 @@ public class AddDishIntoCategory extends AppCompatActivity {
 
                 } else {
                     //this means no data was entered
-                    Toast.makeText(AddDishIntoCategory.this, "Input field is empty!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddDishIntoCategory.this, R.string.empty_input_field, Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     private void sendDishData() {
-
         new BGTaskSendDishData().execute();
     }
 
@@ -177,8 +176,7 @@ public class AddDishIntoCategory extends AppCompatActivity {
 
         Log.i("is veg data present - ", String.valueOf(mIsVegDataPresent));
     }
-
-
+    
     private class BGTaskSendDishData extends AsyncTask<Void, Void, String>
     {
         String finalURL, userId, userToken;
@@ -191,7 +189,7 @@ public class AddDishIntoCategory extends AppCompatActivity {
             userId = sharedPref.getString("restId", null);
             userToken = sharedPref.getString("restToken", null);
 
-            finalURL = MainActivity.mRequestURL + "Restaurants/" + userId + "?access_token=" + userToken ;
+            finalURL = getString(R.string.request_url) + "Restaurants/" + userId + "?access_token=" + userToken ;
         }
 
         @Override

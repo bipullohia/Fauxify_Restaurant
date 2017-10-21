@@ -45,7 +45,7 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_passcodescreen);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("Fauxify for Restaurant");
+        getSupportActionBar().setTitle(R.string.app_name);
 
         SharedPreferences sharedPref;
         sharedPref = getSharedPreferences("User Preferences Data", Context.MODE_PRIVATE);
@@ -88,7 +88,7 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
         if (!mUsername.matches("") && !mPassword.matches("")) {
             new BGTaskIfRestExist().execute();
         } else {
-            Toast.makeText(this, "Username/Password field cannot be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.empty_input_field, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -158,7 +158,7 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
                 LoginRestaurant();
 
             } else if (ifRestaurantExists.equals("false")) {
-                Toast.makeText(getApplicationContext(), "Username doesn't exist", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), R.string.username_doesnt_exist, Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -169,7 +169,7 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
 
     private class BGTaskLoginUser extends AsyncTask<Void, Void, String> {
 
-        String jsonUrl = "http://fauxify.com/api/restaurants/login"; // undefined url
+        String jsonUrl = getString(R.string.request_url)+ "restaurants/login"; // undefined url
         boolean exceptioncaught = false;
         boolean issuccess = true;
 
@@ -233,7 +233,7 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
                     issuccess = false;
                 }
 
-                Log.e("test", json);
+                Log.i("test", json);
 
             } catch (IOException | JSONException e) {
 
@@ -252,7 +252,7 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
                 startActivity(intent);
 
             } else if (!issuccess) {
-                Toast.makeText(PasscodeScreen.this, "Login Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PasscodeScreen.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
             }
         }
     }

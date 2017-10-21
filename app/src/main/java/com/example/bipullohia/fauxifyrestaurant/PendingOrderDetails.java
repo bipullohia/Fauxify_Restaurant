@@ -74,7 +74,7 @@ public class PendingOrderDetails extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar_pendingorder_details);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //to display up button on actionbar
-        getSupportActionBar().setTitle("Order Details");
+        getSupportActionBar().setTitle(R.string.order_details);
 
         mSetDeliveryTimeCardView = (CardView) findViewById(R.id.cardview_confirmdelivery);
         mShowDeliveryTimeCardView = (CardView) findViewById(R.id.cardview_show_deliverytime);
@@ -192,14 +192,14 @@ public class PendingOrderDetails extends AppCompatActivity {
     private void confirmDelivery() {
 
         AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
-        alertbuilder.setMessage("Are you sure the Order is Delivered?")
+        alertbuilder.setMessage(R.string.are_you_sure_order_delivered)
                 .setCancelable(true)
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                Toast.makeText(getApplicationContext(), "Order Delivery Confirmed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), R.string.order_delivery_confirmed, Toast.LENGTH_SHORT).show();
                                 changeDeliveryStatus();
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
@@ -207,7 +207,7 @@ public class PendingOrderDetails extends AppCompatActivity {
                         }
                 )
 
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
@@ -215,7 +215,7 @@ public class PendingOrderDetails extends AppCompatActivity {
                 });
 
         AlertDialog alert = alertbuilder.create();
-        alert.setTitle("Delivery Confirmation");
+        alert.setTitle(getString(R.string.delivery_confirmation));
         alert.show();
     }
 
@@ -235,7 +235,7 @@ public class PendingOrderDetails extends AppCompatActivity {
             String restId = sharedPref.getString("restId", null);
             String restToken = sharedPref.getString("restToken", null);
 
-            json_url = MainActivity.mRequestURL + "restaurants/" + restId + "/fauxorders/" + orderId + "?access_token=" + restToken;
+            json_url = getString(R.string.request_url) + "restaurants/" + restId + "/fauxorders/" + orderId + "?access_token=" + restToken;
             Log.e("finalURL", json_url);
         }
 
@@ -325,7 +325,7 @@ public class PendingOrderDetails extends AppCompatActivity {
             String restId = sharedPref.getString("restId", null);
             String restToken = sharedPref.getString("restToken", null);
 
-            json_url = MainActivity.mRequestURL + "restaurants/" + restId + "/fauxorders/" + orderId + "?access_token=" + restToken;
+            json_url = getString(R.string.request_url) + "restaurants/" + restId + "/fauxorders/" + orderId + "?access_token=" + restToken;
             Log.e("finalURL", json_url);
         }
 

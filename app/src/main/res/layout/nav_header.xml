@@ -22,7 +22,7 @@
             android:layout_marginRight="10dp"
             android:textColor="@color/colorAccent"
             android:textSize="16sp"
-            android:text="Restaurant Name"/>
+            android:text="@string/restaurant_name"/>
 
         <TextView
             android:id="@+id/navheader_rest_type"
@@ -33,7 +33,7 @@
             android:layout_marginBottom="3dp"
             android:textColor="@color/white"
             android:textSize="14sp"
-            android:text="Type"/>
+            android:text="@string/restaurant_type"/>
 
     </LinearLayout>
 
