@@ -27,7 +27,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class ModifyDishIntoCategory extends AppCompatActivity {
+public class ModifyDishIntoCategoryActivity extends AppCompatActivity {
 
     TextView mDishNameHeadingTextView;
     Button mSubmitButton;
@@ -112,59 +112,66 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
 
                 checkRadioButtonStatus();
 
-                mNewDishDataJO = new JSONObject();
+                if(dishname.equals("") || dishprice.equals("")){
+                    Toast.makeText(ModifyDishIntoCategoryActivity.this, R.string.empty_input_field, Toast.LENGTH_SHORT).show();
 
-                try {
-                    mNewDishDataJO.put("dishname", dishname);
-                    mNewDishDataJO.put("dishprice", dishprice);
-                    mNewDishDataJO.put("isveg", mDishTypeDefaultInt);
-                    Log.e("asdfg", mNewDishDataJO.toString());
+                }else{
+                    //this makes sure that no empty field was given to it
+                    mNewDishDataJO = new JSONObject();
+                    try {
+                        mNewDishDataJO.put("dishname", dishname);
+                        mNewDishDataJO.put("dishprice", dishprice);
+                        mNewDishDataJO.put("isveg", mDishTypeDefaultInt);
+                        Log.e("asdfg", mNewDishDataJO.toString());
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                try {
-                    mCategoryDataJA = new JSONArray(mCategoryData);
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
-                mFinalMenuJO = new JSONObject();
-                mParticularCategoryJO = new JSONObject();
+                    try {
+                        mCategoryDataJA = new JSONArray(mCategoryData);
 
-                for (int i = 0; i < mCategoryList.size(); i++) {
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
-                    if (!mCategoryList.get(i).equals(mCategory)) {
+                    mFinalMenuJO = new JSONObject();
+                    mParticularCategoryJO = new JSONObject();
 
-                        try {
-                            mFinalMenuJO.accumulate(mCategoryList.get(i), mCategoryDataJA.get(i));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    for (int i = 0; i < mCategoryList.size(); i++) {
 
-                    } else if (mCategoryList.get(i).equals(mCategory)) {
+                        if (!mCategoryList.get(i).equals(mCategory)) {
 
-                        try {
-                            mParticularCategoryJO = mCategoryDataJA.getJSONObject(i);
-                            mParticularCategoryJO.remove(mDishIdDefault);
-                            mParticularCategoryJO.accumulate(mDishIdDefault, mNewDishDataJO);
+                            try {
+                                mFinalMenuJO.accumulate(mCategoryList.get(i), mCategoryDataJA.get(i));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        } else if (mCategoryList.get(i).equals(mCategory)) {
 
-                        try {
-                            mFinalMenuJO.accumulate(mCategoryList.get(i), mParticularCategoryJO);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            try {
+                                mParticularCategoryJO = mCategoryDataJA.getJSONObject(i);
+                                mParticularCategoryJO.remove(mDishIdDefault);
+                                mParticularCategoryJO.accumulate(mDishIdDefault, mNewDishDataJO);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            try {
+                                mFinalMenuJO.accumulate(mCategoryList.get(i), mParticularCategoryJO);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
-                }
-                Log.e("final-menu", mFinalMenuJO.toString());
+                    Log.e("final-menu", mFinalMenuJO.toString());
 
-                sendDishData();
+                    sendDishData();
+                }
             }
         });
     }
@@ -249,7 +256,7 @@ public class ModifyDishIntoCategory extends AppCompatActivity {
             DishesOfferedFragment.shouldRefreshOnResume = true;
             Toast.makeText(getApplicationContext(), R.string.item_modified, Toast.LENGTH_SHORT).show();
 
-            finish();
+            finish(); //finished the activity to resume the last one (Dishes Offered Fragment)
         }
     }
 }

@@ -47,7 +47,7 @@ class DeliveredOrderAdapter extends RecyclerView.Adapter<DeliveredOrderAdapter.M
 
             int position= getAdapterPosition();
             Intent intent;
-            intent = new Intent(context, DeliveredOrderDetails.class);
+            intent = new Intent(context, DeliveredOrderDetailsActivity.class);
 
             Orders orders = orderList.get(position);
 
@@ -76,7 +76,7 @@ class DeliveredOrderAdapter extends RecyclerView.Adapter<DeliveredOrderAdapter.M
     @Override
     public DeliveredOrderAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType)  {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.ordersfragment_rowlayout, parent, false);
+                .inflate(R.layout.rowlayout_ordersfragment, parent, false);
 
         return new DeliveredOrderAdapter.MyViewHolder(itemView);
     }

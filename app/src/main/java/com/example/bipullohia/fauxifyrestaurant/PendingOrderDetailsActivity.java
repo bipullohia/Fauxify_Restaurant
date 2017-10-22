@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import static com.example.bipullohia.fauxifyrestaurant.R.id.deliverytime;
 
 
-public class PendingOrderDetails extends AppCompatActivity {
+public class PendingOrderDetailsActivity extends AppCompatActivity {
 
     Toolbar mToolbar;
     Spinner mSpinner;
@@ -177,6 +177,7 @@ public class PendingOrderDetails extends AppCompatActivity {
                 sendDeliveryDetails();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -203,6 +204,7 @@ public class PendingOrderDetails extends AppCompatActivity {
                                 changeDeliveryStatus();
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
+                                finish();
                             }
                         }
                 )

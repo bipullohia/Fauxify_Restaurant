@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         SharedPreferences.Editor editor = sharedPref.edit();
                         editor.clear();
                         editor.apply();
-                        Intent intent = new Intent(getApplicationContext(), PasscodeScreen.class);
+                        Intent intent = new Intent(getApplicationContext(), PasscodeScreenActivity.class);
                         startActivity(intent);
                         finish();
                 }

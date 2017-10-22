@@ -39,7 +39,7 @@ class CurrentOrderAdapter extends RecyclerView.Adapter<CurrentOrderAdapter.MyVie
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cartitem_dishesdetails_rowlayout, parent, false);
+                .inflate(R.layout.rowlayout_cartitem_dishesdetails, parent, false);
 
         return new MyViewHolder(itemView);
     }

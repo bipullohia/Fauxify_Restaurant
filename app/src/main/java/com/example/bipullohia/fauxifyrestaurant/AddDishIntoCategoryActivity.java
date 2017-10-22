@@ -28,7 +28,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class AddDishIntoCategory extends AppCompatActivity {
+public class AddDishIntoCategoryActivity extends AppCompatActivity {
 
     TextView mDishNameHeadingTextView;
     Button mSubmitButton;
@@ -148,7 +148,7 @@ public class AddDishIntoCategory extends AppCompatActivity {
 
                 } else {
                     //this means no data was entered
-                    Toast.makeText(AddDishIntoCategory.this, R.string.empty_input_field, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddDishIntoCategoryActivity.this, R.string.empty_input_field, Toast.LENGTH_SHORT).show();
                 }
             }
         });

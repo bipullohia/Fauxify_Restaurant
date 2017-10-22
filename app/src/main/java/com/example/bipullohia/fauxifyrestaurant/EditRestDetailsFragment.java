@@ -33,7 +33,7 @@ import java.net.URL;
 
 public class EditRestDetailsFragment extends Fragment {
 
-    EditText mRestTypeEditText, mRestDelFeeTextView, mRestDelTimeTextView, mRestMinOrderTextView, mRestFreeDelAmountTextView;
+    EditText mRestTypeEditText, mRestDelFeeEditText, mRestDelTimeEditText, mRestMinOrderEditText, mRestFreeDelAmountEditText;
     TextView mRestNameTextView;
     Button mSubmitNewDetailsButton;
     String mRestaurantType, mRestaurantDelFee, mRestaurantDelTime, mRestaurantMinOrder, mRestaurantName, mRestaurantFreeDelAmount;
@@ -48,11 +48,11 @@ public class EditRestDetailsFragment extends Fragment {
         View rootview = inflater.inflate(R.layout.fragment_edit_rest_details, container, false);
 
         mRestNameTextView = (TextView) rootview.findViewById(R.id.textview_rest_name);
-        mRestDelFeeTextView = (EditText) rootview.findViewById(R.id.edittext_deliveryfee_rest);
-        mRestDelTimeTextView = (EditText) rootview.findViewById(R.id.edittext_deliverytime_rest);
-        mRestMinOrderTextView = (EditText) rootview.findViewById(R.id.edittext_minorder_rest);
+        mRestDelFeeEditText = (EditText) rootview.findViewById(R.id.edittext_deliveryfee_rest);
+        mRestDelTimeEditText = (EditText) rootview.findViewById(R.id.edittext_deliverytime_rest);
+        mRestMinOrderEditText = (EditText) rootview.findViewById(R.id.edittext_minorder_rest);
         mRestTypeEditText = (EditText) rootview.findViewById(R.id.edittext_restaurant_type);
-        mRestFreeDelAmountTextView = (EditText) rootview.findViewById(R.id.edittext_free_deliveryamount_rest);
+        mRestFreeDelAmountEditText = (EditText) rootview.findViewById(R.id.edittext_free_deliveryamount_rest);
         mSubmitNewDetailsButton = (Button) rootview.findViewById(R.id.button_submit_editrestaurant);
 
         updateOldValues();
@@ -61,35 +61,44 @@ public class EditRestDetailsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                mNewRestDelFee = mRestDelFeeTextView.getText().toString();
-                mNewRestDelTime = mRestDelTimeTextView.getText().toString();
-                mNewRestMinOrder = mRestMinOrderTextView.getText().toString();
+                mNewRestDelFee = mRestDelFeeEditText.getText().toString();
+                mNewRestDelTime = mRestDelTimeEditText.getText().toString();
+                mNewRestMinOrder = mRestMinOrderEditText.getText().toString();
                 mNewRestType = mRestTypeEditText.getText().toString();
-                mNewRestFreeDelAmount = mRestFreeDelAmountTextView.getText().toString();
+                mNewRestFreeDelAmount = mRestFreeDelAmountEditText.getText().toString();
 
-                AlertDialog.Builder alertbuilder = new AlertDialog.Builder(getContext());
-                alertbuilder.setMessage(R.string.update_details_ques)
-                        .setCancelable(true)
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
 
-                                submitNewDetails();
-                                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                                ft.detach(EditRestDetailsFragment.this).attach(EditRestDetailsFragment.this).commit();
+                if(!mNewRestDelFee.equals("") && !mNewRestDelTime.equals("") && !mNewRestMinOrder.equals("")
+                        && mNewRestType.equals("") && !mNewRestFreeDelAmount.equals("")){
 
-                                Toast.makeText(getContext(), R.string.new_details_updated, Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        });
 
-                AlertDialog alert = alertbuilder.create();
-                alert.show();
+                    AlertDialog.Builder alertbuilder = new AlertDialog.Builder(getContext());
+                    alertbuilder.setMessage(R.string.update_details_ques)
+                            .setCancelable(true)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    submitNewDetails();
+                                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                    ft.detach(EditRestDetailsFragment.this).attach(EditRestDetailsFragment.this).commit();
+
+                                    Toast.makeText(getContext(), R.string.new_details_updated, Toast.LENGTH_LONG).show();
+                                }
+                            })
+                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            });
+
+                    AlertDialog alert = alertbuilder.create();
+                    alert.show();
+
+                }else{
+                    Toast.makeText(getContext(), R.string.empty_input_field, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -155,12 +164,12 @@ public class EditRestDetailsFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
 
-            mRestMinOrderTextView.setText(mRestaurantMinOrder);
-            mRestDelTimeTextView.setText(mRestaurantDelTime.substring(0, 2));
+            mRestMinOrderEditText.setText(mRestaurantMinOrder);
+            mRestDelTimeEditText.setText(mRestaurantDelTime.substring(0, 2));
             mRestNameTextView.setText(mRestaurantName);
             mRestTypeEditText.setText(mRestaurantType);
-            mRestDelFeeTextView.setText(mRestaurantDelFee);
-            mRestFreeDelAmountTextView.setText(mRestaurantFreeDelAmount);
+            mRestDelFeeEditText.setText(mRestaurantDelFee);
+            mRestFreeDelAmountEditText.setText(mRestaurantFreeDelAmount);
 
             progressDialog.dismiss();
         }

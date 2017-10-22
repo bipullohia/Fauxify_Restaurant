@@ -10,7 +10,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PasscodeScreen">
+        <activity android:name=".PasscodeScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,16 +22,16 @@
             android:launchMode="singleTop"/>
 
         <activity
-            android:name=".PendingOrderDetails"
+            android:name=".PendingOrderDetailsActivity"
             android:parentActivityName=".MainActivity" />
 
-        <activity android:name=".DeliveredOrderDetails"
+        <activity android:name=".DeliveredOrderDetailsActivity"
             android:parentActivityName=".MainActivity"/>
 
-        <activity android:name=".AddDishIntoCategory">
+        <activity android:name=".AddDishIntoCategoryActivity">
         </activity>
 
-        <activity android:name=".ModifyDishIntoCategory">
+        <activity android:name=".ModifyDishIntoCategoryActivity">
         </activity>
 
 

@@ -84,13 +84,13 @@
     <string name="set_restaurant_as_active">Set Restaurant as Active</string>
     <string name="status_details">Status Details</string>
     <string name="active">Active</string>
-    <string name="inactive">Inactive</string>
     <string name="restaurant_active_msg">Customers CAN order food if Restaurant Status is set as \'Active\'</string>
     <string name="restaurant_inactive_msg">Customers CANNOT order food if Restaurant Status is set as \'Inactive\'</string>
     <string name="vegetarian_dish_imageview">Vegetarian Dish ImageView</string>
     <string name="non_vegetarian_dish_imageview">Non-Vegetarian Dish ImageView</string>
     <string name="default_status">Default Status</string>
     <string name="total">Total</string>
+    <string name="inactive">inactive</string>
 
 
     <string-array name="Timing">

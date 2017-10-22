@@ -47,7 +47,7 @@ class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdapter.MyV
 
             int position = getAdapterPosition();
             Intent intent;
-            intent = new Intent(context, PendingOrderDetails.class);
+            intent = new Intent(context, PendingOrderDetailsActivity.class);
 
             Orders orders = orderList.get(position);
 
@@ -75,7 +75,7 @@ class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdapter.MyV
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.ordersfragment_rowlayout, parent, false);
+                .inflate(R.layout.rowlayout_ordersfragment, parent, false);
 
         return new MyViewHolder(itemView);
     }

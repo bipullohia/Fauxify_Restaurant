@@ -136,7 +136,7 @@ public class DishesOfferedFragment extends Fragment {
 
                             if (which == 0) {
 
-                                Intent intent = new Intent(getContext(), AddDishIntoCategory.class);
+                                Intent intent = new Intent(getContext(), AddDishIntoCategoryActivity.class);
                                 intent.putExtra("category", category);
                                 intent.putExtra("categoryData", jsonArray.toString());
                                 intent.putStringArrayListExtra("categoryList", mCategoriesList);
@@ -195,7 +195,7 @@ public class DishesOfferedFragment extends Fragment {
 
                             if (which == 0) {
 
-                                Intent intent1 = new Intent(getContext(), ModifyDishIntoCategory.class);
+                                Intent intent1 = new Intent(getContext(), ModifyDishIntoCategoryActivity.class);
                                 intent1.putExtra("category", category);
 
                                 intent1.putExtra("dishname", currentitem);

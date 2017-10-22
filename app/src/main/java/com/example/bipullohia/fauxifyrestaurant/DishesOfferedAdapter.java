@@ -67,7 +67,7 @@ class DishesOfferedAdapter extends BaseExpandableListAdapter {
 
         if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.dishesoffered_parentviewlist, null);
+            view = layoutInflater.inflate(R.layout.rowlayout_dishesoffered_parentviewlist, null);
         }
 
         TextView titleParentTextView = (TextView) view.findViewById(R.id.textview_parent);
@@ -84,7 +84,7 @@ class DishesOfferedAdapter extends BaseExpandableListAdapter {
 
         if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.dishesoffered_childviewlist, null);
+            view = layoutInflater.inflate(R.layout.rowlayout_dishesoffered_childviewlist, null);
         }
 
         ImageView vegImageView = (ImageView) view.findViewById(R.id.isVegDish);

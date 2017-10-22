@@ -30,7 +30,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListener, View.OnClickListener {
+public class PasscodeScreenActivity extends AppCompatActivity implements View.OnKeyListener, View.OnClickListener {
 
     EditText mRestUsernameEditText, mRestPasswordEditText;
     Button mLoginButton;
@@ -56,6 +56,7 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
 
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
+            finish();
             Log.i("status", "skipping login");
         }
 
@@ -250,9 +251,10 @@ public class PasscodeScreen extends AppCompatActivity implements View.OnKeyListe
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
+                finish();
 
             } else if (!issuccess) {
-                Toast.makeText(PasscodeScreen.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
+                Toast.makeText(PasscodeScreenActivity.this, R.string.login_failed, Toast.LENGTH_SHORT).show();
             }
         }
     }
