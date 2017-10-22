@@ -32,6 +32,8 @@ import java.net.URL;
 
 public class PasscodeScreenActivity extends AppCompatActivity implements View.OnKeyListener, View.OnClickListener {
 
+    private static final String TAG = "PasscodeScreenActivity";
+
     EditText mRestUsernameEditText, mRestPasswordEditText;
     Button mLoginButton;
     static String mResId;
@@ -57,7 +59,7 @@ public class PasscodeScreenActivity extends AppCompatActivity implements View.On
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
-            Log.i("status", "skipping login");
+            Log.i(TAG, "status: skipping login");
         }
 
         mRestUsernameEditText = (EditText) findViewById(R.id.edittext_rest_username);
@@ -114,7 +116,7 @@ public class PasscodeScreenActivity extends AppCompatActivity implements View.On
         @Override
         protected void onPreExecute() {
 
-            json_url = "http://fauxify.com/api/restaurants/";
+            json_url = getString(R.string.request_url) + "restaurants/";
             json_checkurl = json_url + mUsername + "/exists";
         }
 
@@ -136,12 +138,11 @@ public class PasscodeScreenActivity extends AppCompatActivity implements View.On
                 inputStream.close();
                 httpConnection.disconnect();
                 String result_checkjson = stringBuilder.toString().trim();
-                Log.e("result", result_checkjson);
 
                 JSONObject jobject = new JSONObject(result_checkjson);
                 ifRestaurantExists = jobject.getString("exists");
 
-                Log.e("if exists", ifRestaurantExists);
+                //Log.d(TAG, "if rest exists (GET)DB: " + ifRestaurantExists);
 
             } catch (JSONException | IOException e) {
                 e.printStackTrace();
@@ -155,7 +156,7 @@ public class PasscodeScreenActivity extends AppCompatActivity implements View.On
 
             if (ifRestaurantExists.equals("true")) {
 
-                Log.e("checkRestexistence", "Restaurant exists: redirecting to main activity");
+                Log.i(TAG, "Restaurant exists in DB: redirecting to main activity");
                 LoginRestaurant();
 
             } else if (ifRestaurantExists.equals("false")) {
@@ -226,7 +227,7 @@ public class PasscodeScreenActivity extends AppCompatActivity implements View.On
                     editor.putString("restId", userId);
                     editor.apply();
 
-                    //Log.i("details", token + "   " + userId);
+                    //Log.d(TAG, "details: " + token + "   " + userId);
                     System.out.println("" + sb.toString());
 
                 } else {
@@ -234,7 +235,7 @@ public class PasscodeScreenActivity extends AppCompatActivity implements View.On
                     issuccess = false;
                 }
 
-                Log.i("test", json);
+                Log.d(TAG, "test-data: " + json);
 
             } catch (IOException | JSONException e) {
 

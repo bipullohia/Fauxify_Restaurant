@@ -40,6 +40,8 @@ import java.util.List;
 
 public class DishesOfferedFragment extends Fragment {
 
+    public static final String TAG = "DishesOfferedFrag";
+
     ExpandableListView mExpandableListView;
     DishesOfferedAdapter mDishesOfferedAdapter;
     List<String> mParentDataList;
@@ -88,7 +90,7 @@ public class DishesOfferedFragment extends Fragment {
 
                                             categoryName = abc.substring(0, 1).toUpperCase() + abc.substring(1);
                                             sendCategoryName();
-                                            Toast.makeText(getContext(), categoryName, Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(), categoryName + " added", Toast.LENGTH_SHORT).show();
 
                                         } else {
                                             Toast.makeText(getContext(), R.string.blank_text_try_again,
@@ -244,10 +246,10 @@ public class DishesOfferedFragment extends Fragment {
                                                     }
                                                 }
 
-                                            Log.e("final json",String.valueOf(jobmenu));
+                                            //Log.d(TAG, "menu: " + String.valueOf(jobmenu));
 
                                             deleteItem();
-                                            Toast.makeText(getContext(),"Item Deleted "+currentitem,Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getContext(),"Item Deleted: "+currentitem,Toast.LENGTH_SHORT).show();
                                         }
                             })
 
@@ -379,8 +381,6 @@ private class BGTaskPrepareDishData extends AsyncTask<Void, Void, String> {
 
                 JSONObject jo = new JSONObject(categorydetails);
 
-                Log.e("result", String.valueOf(jo));
-
                 ArrayList<String> dishDetails = new ArrayList<>();
                 ArrayList<String> dishId = new ArrayList<>();
 
@@ -391,7 +391,7 @@ private class BGTaskPrepareDishData extends AsyncTask<Void, Void, String> {
                     dishDetails.add(jo.getString(key));
                 }
 
-                Log.e("dishid", dishId.toString());
+                //Log.d(TAG, "dishid" + dishId.toString());
 
                 ArrayList<DishMenu> dishlist = new ArrayList<>();
 
@@ -480,7 +480,7 @@ private class BGTaskAddCategory extends AsyncTask<Void, Void, String>
                 System.out.println(httpConnection.getResponseMessage());
             }
 
-            Log.e("test", json);
+            //Log.d(TAG, "testdata -" + json);
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
@@ -511,13 +511,12 @@ private class BGTaskDeleteCategory extends AsyncTask<Void, Void, String> {
 
         json_url = getString(R.string.request_url) + "Restaurants/" + userId + "?access_token=" + userToken ;
 
-        Log.e("CategoriesList", mCategoriesList.toString());
+        Log.d(TAG, "category list: " + mCategoriesList.toString());
 
         for (int i = 0; i < mCategoriesList.size(); i++) {
 
             if (!mCategoriesList.get(i).equals(category)) {
 
-                Log.e("ismatch", String.valueOf(!mCategoriesList.get(i).equals(category)) + String.valueOf(mCategoriesList.get(i)) + "  " + category);
                 categories1.add(mCategoriesList.get(i));
                 try {
                     jsonArray1.put(jsonArray.get(i));
@@ -571,7 +570,7 @@ private class BGTaskDeleteCategory extends AsyncTask<Void, Void, String> {
                 System.out.println(httpConnection.getResponseMessage());
             }
 
-            Log.e("test", json);
+            //Log.d(TAG, "testdata2 -" + json);
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
@@ -640,7 +639,7 @@ private class BGTaskDeleteItem extends AsyncTask<Void, Void, String>
                 System.out.println(httpConnection.getResponseMessage());
             }
 
-            Log.e("test", json);
+            //Log.d(TAG, "testdata3 -" + json);
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }

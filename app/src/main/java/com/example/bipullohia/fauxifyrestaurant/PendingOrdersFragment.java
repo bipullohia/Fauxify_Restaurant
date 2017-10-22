@@ -33,6 +33,7 @@ import java.util.ArrayList;
 
 public class PendingOrdersFragment extends Fragment {
 
+    private static final String TAG = "PendingOrderFrag";
     private ArrayList<Orders> mOrderList = new ArrayList<>();
     private PendingOrdersAdapter mPendingOrdersAdapter;
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -86,7 +87,6 @@ public class PendingOrdersFragment extends Fragment {
             String restToken = sharedPref.getString("restToken", null);
 
             json_url = getString(R.string.request_url) + "restaurants/" + restId + "/fauxorders?access_token=" + restToken;
-            Log.e("finalURL", json_url);
 
             pd = ProgressDialog.show(getContext(), "", getString(R.string.loading_pending_orders), false);
         }
@@ -109,7 +109,7 @@ public class PendingOrdersFragment extends Fragment {
                 inputStream.close();
                 httpConnection.disconnect();
                 String resultjson = stringBuilder.toString().trim();
-                Log.e("result", resultjson);
+                //Log.d(TAG, "order data: " + resultjson);
 
                 jsonArray = new JSONArray(resultjson);
 
@@ -125,7 +125,7 @@ public class PendingOrdersFragment extends Fragment {
 
             String totalItems, totalItemPrice, orderConfirmed, orderDelivered, dishesInfo, deliveryFee;
             if (jsonArray != null) {
-                Log.e("Jsonobject length", String.valueOf(jsonArray.length()));
+                Log.d(TAG, "jArray length: " + String.valueOf(jsonArray.length()));
                 for (int j = (jsonArray.length() - 1); j >= 0; j--) {
 
                     try {
@@ -171,7 +171,7 @@ public class PendingOrdersFragment extends Fragment {
 
                 mPendingOrdersAdapter.notifyDataSetChanged();
 
-            } else Log.e("Jsonarray length", "is zero");
+            } else Log.d(TAG, "jArray length is zero");
             pd.dismiss();
         }
     }

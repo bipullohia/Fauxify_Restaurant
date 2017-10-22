@@ -30,6 +30,7 @@ import java.util.Random;
 
 public class AddDishIntoCategoryActivity extends AppCompatActivity {
 
+    private static final String TAG = "AddDishIntoCatActivity";
     TextView mDishNameHeadingTextView;
     Button mSubmitButton;
     RadioButton mVegRadioButton, mNonVegRadioButton;
@@ -76,8 +77,8 @@ public class AddDishIntoCategoryActivity extends AppCompatActivity {
 
         mDishNameHeadingTextView.setText("Add to " + "''" + mCategory + "''");
 
-        Log.i("checking-Category", mCategory);
-        Log.i("checking-categorydata", mCategoryData);
+        Log.d(TAG, "category:"+ mCategory);
+        //Log.d(TAG, "category-data" + mCategoryData);
 
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,8 +100,6 @@ public class AddDishIntoCategoryActivity extends AppCompatActivity {
                         mNewDishDataJO.put("dishname", dishnameUpper);
                         mNewDishDataJO.put("dishprice", dishprice);
                         mNewDishDataJO.put("isveg", mDishTypeInt);
-
-                        Log.i("check-new dish data", mNewDishDataJO.toString());
 
                         mCategoryDataJA = new JSONArray(mCategoryData);
 
@@ -143,7 +142,7 @@ public class AddDishIntoCategoryActivity extends AppCompatActivity {
                         }
                     }
 
-                    //Log.i("final data to be sent", mFinalMenuJO.toString());
+                    //Log.d(TAG, "Final data to be sent: " + mFinalMenuJO.toString());
                     sendDishData(); // data sent to the server
 
                 } else {
@@ -174,7 +173,7 @@ public class AddDishIntoCategoryActivity extends AppCompatActivity {
             }
         }
 
-        Log.i("is veg data present - ", String.valueOf(mIsVegDataPresent));
+        Log.d(TAG, "is veg data present: " + String.valueOf(mIsVegDataPresent));
     }
     
     private class BGTaskSendDishData extends AsyncTask<Void, Void, String>
@@ -231,7 +230,7 @@ public class AddDishIntoCategoryActivity extends AppCompatActivity {
                     System.out.println(httpConnection.getResponseMessage());
                 }
 
-                Log.i("test the sent data", json);
+                Log.d(TAG, "data to be sent: " + json);
 
             } catch (IOException | JSONException e) {
                 e.printStackTrace();

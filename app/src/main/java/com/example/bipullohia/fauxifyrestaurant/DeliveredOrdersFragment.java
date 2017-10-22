@@ -30,6 +30,7 @@ import java.util.ArrayList;
 
 public class DeliveredOrdersFragment extends Fragment {
 
+    private static final String TAG = "DeliveredOrderFrag";
     private ArrayList<Orders> mOrderList = new ArrayList<>();
     private DeliveredOrderAdapter mDeliveredOrderAdapter;
 
@@ -70,7 +71,6 @@ public class DeliveredOrdersFragment extends Fragment {
             String restToken = sharedPref.getString("restToken", null);
 
             urlFinal = getString(R.string.request_url) + "restaurants/" + restId + "/fauxorders?access_token=" + restToken;
-            Log.e("finalURL", urlFinal);
 
             progressDialog = ProgressDialog.show(getContext(), "", getString(R.string.loading_delivered_orders), false);
         }
@@ -93,7 +93,7 @@ public class DeliveredOrdersFragment extends Fragment {
                 inputStream.close();
                 httpConnection.disconnect();
                 String resultjson = stringBuilder.toString().trim();
-                Log.e("result", resultjson);
+                Log.d(TAG, "result data: " + resultjson);
 
                 jsonArrayAllData = new JSONArray(resultjson);
 
@@ -109,7 +109,6 @@ public class DeliveredOrdersFragment extends Fragment {
 
             String totalItems, totalItemPrice, orderConfirmed, orderDelivered, dishesInfo, deliveryFee;
             if (jsonArrayAllData != null) {
-                Log.e("Jsonobject length", String.valueOf(jsonArrayAllData.length()));
                 for (int j = 0; j <= (jsonArrayAllData.length() - 1); j++) {
 
                     try {
@@ -155,7 +154,7 @@ public class DeliveredOrdersFragment extends Fragment {
 
                 mDeliveredOrderAdapter.notifyDataSetChanged();
 
-            } else Log.e("Jsonarray length -", "zero");
+            } else Log.d(TAG, "JSON Array length is zero");
 
             progressDialog.dismiss();
         }

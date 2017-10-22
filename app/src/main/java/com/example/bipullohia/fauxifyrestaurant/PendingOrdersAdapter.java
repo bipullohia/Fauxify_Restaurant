@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdapter.MyViewHolder> {
 
+    private static final String TAG = "PendingOrderAdapter";
     private static ArrayList<Orders> orderList;
 
     class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -91,7 +92,7 @@ class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdapter.MyV
 
         String timestamp = orders.getOrderTime();
         String orderDate = timestamp.substring(0, 2);
-        Log.d("orderdate", orderDate);
+        Log.d(TAG, "orderdate: " + orderDate);
 
         String orderMonth = "";
         String month = timestamp.substring(3,5);
@@ -140,7 +141,7 @@ class PendingOrdersAdapter extends RecyclerView.Adapter<PendingOrdersAdapter.MyV
             holder.mRedDeliverTextView.setVisibility(View.VISIBLE);
         }
 
-        Log.e("dishesinfo orderId", orders.getOrderId());
+        Log.d(TAG, "dish-info orderid: " + orders.getOrderId());
     }
 
     @Override

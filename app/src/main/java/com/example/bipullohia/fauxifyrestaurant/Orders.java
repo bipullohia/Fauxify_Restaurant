@@ -110,9 +110,7 @@ class Orders {
         this.totalItemsPrice = name;
     }
 
-    String getDeliveryFee() {
-        return deliveryFee;
-    }
+    String getDeliveryFee() { return deliveryFee; }
 
     public void setDeliveryFee(String name) {
         this.deliveryFee = name;

@@ -29,6 +29,8 @@ import java.util.ArrayList;
 
 public class ModifyDishIntoCategoryActivity extends AppCompatActivity {
 
+    private static final String TAG = "ModDishCategoryActivity";
+
     TextView mDishNameHeadingTextView;
     Button mSubmitButton;
     RadioButton mVegRadioButton, mNonVegRadioButton;
@@ -100,8 +102,8 @@ public class ModifyDishIntoCategoryActivity extends AppCompatActivity {
                 break;
         }
 
-        Log.i("checking-Category", mCategory);
-        Log.i("checking-categorydata", mCategoryData);
+        Log.d(TAG, "category: " + mCategory);
+        //Log.d(TAG, "category data: " + mCategoryData);
 
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +124,6 @@ public class ModifyDishIntoCategoryActivity extends AppCompatActivity {
                         mNewDishDataJO.put("dishname", dishname);
                         mNewDishDataJO.put("dishprice", dishprice);
                         mNewDishDataJO.put("isveg", mDishTypeDefaultInt);
-                        Log.e("asdfg", mNewDishDataJO.toString());
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -168,7 +169,7 @@ public class ModifyDishIntoCategoryActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    Log.e("final-menu", mFinalMenuJO.toString());
+                    Log.d(TAG, "final menu: " + mFinalMenuJO.toString());
 
                     sendDishData();
                 }
@@ -244,7 +245,7 @@ public class ModifyDishIntoCategoryActivity extends AppCompatActivity {
                     System.out.println(httpConnection.getResponseMessage());
                 }
 
-                Log.e("test", json);
+                //Log.d(TAG, "test-data: " + json);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }

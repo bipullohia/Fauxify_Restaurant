@@ -28,6 +28,8 @@ import java.net.URL;
 
 public class RestaurantStatusFragment extends Fragment {
 
+    private static final String TAG = "RestStatusFrag";
+
     public Switch mRestStatusSwitch;
     String mOppositeOfRestStatus, mNewRestStatus;
 
@@ -42,7 +44,7 @@ public class RestaurantStatusFragment extends Fragment {
 
         mRestStatusSwitch = (Switch) rootview.findViewById(R.id.switch_rest_status);
 
-        Log.i("MainActivity restStatus", MainActivity.RestStatus);
+        Log.d(TAG, "MainActivity restStatus: " + MainActivity.RestStatus);
         if (MainActivity.RestStatus.equals("open")) {
 
             mRestStatusSwitch.setChecked(true);
@@ -52,8 +54,6 @@ public class RestaurantStatusFragment extends Fragment {
             mRestStatusSwitch.setChecked(false);
             mOppositeOfRestStatus = "Active";
         }
-
-        Log.i("oppositeRestStatus", mOppositeOfRestStatus);
 
         mRestStatusSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +71,7 @@ public class RestaurantStatusFragment extends Fragment {
                                     mNewRestStatus = "open";
                                 }
 
-                                Log.i("new RestStatus", mNewRestStatus);
+                                Log.d(TAG, "new RestStatus: " + mNewRestStatus);
                                 changeRestaurantStatus();
                             }
                         })
@@ -135,7 +135,6 @@ public class RestaurantStatusFragment extends Fragment {
 
                 JSONObject jsonObject = new JSONObject();
 
-                Log.i("newreststatus async", mNewRestStatus);
                 jsonObject.accumulate("RestaurantStatus", mNewRestStatus);
 
                 String json = jsonObject.toString();
@@ -160,7 +159,7 @@ public class RestaurantStatusFragment extends Fragment {
                     System.out.println(httpConnection.getResponseMessage());
                 }
 
-                Log.e("test", json);
+                //Log.d(TAG, "test-data: " + json);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }

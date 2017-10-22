@@ -40,6 +40,7 @@ import static com.example.bipullohia.fauxifyrestaurant.R.id.deliverytime;
 
 public class PendingOrderDetailsActivity extends AppCompatActivity {
 
+    private static final String TAG = "PendOrderDetailActivity";
     Toolbar mToolbar;
     Spinner mSpinner;
     ArrayAdapter<CharSequence> mArrayAdapter;
@@ -141,10 +142,8 @@ public class PendingOrderDetailsActivity extends AppCompatActivity {
                     mSubmitDeliveryTimeButton.setVisibility(View.VISIBLE);
                     String dtime = mSpinner.getSelectedItem().toString();
                     mDeliveryTime = dtime.substring(0, 2);
-
-                    Log.e("substring", mDeliveryTime);
                 }
-                Log.e("Position", (String) parent.getItemAtPosition(position));
+                Log.d(TAG, "position: " + (String) parent.getItemAtPosition(position));
             }
 
             @Override
@@ -238,7 +237,6 @@ public class PendingOrderDetailsActivity extends AppCompatActivity {
             String restToken = sharedPref.getString("restToken", null);
 
             json_url = getString(R.string.request_url) + "restaurants/" + restId + "/fauxorders/" + orderId + "?access_token=" + restToken;
-            Log.e("finalURL", json_url);
         }
 
         @Override
@@ -266,7 +264,6 @@ public class PendingOrderDetailsActivity extends AppCompatActivity {
                 jo.put("delivery", joDelivery);
 
                 String json = jo.toString();
-                Log.e("testChangeDelStatusPost", json);
                 OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
                 out.write(json);
                 out.flush();
@@ -287,7 +284,7 @@ public class PendingOrderDetailsActivity extends AppCompatActivity {
                     System.out.println(httpURLConnection.getResponseMessage());
                 }
 
-                Log.e("test", json);
+                //Log.d(TAG, "test-data: " + json);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
@@ -328,7 +325,6 @@ public class PendingOrderDetailsActivity extends AppCompatActivity {
             String restToken = sharedPref.getString("restToken", null);
 
             json_url = getString(R.string.request_url) + "restaurants/" + restId + "/fauxorders/" + orderId + "?access_token=" + restToken;
-            Log.e("finalURL", json_url);
         }
 
         @Override
@@ -356,7 +352,7 @@ public class PendingOrderDetailsActivity extends AppCompatActivity {
                 jo.put("delivery", joDelivery);
 
                 String json = jo.toString();
-                Log.e("udshc", json);
+                //Log.d(TAG, "test-data2: " + json);
                 OutputStreamWriter out = new OutputStreamWriter(httpURLConnection.getOutputStream());
                 out.write(json);
                 out.flush();
@@ -380,7 +376,7 @@ public class PendingOrderDetailsActivity extends AppCompatActivity {
                     System.out.println(httpURLConnection.getResponseMessage());
                 }
 
-                Log.e("test", json);
+                Log.d(TAG, "test-data3: " + json);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }

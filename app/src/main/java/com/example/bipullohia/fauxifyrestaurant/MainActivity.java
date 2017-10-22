@@ -36,6 +36,8 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = "MainActivity";
+
     ActionBarDrawerToggle mToggleActionBarDrawer;
     DrawerLayout mDrawerLayout;
     Toolbar mToolbar;
@@ -239,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 inputStream.close();
                 httpConnection.disconnect();
                 String resultjson = stringBuilder.toString().trim();
-                Log.e("result-checkRestStatus", resultjson);
+                Log.d(TAG, "restaurant status DB: " + resultjson);
 
                 jobject = new JSONObject(resultjson);
 
@@ -255,7 +257,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             try {
                 RestStatus = jobject.getString("RestaurantStatus");
-                Log.i("new reststatus MA", RestStatus);
                 restName = jobject.getString("Restname");
                 restType = jobject.getString("Resttype");
 

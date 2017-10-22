@@ -33,6 +33,8 @@ import java.net.URL;
 
 public class EditRestDetailsFragment extends Fragment {
 
+    private static final String TAG = "EditRestDetailsFrag";
+
     EditText mRestTypeEditText, mRestDelFeeEditText, mRestDelTimeEditText, mRestMinOrderEditText, mRestFreeDelAmountEditText;
     TextView mRestNameTextView;
     Button mSubmitNewDetailsButton;
@@ -178,7 +180,8 @@ public class EditRestDetailsFragment extends Fragment {
     public void submitNewDetails() {
 
         new BGTaskSubmitNewDetails().execute();
-        Log.i("status", mNewRestDelFee + mNewRestType + mNewRestDelTime + mNewRestMinOrder + mNewRestFreeDelAmount);
+        //Log.d(TAG, "new details: " + mNewRestDelFee + mNewRestType + mNewRestDelTime
+        //                            + mNewRestMinOrder + mNewRestFreeDelAmount);
     }
 
     private class BGTaskSubmitNewDetails extends AsyncTask<Void, Void, String> {
@@ -215,7 +218,7 @@ public class EditRestDetailsFragment extends Fragment {
                 jsonObject.put("Resttype", mNewRestType);
                 jsonObject.put("Deliversin", mNewRestDelTime + " minutes");
 
-                Log.i("del time", mNewRestDelTime + " minutes");
+                //Log.d(TAG, "new delivery time: " + mNewRestDelTime + " minutes");
                 jsonObject.put("Minorder", mNewRestMinOrder);
                 jsonObject.put("Deliveryfee", mNewRestDelFee);
                 jsonObject.put("freeDeliveryAmount", mNewRestFreeDelAmount);
@@ -242,7 +245,7 @@ public class EditRestDetailsFragment extends Fragment {
                     System.out.println(httpURLConnection.getResponseMessage());
                 }
 
-                Log.i("test-submitNewDetails", json);
+                Log.d(TAG, "test-data: " + json);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
