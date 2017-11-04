@@ -41,7 +41,7 @@
     <string name="login_failed">Login Failed</string>
     <string name="are_you_sure_order_delivered">Are you sure the Order is Delivered?</string>
     <string name="order_delivery_confirmed">Order Delivery Confirmed</string>
-    <string name="delivery_confirmation">Delivery Confirmation</string>
+    <string name="delivery_confirmation">Order delivered?</string>
     <string name="change_restaurant_status">Change Restaurant Status</string>
     <string name="item_name">Item Name</string>
     <string name="item_price_rs">Item Price (Rs)</string>
@@ -69,7 +69,7 @@
     <string name="x">x</string>
     <string name="select_another_time">Select Another Time</string>
     <string name="confirm_delivery">Confirm Delivery</string>
-    <string name="order_delivered">Order Delivered</string>
+    <string name="order_delivered">Yes</string>
     <string name="vegetarian_dish">Vegetarian Dish</string>
     <string name="non_vegetarian_dish">Non-Vegetarian Dish</string>
     <string name="categories_offered">Categories Offered</string>
@@ -89,7 +89,7 @@
     <string name="vegetarian_dish_imageview">Vegetarian Dish ImageView</string>
     <string name="non_vegetarian_dish_imageview">Non-Vegetarian Dish ImageView</string>
     <string name="default_status">Default Status</string>
-    <string name="total">Total</string>
+    <string name="total">Total </string>
     <string name="inactive">inactive</string>
 
 
